@@ -1,0 +1,132 @@
+\chapter{The Internet of Things}
+\label{sec:iot}
+
+\section{Taking a Step Back}
+
+\subsection{The Internet}
+
+There have been other communication networks before the Internet. However only the Internet spread over the globe. What are the reasons for this inimitable success story?
+
+\subsubsection{Architectural Design Principles}
+
+The Internet followed different design principles than its predecessors and competitors. The Internet is fundamentally about open standards and open software that implements those standards. Another important choice is known as the End-to-End (e2e)principle \cite{Saltzer:1984:EAS:357401.357402}. The e2e principle states that \emph{intelligence} should be at the edges, at the top of a layered system. This implies the strict separation of application-specific matter and the actual means of communication and transport. This is what allows the uncountable applications and use cases of the Internet, and low cost for communication.
+
+Internet protocol suite
+
+\subsection{The Web}
+"It's not the computers which are interesting, it is the documents!"
+
+http application layer
+
+
+\subsection{Web 2.0}
+
+The second paradigm is the web as a platform \cite{o2007web}. Instead of unidirectional broadcasting from servers to clients, and from content producers to content consumers, the web 2.0 embraced the concepts of co-creation and collective intelligence. Monolithic server applications became lightweight service oriented architectures which led to more experimentation, more compositions, and more user involvement. Google, Wikipedia, and social networks like Facebook are children of this era.
+
+Ever more software became open source and the value shifted towards network effects and user data.
+
+The thriving business models of the web 2.0 are (targeted) advertisement and the ability to leverage the long tail. In fact advertisement was in many cases the only chance to generate revenue from a website.  
+
+
+
+\subsection{Cloud Computing and The As-a-Service Paradigm}
+
+\section{History of the Internet of Things}
+Ubiquitous computing
+IOT 
+
+\section{Where are we now?}
+
+
+\subsection{Industry perspective}
+
+Heterogeneity and complexity lead to the establishment of a plethora of middleware solutions commonly termed IoT platforms
+
+SigFox, The Thing Network
+
+\subsection{Consumer perspective}
+
+\subsection{Research perspective}
+
+The IoT industry has successfully embraced the economic model of the cloud. Consumer good and device manufacturers are able to connect their products easily and cheaply by utilizing one of the many aspiring cloud-based IoT platforms. Those IoT platforms themselves are using cloud providers such as Amazon, Google, Microsoft or Rackspace, which offer computing and storage infrastructure as pay-as-you-go services. This has led to a paradigm where devices do not communicate directly with each other but interaction is mediated through cloud-based web services.
+
+Cisco gives a definition of fog computing.
+Discussion of cloud and fog. \cite{Yi:2015:SFC:2757384.2757397} briefly discusses the problems of cloud computing. Namely, unreliable latency, lack of mobility support, and location awareness. Issue of fog computing are also discussed. One issue is the missing programming model, but I would argue microservices architectures are step in the right direction. Accounting, billing and monitoring is another issue. So is security and privacy.
+
+
+\cite{DBLP:journals/corr/RomanLM16} provide a thorough overview of the security threads and challenges of mobile edge computing and fog computing.
+
+
+Cloud Computing - the business perspective\cite{Marston2011176}
+
+Integration of cloud computing and internet of things a survey \cite{botta2016integration}
+
+\cite{7123563} surveys IoT research focusing on technology and protocols. It gives a good overview over CoAP, MQTT, XMPP, AMQP etc.
+
+\cite{Roman20132266} discuss challenges and opportunities for a distributed IoT. Mention the problem of identity and authentication. Authentication is naturally simpler in a centralized model.
+
+\section{Opportunities}
+
+\section{Security}
+
+Secure Socket Layer (SSL) and its successor Transport Layer Security (TLS) are protocols designed to provide confidentiality, authenticity, and integrity for communication between two parties on top of TCP/IP. Both protocols rely on public key cryptography. Hence, they have to know the public key of their respective counterparty, and they have to be sure that the key really belongs to the party they want to communicate with. SSL/TLS is based on Certificate Authorities (CAs), which issue x.509 certificates that attest the correspondence between a public key and a party\footnote{Typically this party is a web server}. A SSL/TLS client verifies a certificate based on a list of trusted keys that is typically preinstalled on the operating system. However, there have been multiple incidents where forged certificates led web browsers to trust malicious servers. 
+
+
+\section{Challenges}
+
+Internet of Crappy Thing, The Internet of Shit, The Internet of Fails.
+
+Cloud is not the center but the edge (diagram)!
+
+\subsection{Scale}
+\subsection{Heterogeneity}
+\subsection{Discovery}
+\subsection{Security}
+\subsection{Privacy}
+\subsection{Economic viability}
+\subsection{Bandwidth}
+IoT shifts downstream shipping of data to upstream shipping of data. LTE peak download 100Mbit/s, peak upload 50Mbit/s.
+
+\subsection{Latency}
+Upper limit for latency to avoid human notice is about 100 ms [53]
+
+\subsection{Quality of Service}
+Temporary web service unavailability typically not a problem but if you cannot enter your home or your light cannot be switched on 
+
+
+The Internet of Things has a gateway problem \cite{Zachariah:2015:ITG:2699343.2699344}
+
+The Cloud is not enough: Saving IoT from the cloud \cite{Zhang:2015}. Argue that the cloud-centric architecture does not scale for the IoT and suggest a distributed platform, called the Global Data Plane (GDP), based on a data-centric design. It is focused on transport, replication, preservation, and integrity of streams of data while enabling transparent optimization for locality and quality of service. The foundation is a single-writer append-only log, coupled with location-independent routing, overlay multicast and higher level interfaces such as common access APIs.
+
+
+\section{Interoperability}
+
+An important aspect of IoT is the ability to digitize the physical world. This is the objective of networked sensors. In order to integrate a physical sensor into a software stack a digital representation has to be given. First efforts of standardization date back to the late nineties. An interesting viewpoint is provided in \cite{Chen:2008}. The title, Sifting through the jungle of sensor standards, is explanatory. Up to the time of writing the situation has not changed much. There are multiple competing standards with different foci and there is none that has overarching backing of manufacturers. 
+\\
+\emph{ECHONET}: Object-oriented design targeted for home appliances. Needs certification.
+\\
+\emph{IEEE 1451}: Low-level IEEE standard for smart transducer interfaces which entails descriptions of calibration, correction, and measurement range.
+\\
+\emph{SensorML}: Data-oriented standard to allow the description complex data modeling and post-processing as a high-level web service-based interface.
+\\
+\emph{Device kit}: XML-based markup language to model hardware devices. Focused on the integration into OSGi-based service-oriented architectures (SOA).
+\\
+\emph{Device Description Language (DDL)}: Low-level description language to enable networked devices discover capabilities of physically attached sensors.
+
+Orthogonal to the actual description of resources is the standardization of communication protocols. 
+
+Here the situation is more coherent. 
+On the application layer a lot of devices allow the usage of standard web protocols such as HTTP. For constrained devices that have to live on battery an adapted version called CoAP has been developed and standardized \cite{shelby2014constrained}. A very well written introduction to web services for embedded systems can be found in \cite{Shelby:2010}. Besides RESTful approaches, publish/subscribe-oriented messaging protocols are used. The two most important are XMPP \cite{saint2011extensible} and MQTT \cite{Hunkeler:2008}. 
+Newer developments with a greater focus on privacy and security are Telehash and Whisper. We will discuss them later in more detail.   
+
+
+
+Sandboxing IoT applications. Embedded scripting language \cite{Kovatsch:2012}
+
+
+Cloudlets \cite{Verbelen:2012,Satyanarananan:2013}
+
+
+Hypercat
+
+ ToS;DR84 (Terms of Service; Didn’t Read)

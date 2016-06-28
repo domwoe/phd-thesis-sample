@@ -1,12 +1,20 @@
 \documentclass[%
-%    a5paper,
-    a4paper,
+    a5paper,
+    %a4paper,
     footinclude=true,
     headinclude=true
 ]{scrbook}
 \KOMAExecuteOptions{fontsize=11pt}
 
 \usepackage{preamble}
+\usepackage{listings}
+
+\lstset{
+	basicstyle=\footnotesize\ttfamily,
+	frame=single,
+	keywordstyle=\bfseries,
+	morekeywords={pubScript:, sigScript:}
+}
 
 \begin{document}
 
@@ -61,34 +69,29 @@
 
 
 %----------------------------------------------------------------------------
-% Background
-\def\dir{chapters/background}
-\input{\dir/background.tex}
-
-
-%----------------------------------------------------------------------------
-% LPQP for MPE Inference
-\def\dir{chapters/lpqp}
-\input{\dir/lpqp.tex}
-
+% The Internet of Things
+\def\dir{chapters/iot}
+\input{\dir/iot.tex}
 
 %----------------------------------------------------------------------------
-% Learning With High-order Losses
-\def\dir{chapters/high_order_loss}
-\input{\dir/hol.tex}
-
-
-%----------------------------------------------------------------------------
-% Maximum Entropy and Maximum Margin
-\def\dir{chapters/maximum_entropy_margin}
-\input{\dir/maximum_entropy_margin.tex}
-
+% From digital cash to cryptoeconomical digital currencies
+\def\dir{chapters/crypto}
+\input{\dir/crypto.tex}
 
 %----------------------------------------------------------------------------
-% Part & Clamp 
-\def\dir{chapters/part_clamp}
-\input{\dir/part_clamp.tex}
+% From digital cash to cryptoeconomical digital currencies
+\def\dir{chapters/economy}
+\input{\dir/economy.tex}
 
+%----------------------------------------------------------------------------
+% Case: Sensing as a Service and Datamarkets
+\def\dir{chapters/datamarket}
+\input{\dir/datamarket.tex}
+
+%----------------------------------------------------------------------------
+% Case: Decentralized Energy and Decentralized Autonomous Organizations
+\def\dir{chapters/dao}
+\input{\dir/dao.tex}
 
 %----------------------------------------------------------------------------
 % Discussion
@@ -135,6 +138,5 @@
 \pagebreak
 \def\dir{frontbackmatter}
 \input{\dir/colophon.tex}
-
 
 \end{document}
