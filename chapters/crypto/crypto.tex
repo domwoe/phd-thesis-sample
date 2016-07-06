@@ -35,7 +35,7 @@ A transaction is valid if the combined value of the inputs are greater than or e
 In the following we will take a closer look at these conditions and how transactions are authenticated. The corresponding data fields are called \emph{pubScript} and \emph{sigScript} and can contain data and op codes, i.e. programming primitives, of a constrained, stateless Forth-like stack-based scripting language called Bitcoin Script. 
 When validating a transaction a node will concatenate the pubScript of a referenced output with the sigScript of a referencing input, and execute the script. A transaction can only be valid if all  scripts evaluate to \emph{true}. 
 
-The most important op codes are related to cryptographic primitives such as digital signature verification and secure hash functions. Bitcoin uses an elliptic curve digital signature algorithm (ECDSA) for authentication. In the prevailing case a derivation of an ECDSA public key is identified with a Bitcoin address, and the corresponding private key is used to create a signature to authenticate the spending of an UTXO corresponding to this Bitcoin address. 
+The most important op codes are related to cryptographic primitives such as digital signature verification and secure hash functions. Bitcoin currently employs an elliptic curve digital signature algorithm (ECDSA) for authentication. In the prevailing case a derivation of an ECDSA public key is identified with a Bitcoin address, and the corresponding private key is used to create a signature to authenticate the spending of an UTXO corresponding to this Bitcoin address. 
 The pubScript in this basic scenario is called pay-to-pubkey-hash (P2PKH).
 
 \begin{lstlisting}
@@ -62,7 +62,7 @@ Concatenating and executing works as follows:
 
 First, OP\_DUP duplicates the operand $<$PubKey$>$. Second, OP\_HASH160 computes the SHA-256 and RIPMED-160 secure hash of $<$PubKey$>$. Third, OP\_EQUALVERIFY takes two operands and returns if they are equal. Fourth, OP\_CHECKSIG takes a signature and a public key, and returns true if the signature validation is successful. 
 
-Bitcoin, i.e. the reference implementation Bitcoin core, currently distinguishes five types of pubScripts:
+Bitcoin, i.e. the reference implementation Bitcoin core, currently distinguishes five types of \emph{standard} pubScripts:
 
 \begin{itemize}
 \item Pay To Public Key Hash (P2PKH)
@@ -72,7 +72,7 @@ Bitcoin, i.e. the reference implementation Bitcoin core, currently distinguishes
 \item Null data
 \end{itemize}
 
-If a pubScript can not be categorized in one of these types, it is termed \emph{non-standard}. Bitcoin core nodes will not relay transactions containing non-standard pubScripts. However, if a non-standard transaction ends up in the blockchain because a miner  (see Sec. \ref{sec:mining}) has a different policy, Bitcoin core nodes will still accept it.
+If a pubScript can not be categorized in one of these types, it is termed \emph{non-standard}. For some time Bitcoin core nodes would not relay transactions containing non-standard pubScripts because there had been found vulnerabilities in some op codes. However, if a non-standard transaction ended up in the blockchain because a miner  (see Sec. \ref{sec:mining}) had a different policy, Bitcoin core nodes still accepted it. Today, Bitcoin core relays transactions with arbitrary non-standard pubScripts.
 
 P2PK is similar to P2KH and not used very often since a shorter key hash is replaced by a longer public key. Multi-signature outputs demand m-of-n signatures to spend an output. However, today multi-signature is usually implemented as P2SH. P2SH is the most versatile pubScript type and thus worth discussing in more detail.
 
@@ -101,7 +101,14 @@ OP_RETURN <data>
 \subsubsection{The Blockchain}
 \label{sec:blockchain}
 
-In the Bitcoin system transactions are batched into a primitive called a block. A block contains the transactions as payload and a header. The header consists essentially  of the root of the Merkle tree that is computed from the transaction hashes, the hash of the previous block, and a number called nonce which we will discuss in the next section. Let us assume for the moment that there is only one node in the Bitcoin network. Since each block refers to its predecessor the emergent data structure is a chain of blocks, a blockchain. Note that linking blocks by means of hash pointers leads to an tamper-evident append-only data structure. If a transaction is changed in block $i$ of a blockchain containing $n$ blocks, the chain of hashes breaks, and every hash from block $i$ to block $n$ has to be re-computed.
+ \begin{figure*}[!t]
+    \centering
+    \includegraphics[width=\linewidth]{./externalized/blockchain}
+    \caption{Simplified structure of the Bitcoin blockchain. Each block references its predecessor by a hash pointer. The content of the gray area is the block header.}
+    \label{fig:blockchain}
+  \end{figure*}
+
+In the Bitcoin system transactions are batched into a primitive called a block. A block contains the transactions as payload and a header. The header consists essentially of the root of the Merkle tree that is computed from the transaction hashes, the hash of the previous block, and a number called nonce which we will discuss in the next section. Let us assume for the moment that there is only one node in the Bitcoin network. Since each block refers to its predecessor the emergent data structure is a chain of blocks, a blockchain. Note that linking blocks by means of hash pointers leads to an tamper-evident append-only data structure. If a transaction is changed in block $i$ of a blockchain containing $n$ blocks, the chain of hashes breaks, and every hash from block $i$ to block $n$ has to be re-computed.
 
 Therefore, a blockchain is a tamper-evident append-only transaction log that defines the current state by giving its complete history.
 
@@ -113,7 +120,7 @@ The naive (local) rule is to accept the block that arrives first. However, in a 
 
 A block has to have an identifying hash that is smaller than a particular target value. Thus, a miner has to vary the block and re-compute its hash until the target is met. Therefore the consensus protocol is non-interactive and the block generation rate is a function of the combined hash rate of every mining node and the particular target or difficulty. The more hashing power an actor controls, the higher is her chance to find a block. If a node follows the Nakamoto consensus protocol it will broadcast a block as soon as the block has been found. Receiving nodes will check the validity of the transactions, and the Proof-of-work. Mining nodes will stop mining their current block, apply the new block, and start mining on top of this new block. Thereby, the chain with the highest accumulated amount of work is considered the valid chain. 
 
-If nodes adhere to the Bitcoin mining protocol, the system is resilient against double-spending, and censorship, as long as the majority of hash power is controlled by honest nodes. \cite{Eyal2014} have shown that a \emph{rational} miner should divert to a different strategy termed \emph{selfish mining}, by which the miner withholds blocks in order to have a head-start to mine the next block, in order to get an unfair advantage. At time of writing, selfish mining has not been observed in the Bitcoin network, but in other blockchain-based cryptocurrencies. It can be argued that a rational miner should follow the selfish mining strategy to maximize her profits. However, the profits are denominated in bitcoin whereas her expenditures are probably to be paid in a national currency. Since the appearance of selfish mining could harm the Bitcoin system as a whole, and thereby have a negative effect on the bitcoin exchange rate, following the Nakamato protocol may still be the rational choice from an ecosystem perspective. 
+If nodes adhere to the Bitcoin mining protocol, the system is resilient against double-spending, and censorship, as long as the majority of hash power is controlled by honest nodes. \cite{Eyal2014} have shown that a \emph{rational} miner should divert to a different strategy termed \emph{selfish mining}, by which the miner withholds blocks in order to have a head-start to mine the next block, in order to get an unfair advantage. At time of writing, selfish mining has not been observed in the Bitcoin network, but in other blockchain-based cryptocurrencies. It can be argued that a rational miner should follow the selfish mining strategy to maximize her profits. However, the profits are denominated in bitcoin whereas her expenditures are probably to be paid in a national currency. Since the appearance of selfish mining could harm the Bitcoin system as a whole, and thereby have a negative effect on the bitcoin exchange rate, following the Nakamato protocol may still be the rational choice from an long-term ecosystem perspective. 
 
 % Interestingly,elfish mining threshold coincides with the theoretical limit of malicious actors in classical consensus protocols, requiring a fixed number of participants per round, with byzantine faults. At time of this writing there is no known theoretical explanation for the coinciding thresholds in very different settings.
 
@@ -190,8 +197,6 @@ Every state transition is authenticated
 
 \section{Participation}
 
-\section{Micropayments}
-
 \section{An Internet of Value}
 
 \subsection{Sidechains}
@@ -199,6 +204,15 @@ Every state transition is authenticated
 \subsection{OPTIONAL: Decentralized Exchanges}
 
 \section{Maidsafe}
+
+\section{Interfacing Blockchains}
+
+\subsection{Full Nodes}
+Full nodes take part in 
+
+\subsection{Thin Clients}
+
+\subsection{Web Services}
 
 Internet status quo: Trust requirement into the service provider and dependency on a central system
 

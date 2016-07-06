@@ -1979,17 +1979,24 @@
     <bcf:citekey order="23">Kovatsch:2012</bcf:citekey>
     <bcf:citekey order="24">Verbelen:2012</bcf:citekey>
     <bcf:citekey order="24">Satyanarananan:2013</bcf:citekey>
-    <bcf:citekey order="25">bip16</bcf:citekey>
-    <bcf:citekey order="26">Eyal2014</bcf:citekey>
-    <bcf:citekey order="27">bearer</bcf:citekey>
-    <bcf:citekey order="28">Luu:2015:DIC:2810103.2813659</bcf:citekey>
-    <bcf:citekey order="29">Bonneau2015</bcf:citekey>
-    <bcf:citekey order="29">Tschorsch:2015:464</bcf:citekey>
-    <bcf:citekey order="30">Christidis2016</bcf:citekey>
-    <bcf:citekey order="31">Loke:2015:MCS:2737797.2656214</bcf:citekey>
-    <bcf:citekey order="32">Searls:2012:EPD:2132860.2132869</bcf:citekey>
-    <bcf:citekey order="33">gsma2014</bcf:citekey>
-    <bcf:citekey order="34">DBLP:journals/corr/QadirSWC16</bcf:citekey>
+    <bcf:citekey order="25">DonetDonet2014</bcf:citekey>
+    <bcf:citekey order="26">bip16</bcf:citekey>
+    <bcf:citekey order="27">Eyal2014</bcf:citekey>
+    <bcf:citekey order="28">bearer</bcf:citekey>
+    <bcf:citekey order="29">Luu:2015:DIC:2810103.2813659</bcf:citekey>
+    <bcf:citekey order="30">Bonneau2015</bcf:citekey>
+    <bcf:citekey order="30">Tschorsch:2015:464</bcf:citekey>
+    <bcf:citekey order="31">kortuem2010smart</bcf:citekey>
+    <bcf:citekey order="32">zorzi2010</bcf:citekey>
+    <bcf:citekey order="33">manyika2015unlocking</bcf:citekey>
+    <bcf:citekey order="34">Bonomi:2012:FCR:2342509.2342513</bcf:citekey>
+    <bcf:citekey order="35">Hearn</bcf:citekey>
+    <bcf:citekey order="36">Siby2013</bcf:citekey>
+    <bcf:citekey order="37">Loke:2015:MCS:2737797.2656214</bcf:citekey>
+    <bcf:citekey order="38">Christidis2016</bcf:citekey>
+    <bcf:citekey order="39">Searls:2012:EPD:2132860.2132869</bcf:citekey>
+    <bcf:citekey order="40">gsma2014</bcf:citekey>
+    <bcf:citekey order="41">DBLP:journals/corr/QadirSWC16</bcf:citekey>
   </bcf:section>
   <bcf:sortlist section="0" type="entry" label="nyt">
   <bcf:sorting>
