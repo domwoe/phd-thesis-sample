@@ -21,15 +21,24 @@ We will discuss all of these contributions in more detail. However, we will star
 \subsubsection{Peer to Peer network}
 \label{sec:p2p}
 
+The foundation of Bitcoin is a peer-to-peer network of voluntary nodes. Each node validates, relays, and stores all (valid) transactions. Thus in Bitcoin everyone validates everything, or at least everyone is able to validate everything. In the beginning every Bitcoin \emph{user} ran a Bitcoin node, since it was the only way to keep track of and to send bitcoins. Today most users do not directly participate in the peer-to-peer network, since running a full node is becoming ever more resource intensive. At time of writing the Bitcoin network consists of approximately 5600 nodes. Nodes are distributed globally, but the majority is in Europe and the coastal areas of the US. 
+
 \cite{DonetDonet2014}
 
 
 \subsubsection{Transactions and Scripting}
 \label{sec:tx}
 
-The naming \emph{Bitcoin} is misleading. In Bitcoin there are no coins being exchanged between parties. A coin in Bitcoin is identified by an unspent transaction output (UTXO). Transfer of ownership of coins is achieved by spending one (or more) UTXO and creating one (or more) new UTXO. 
+The naming of \emph{Bitcoin} is misleading. In Bitcoin there are no coins being exchanged between parties. A coin in Bitcoin is identified by an unspent transaction output (UTXO). Transfer of ownership of coins is achieved by spending one (or more) UTXO and creating one (or more) new UTXO.
+The authenticated data structure used is called a transaction. A simplified representation of a transaction is shown in Figure \ref{fig:bitcointx}. The individual data fields will be explained over the course of this section.
+ A transaction contains essentially a list of inputs and outputs. Inputs reference (unspent) outputs of previous transactions, and provide a means of authentication to prove ownership over these UTXOs. Outputs are tuples entailing values, the amount denominated in satoshi, and the condition the receiver has to meet to spend the output. 
 
-The authenticated data structure used is called a transaction. A transaction contains essentially a list of inputs and outputs. Inputs reference (unspent) outputs of previous transactions, and provide a means of authentication to prove ownership over these UTXOs. Outputs are tuples entailing values, the amount denominated in satoshi, and the condition the receiver has to meet to spend the output. 
+\begin{figure}
+\centering
+\includegraphics[width=\textwidth]{./externalized/simplifiedTx.pdf}
+\caption{A simplified representation of the Bitcoin transaction data structure.}
+\label{fig:bitcointx}
+\end{figure}
 
 A transaction is valid if the combined value of the inputs are greater than or equal to the combined value of the outputs, and if the conditions of the referenced previous UTXOs are met.
 In the following we will take a closer look at these conditions and how transactions are authenticated. The corresponding data fields are called \emph{pubScript} and \emph{sigScript} and can contain data and op codes, i.e. programming primitives, of a constrained, stateless Forth-like stack-based scripting language called Bitcoin Script. 
