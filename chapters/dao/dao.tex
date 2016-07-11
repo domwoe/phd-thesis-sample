@@ -1,19 +1,73 @@
 \chapter{Case: Decentralized Energy and Decentralized Autonomous Organizations}
 \label{sec:dao}
 
-\cite{gsma2014} gives a good overview of energy access in sub-saharan africa. Discusses solar home systems, mini-grids, and on-grid systems. Stresses the role of cellular connectivity and pay-as-you-go models. According to the report around 40\% of on-grid energy gets stolen. Furthermore, they provide a graph on the evolution of electrification rate and the rate for cellular coverage.
 
-\cite{DBLP:journals/corr/QadirSWC16} discuss the approach of resource pooling for wireless networks in the developing world. This could be used if providing connectivity to villages is implemented as an additional service by the DAO.
 
 https://www.kpmg.com/IN/en/IssuesAndInsights/ArticlesPublications/Documents/ENRich2015.pdf
 Rooftop solar is already competitive in some areas in India. Storage costs are still high, but falling. Stress the need for private investments and the need to tap global capital markets.
 
-\section{Decentralized Autonomous Organizations}
+\section{Motivation}
 
-\section{Decentralizing the M-Kopa Model}
+Hundreds of million people globally lack access to energy. Grids are unreliable and last mile connection costs can be inhibitive. Off-grid energy technologies of various sizes are being made available by private companies as well non-profit organizations. In terms of scale, the most important technology are Solar Home Systems (SHS)
 
-\section{Microgrids and Peer-to-Peer Energy Markets}
+A SHS is composed of a small solar panel, a battery, LED lights, and USB charging. The capacity of the system ranges typically between 10 and 250 Watt. Larger systems typically comprise fans and TVs. Small systems can be installed by the user but larger systems need a technician.
 
-\section{Transparency for Solar-backed Securities}
+World market production of solar panels focuses on a module size of 250 Watt. Hence the price per Watt is lowest for 250 Watt modules. However, 250 Watt exceed the typical demand of a rural off-grid household. Thus micro-utility (c.f. Grameen Shakti) and peer-to-peer microgrids (c.f. uLink) models are appealing. In these models a local entrepreneur shares the generated electricity with her neighbors. Therefore, energy consumption should be able to be metered and the local entrepreneur needs to collect payments.
+
+People that are in need of SHSs are typically at the bottom of the pyramid. They lack the capital to buy a SHS and have no access to traditional financing. Innovative financing schemes that are based on mobile payments and the ability to remote disable the system have been developed to bring those systems to more poor households. These schemes can be divided in two main categories: Pay-for-service and lease-to-own. In the pay-for-service model the SHS manufacturer is the owner of the system and the user pays has to pay fee for its usage. If the user does not pay electricity access is turned off and after some time the system gets taken back. In the lease-to-own model the user also has to pay for the usage but she also pays a principal so that at some point the ownership gets transferred to her and the system gets permanently unlocked. 
+
+A prominent example for the lease-to-own model is M-Kopa which operates in East Africa. M-Kopa offers also that the user may switch back to the lease-to-own model after the user has fully paid the system in order to get financing for some other product. Notably, the user does not get a loan to buy a product somewhere but she gets a product that is distributed by M-Kopa. 
+
+Companies like M-Kopa need large capital in order to finance the distribution of their systems. Besides debt and equity financing some companies have securitized their implicit loans to users. This practice is however only viable for the larger companies that already have reached some scale. 
+
+\section{Problem statement}
+
+
+\section{General Model}
+
+When transaction costs become negligible and contract enforcement gets automated large-scale principles can be applied on ever smaller scales. Joint-stock companies have been invented to share risk but also rewards between shareholders in order to finance large-scale commercial endeavors. However regulatory burden and hence bureaucratic costs of such a structure are high in order to protect shareholders.   
+
+Starting a as a Uber driver in Mexico City or as a solar micro-utility provider in India are much smaller endeavors. Nevertheless, financing a car or a solar home system can be challenging. Can we transfer the idea of a join-stock company on the level of a product itself? Let us think of the car or the solar home system as a business entity on its own. Cryptocurrencies allow a connected product to accept payments and to have the revenue at its command. As a business entity it may issue shares as well. If those shares are issued as tokens on the same network on which the cryptocurrency lives, then the revenue can be distributed autonomously. In this scenario there is only one party that has to be trusted: the connected product itself. In principle, dividends can be distributed transparently, in real-time, and around the globe.
+
+It has to be ensured that the product only operates in a well-defined way. Therefore payment and share issuance terms have to be defined in a machine-readable contract that is notarized on the blockchain, and is enforced in a trusted environment on the connected product. 
+
+It is important that the connected product's main utility is in providing a metered service which is disabled automatically in case sufficient payments are missing. Otherwise investors would face a high risk in not getting their expected return on investment since the product may not generate the expected revenue.
+
+Let us go through an example. Linda wants to buy a car for \$ 25 000 USD in order to start working as a driver. However she has only \$ 5000 USD at her disposal. Together with the car manufacturer (or some intermediary) a machine- and human-readable contract is agreed upon which entails the rules under which shares are issued, the service is priced, and dividends are paid. 
+We omit for the moment the complex process of fixing these terms. This is one of the biggest problems I see currently. In addition service prices might be able to be flexible within bounds or governed by some rules. At the same time it should not be possible to defraud investors by somehow creating artificially low prices after selling of shares and then charge customers via side channels.
+The contract is notarized on the blockchain such that the product acknowledges the contract. The product then issues shares according to the contract. Assuming we agreed on an issuance of 25 shares. 5 shares would be allocated to Linda while the rest would be allocated to the manufacturer. The manufacturer would then try to find buyers for the shares. Keeping legal requirements aside, the shares could be sold globally with negligible transaction costs. 
+
+Linda is now the operator (kind of a CEO) and a shareholder of the car. In order to use the car she has to pay a fee to the car. The fee is then distributed among all shareholders according to their holdings. 
+ 
+Notes for further discussion
+Issuance policy for additional revenue-based shares to keep the operator incentivized to keep a high revenue stream.
+Locking operator shares at least  for a specific time. Such that the operator keeps skin in the game.
+On-demand Liquidation
+In principle it is the transformation of a collateral-based loan to a cashflow-based loan, isn't it? What are the implications?
+Trade of between enforcement by law/legal system and enforcement by architecture/code
+What happens in case of defects/maintenance?
+
+
+
+
+
+\subsection{Requirements}
+
+\subsubsection{Remote Disablement}
+\section{Bitcoin colored coins}
+
+\section{Ethereum}
+
+\section{Results}
+
+\section{Discussion}
+
+\section{Related Work}
+
+\cite{gsma2014} gives a good overview of energy access in sub-saharan africa. Discusses solar home systems, mini-grids, and on-grid systems. Stresses the role of cellular connectivity and pay-as-you-go models. According to the report around 40\% of on-grid energy gets stolen. Furthermore, they provide a graph on the evolution of electrification rate and the rate for cellular coverage.
+
+\cite{DBLP:journals/corr/QadirSWC16} discuss the approach of resource pooling for wireless networks in the developing world. This could be used if providing connectivity to villages is implemented as an additional service by the DAO.
+
+\section{Conclusion}
 
 

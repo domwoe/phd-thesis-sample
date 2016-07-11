@@ -9,7 +9,8 @@
 %\usepackage{subfig}
 \usepackage{preamble}
 \usepackage{listings}
-
+\usepackage{algorithm}
+%\usepackage{pdflscape}
 %\@ifundefined{showcaptionsetup}{}{%
 %\PassOptionsToPackage{caption=false}{subfig}}
 %\usepackage{subfig}
@@ -20,6 +21,8 @@
 	keywordstyle=\bfseries,
 	morekeywords={pubScript:, sigScript:}
 }
+
+\newcommand\tabhead[1]{\small\textbf{#1}}
 
 \begin{document}
 
@@ -85,8 +88,24 @@
 
 %----------------------------------------------------------------------------
 % From digital cash to cryptoeconomical digital currencies
+\def\dir{chapters/ecosystem}
+\input{\dir/ecosystem.tex}
+
+%----------------------------------------------------------------------------
+% From digital cash to cryptoeconomical digital currencies
 \def\dir{chapters/economy}
 \input{\dir/economy.tex}
+
+%----------------------------------------------------------------------------
+% Case: Sensing as a Service and Datamarkets
+\def\dir{chapters/s2aas}
+\input{\dir/s2aas.tex}
+
+
+%----------------------------------------------------------------------------
+% Case: Sensing as a Service and Datamarkets
+\def\dir{chapters/crowdsensing}
+\input{\dir/crowdsensing.tex}
 
 %----------------------------------------------------------------------------
 % Case: Sensing as a Service and Datamarkets

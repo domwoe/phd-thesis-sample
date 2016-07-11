@@ -4,7 +4,7 @@
 
 \section{Bitcoin: The first decentralized Cryptocurrency}
 
- In November 2008 an e-mail with the subject: "Bitcoin P2P e-cash paper"\footnote{http://satoshi.nakamotoinstitute.org/emails/cryptography/1/} was sent to The Cryptography Mailing List. The first e-mail from sender Satoshi Nakamoto. The e-mail presents the abstract and a link to a white paper with the title "Bitcoin: A Peer-to-Peer Electronic Cash System". A few month later, On January 3rd 2009, the first instances of the Bitcoin client software began running the Bitcoin network, and Bitcoin has been running ever since. 
+ In November 2008 an e-mail with the subject: "Bitcoin P2P e-cash paper"\footnote{\url{http://satoshi.nakamotoinstitute.org/emails/cryptography/1/}} was sent to The Cryptography Mailing List. The first e-mail from sender Satoshi Nakamoto. The e-mail presents the abstract and a link to a white paper with the title "Bitcoin: A Peer-to-Peer Electronic Cash System". A few month later, On January 3rd 2009, the first instances of the Bitcoin client software began running the Bitcoin network, and Bitcoin has been running ever since. 
 
  As already apparent from the title of the paper, Bitcoin provides a P2P digital cash system without the reliance on a trusted third party. Since digital assets can be duplicated without cost, corresponding to the double spending problem, previous digital cash system had to rely on trusted third parties to authorize transactions centrally. These trusted third parties have therefore the ability to censor transactions, and to change the monetary policy, i.e. create new money at will. 
 
@@ -22,6 +22,13 @@ We will discuss all of these contributions in more detail. However, we will star
 \label{sec:p2p}
 
 The foundation of Bitcoin is a peer-to-peer network of voluntary nodes. Each node validates, relays, and stores all (valid) transactions. Thus in Bitcoin everyone validates everything, or at least everyone is able to validate everything. In the beginning every Bitcoin \emph{user} ran a Bitcoin node, since it was the only way to keep track of and to send bitcoins. Today most users do not directly participate in the peer-to-peer network, since running a full node is becoming ever more resource intensive. At time of writing the Bitcoin network consists of approximately 5600 nodes. Nodes are distributed globally, but the majority is in Europe and the coastal areas of the US. 
+
+\begin{figure}
+\centering
+\includegraphics[width=\textwidth]{./externalized/bitcoinnodes.png}
+\caption{Concentration of Bitcoin nodes around the world (Source: \url{https://bitnodes.21.co}, accessed 07/07/2016).}
+\label{fig:bitcointx}
+\end{figure}
 
 \cite{DonetDonet2014}
 
@@ -166,9 +173,18 @@ Bitcoin can be used as a platform to build distributed applications on top. The 
 \subsection{Open Challenges}
 \label{sec:btc_challenges}
 
-Although Bitcoin has repeatedly exceeded a market capitalization of \$ 10 billion it has still to be viewed as an experiment with unknown outcome. Bitcoin faces a multitude of challenges in various fields. Besides the technical challenges, there are also challenges concerning usability/comprehensibility, governance, legal status, law enforcement, and even environmental impact. 
+Although Bitcoin has repeatedly exceeded a market capitalization of \$ 10 billion it has still to be viewed as an experiment with unknown outcome. Bitcoin faces a multitude of challenges in various fields. Besides the technical challenges, there are also challenges concerning usability/comprehensibility, governance, legal status, law enforcement, and even environmental impact. However, it is interesting to note that some challenges concern human-blockchain interaction, and do not apply to machines. In particular, comprehensibility and usability of key management systems are prohibiting Bitcoin adoption of humans, whereas machines do not care.
 
 \subsubsection{Scalability}
+
+Although often characterized as a distributed system, Bitcoin, and every other current blockchain-based system, is fully replicated. Instead of nodes sharing work, every (full) node is validating and storing every transaction. Thus far, there is no known alternative in order to provide the same security properties.
+
+\cite{croman2016scaling} investigated Bitcoin along key metrics and provided evidence about Bitcoin's scaling behavior without drastic architectural changes.
+The most important metrics are as follows:
+\paragraph{Maximum Throughput} 
+Bitcoin has two main parameters which directly influence throughput, i.e. the number of transactions per second. First, the \emph{block generation rate} which is controlled to have an expectation value of 10 min, and second the \emph{block size limit} which Satoshi introduced later to prevent denial of service attacks. This leads to an effective throughput of about 3.5 transactions per second. In contrast VISA handles on average about 2,000 transactions per second and has a peak capacity of 56,000 transactions per second \cite{visa}. 
+\paragraph{Latency} The time until a transaction is \emph{confirmed}, i.e. the time until the transaction is included into a valid block, is roughly 10 min in expectation, but may be longer if the network load is high and a transaction provides not enough fees. For transactions of higher value it is advisable to wait for more than one confirmation, i.e. to wait until the block is sufficiently deep in the blockchain, and reorganization attacks become unfeasible. The standard number of confirmations as stated in the original white paper is six. 
+\paragraph{Bootstrap time} A node that joins the network has to download and process the entire transaction history. This bootstrap time scales linearly with time and is already on the order of days.
 
 \subsubsection{Privacy}
 
@@ -177,9 +193,6 @@ Although Bitcoin has repeatedly exceeded a market capitalization of \$ 10 billio
 \subsubsection{Environmental Footprint}
 
 \subsubsection{Illicit Usage}
-
-
-\subsection{A Look at the Ecosystem}
 
 
 %\section{OPTIONAL: The Cambrian Explosion of Cryptocurrencies}

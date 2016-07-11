@@ -1,13 +1,14 @@
 # Fdb version 3
-["pdflatex"] 1467814996 "economy.tex" "economy.pdf" "economy" 1467814998
+["pdflatex"] 1468102267 "economy.tex" "economy.pdf" "economy" 1468102271
   "/usr/local/texlive/2013/texmf-dist/fonts/map/fontname/texfonts.map" 1272929888 3287 e6b82fe08f5336d4d5ebc73fb1152e87 ""
   "/usr/local/texlive/2013/texmf-dist/fonts/tfm/public/cm/cmbx10.tfm" 1136768653 1328 c834bbb027764024c09d3d2bf908b5f0 ""
   "/usr/local/texlive/2013/texmf-dist/fonts/tfm/public/cm/cmti10.tfm" 1136768653 1480 aa8e34af0eb6a2941b776984cf1dfdc4 ""
   "/usr/local/texlive/2013/texmf-dist/web2c/texmf.cnf" 1366045088 31707 0953c15448e216a6585e92ee639d2dc2 ""
+  "/usr/local/texlive/2013/texmf-var/fonts/map/pdftex/updmap/pdftex.map" 1369923225 1072746 3ce1f23f203cb4a0015ca3c8411dee4a ""
   "/usr/local/texlive/2013/texmf-var/web2c/pdftex/pdflatex.fmt" 1400657356 3827029 9833f5950ba280ff7e801175b3995653 ""
   "/usr/local/texlive/2013/texmf.cnf" 1369923207 577 cbc827f6294276973a1952e86e8ad73a ""
   "economy.aux" 1459451202 8 a94a2480d3289e625eea47cd1b285758 ""
-  "economy.tex" 1467814996 21467 906bda05c9d7afa4e44abaa1ca893f66 ""
+  "economy.tex" 1468102266 38345 c1f79599337468b1a32ff03d5ad875ba ""
   (generated)
-  "economy.log"
   "economy.pdf"
+  "economy.log"

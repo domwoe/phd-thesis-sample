@@ -1,28 +1,4 @@
-\chapter{The Economy of Things}
-\label{sec:economy}
-
-Smart objects are able to compute, to communicate and to sense and act on the physical world. Thus, they represent the building blocks of pervasive systems and the Internet of Things \cite{kortuem2010smart}. But being smart is not enough. Although the importance of interoperability has been highlighted by scholars \cite{zorzi2010} and practitioners \cite{manyika2015unlocking}, most connected devices operate in application-specific silos and communicate not with each other, but solely with the manufacturer's backend services or directly with people via smart phone apps.
-Obstacles on the road to interoperability and \textit{the} Internet of Things are not only technical, e.g. heterogeneity (and thus complexity) and security, but also the lock-in business model of companies.
-Cryptocurrencies and blockchain technology with their prime representative Bitcoin provide a new design space to tackle these issues by providing smart objects with unprecedented economic capabilities and autonomy from central coordination. This economic empowerment of connected devices is particularly well suited for the emergent paradigms of (autonomous) fog computing \cite{Bonomi:2012:FCR:2342509.2342513} and the web of things . Smart objects can get the ability to offer services for payments, pay other smart object autonomously, and even generate cryptocurrency to stay liquid. Moreover, smart objects that \textit{live on a blockchain} can be managed, shared, sold and rented without the need of backend infrastructure provided by the manufacturer. Furthermore new types of ownership and monetization models are conceivable.
-
-
-\section{Building Blocks}
-
-\subsection{Identity or Representation on the Blockchain}
-
-Economic objects can have various representations on a blockchain depending on the capabilities of the object and the specifics of the blockchain. A basic requirement for an economic object is to be able to receive and to send cryptocurrency. Thus, an economic object needs at least an \emph{account} on the respective blockchain.
-
-However, representation of ownership 
-
-\subsection{Interaction with the Blockchain}
-
-Smart objects vary significantly in their capabilities. From tiny battery-powered sensors with restricted computation and communication capabilities to smart TVs and refrigerators that are constantly connected to broadband Internet and continuous power supply. How will these objects interact with the blockchain? How do they initiate and verify transactions? 
-
-\subsection{Micropayments}
-
-\section{Economic Objects on Bitcoin}
-
-\section{Instant Micropayments}
+\chapter{Machine-to-Machine Micropayments}
 
 Most services that economic objects could provide are low value services relative to our day to day experience as humans. Hence, there is a need for efficient, low-friction micropayments. 
 
@@ -34,13 +10,13 @@ Normal P2PKH transactions are thus not suitable for micropayments. Another obsta
 
 In addition, confirmation times on the order of tens of minutes are too long for many types of  machine-to-machine transactions.
 
-\subsection{Off-Chain Micropayments}
+\section{Off-Chain Micropayments}
 
 Centralized third party services have been emerged that allow zero fee microtransactions between their users. Examples are Coinbase\footnote{https://www.coinbase.com}, 21\footnote{https://www.21.co}, and ChangeTip\footnote{https://www.changetip.com}. Thereby users deposit coins in addresses controlled by the third party service. The service then handles transactions between users internally, i.e. off-chain. However, users lose all control over their funds. The situation looks similar to using PayPal. Why does PayPal charge fees but services based on Bitcoin do not? The main reasons are: (1) PayPal accounts are usually funded by credit cards, and those transactions are susceptible to chargeback fraud. (2) Regulatory overhead. 
 
-\subsection{Payment Channels}
+\section{Payment Channels}
 
-\subsubsection{Unidirectional Payment Channels}
+\subsection{Unidirectional Payment Channels}
 \label{sec:unipc}
 
 The idea to use Bitcoin contracts to establish payment channels between two parties was introduced by Hearn and Spilman \cite{Hearn}. An unidirectional payment channel allows a single payer to pay a single payee repeatedly by sending signed transactions over some communication channel. Individual payments can be as low as 1 satoshi and the payee is able to accept payments instantly without double-spending risk. This is achieved by using the blockchain as a trustless escrow service in form of a timelocked multisignature output that is funded by the payer. A graphical representation and a description of a non-interactive implementation of the protocol is depicted in Figure \ref{fig:paymentchannels}.
@@ -53,7 +29,7 @@ The idea to use Bitcoin contracts to establish payment channels between two part
 
 Unidirectional payment channels between two parties involve two on-chain Bitcoin transactions. One funding transaction and one transaction to close the channel. In the unidirectional setting only one party funds the channel and risks locking her funds (temporarily) in case the receiving party is not cooperative. Simple unidirectional payment channels are useful for repeated, metered payments between a single payer and a single payee. Use cases are video streaming\footnote{https://streamium.io/} and WiFi access \cite{Siby2013}.
 
-\subsubsection{Unidirectional Mediated Payment Channels}
+\subsection{Unidirectional Mediated Payment Channels}
 
 Mediated payment channels allow the routing of payments through intermediate payment channels by using a concept called \emph{hashlocks} or rather hash timelocked contracts (HTLC). We can express a HTLC between two parties in common words as follows: I pay you if you can provide the secret within a certain period. Assume Alice (A) wants to send a small payment to Bob (B), but Alice and Bob do not have an open payment channel. However, A has a channel with Charlie (C), and C has a channel with B. In principle A could pay C and tell him to pay B. But A has no way to enforce the payment from B to C if the payment channels are independent. We need a way to condition the individual payments on each other. This can be done by conditioning the payments on a common secret generated by the final recipient B. 
 
@@ -74,11 +50,11 @@ A particular payment transaction might entail a number of HTLC outputs correspon
 \begin{figure}
 \begin{lstlisting}[breaklines,mathescape=true]
 OP_IF
-	OP_DUP OP_HASH160 <PubKeyHash B (C)> OP_EQUALVERIFY OP_CHECKSIG
-	HASH160 <Hash160 (secret)> EQUAL
+  OP_DUP OP_HASH160 <PubKeyHash B (C)> OP_EQUALVERIFY OP_CHECKSIG
+  HASH160 <Hash160 (secret)> EQUAL
 OP_ELSE
-	OP_DUP OP_HASH160 <PubKeyHash A (B)> OP_EQUALVERIFY OP_CHECKSIG
-	<$T_1$ ($T_2$)> CHECKLOCKTIMEVERIFY DROP
+  OP_DUP OP_HASH160 <PubKeyHash A (B)> OP_EQUALVERIFY OP_CHECKSIG
+  <$T_1$ ($T_2$)> CHECKLOCKTIMEVERIFY DROP
 OP_ENDIF
 \end{lstlisting} 
 \caption{HTLC pubScript of a payment transaction in an unidirectional mediated payment channel setup. The first branch of the conditional can be used by the recipient to claim the output by providing the secret, the second branch can be used by the sender to reclaim their funds after $T_1$ ($T_2$).}
@@ -104,7 +80,7 @@ OP_ENDIF
 \begin{figure}
 \centering
 \includegraphics[width=\linewidth]{./externalized/htlcflow.pdf}
-\caption{A series of (off-chain) transactions with two concurrent payments. After a secret is released the corresponding HTLC output can be removed and the balances can be updated. The big HTLC output further disincentive abortion of the protocol by broadcasting a transaction including HTLC outputs.}
+\caption{A series of (off-chain) transactions with two concurrent payments. After the secret is released the corresponding HTLC output can be removed and the balances can be updated. The large byte-wise size of HTLC outputs further disincentive abortion of the protocol by broadcasting a transaction including HTLC outputs.}
 \label{fig:htlcflow}
 \end{figure}
 
@@ -122,11 +98,11 @@ Assuming two parties, A and B, the protocol begins with the creation of a transa
 \begin{figure}
 \begin{lstlisting}[breaklines,mathescape=true]
 OP_IF
-	OP_DUP OP_HASH160 <PubKeyHash B (A)> OP_EQUALVERIFY OP_CHECKSIG
-	HASH160 <Hash160 (revocation secret)> EQUAL
+  OP_DUP OP_HASH160 <PubKeyHash B (A)> OP_EQUALVERIFY OP_CHECKSIG
+  HASH160 <Hash160 (revocation secret)> EQUAL
 OP_ELSE
-	OP_DUP OP_HASH160 <PubKeyHash A (B)> OP_EQUALVERIFY OP_CHECKSIG
-	<$\Delta$> CHECKSEQUENCEVERIFY DROP
+  OP_DUP OP_HASH160 <PubKeyHash A (B)> OP_EQUALVERIFY OP_CHECKSIG
+  <$\Delta$> CHECKSEQUENCEVERIFY DROP
 OP_ENDIF
 \end{lstlisting} 
 \caption{PubScript of commitment transactions of A (B) for a bidirectional payment channel. The output can either be spent immediately by the counterparty if the counterparty can provide the revocation secret, or by the originator after a relative timelock $\Delta$.}
@@ -135,56 +111,164 @@ OP_ENDIF
 
 After the commitment transactions have been exchanged, the funding transaction can be broadcasted. 
 
-\subsubsection{Payment Channel Networks}
+\subsection{Payment Channel Networks}
 \label{sec:paymentchannelnetworks}
 
 Payment channel networks are the generalization of mediated bidirectional payment channels. In principle they allow to interconnect an arbitrary number of payment channels in order to route instant off-chain payments. 
 
-\subsubsection{Comparison of Payment channel design}
 
-\begin{table}
+\section{Further Micropayment Mechanisms}
+
+\subsection{Probabilistic Payments}
+
+Probabilistic payments \cite{wheeler1996transactions,rivest1996payword,rivest1997electronic} are lottery-based payments. The lottery is biased in such a way that a single draw has an expected value according to the aspired micropayment.
+\cite{Pass:2015:MDC:2810103.2813713} present such a lottery-based micropayment scheme for ledger-based transaction system, and discuss implementations in Bitcoin. However an implementation that does not rely on a semi-trusted third party would need a new signature verification primitive in the Bitcoin scripting language. 
+
+\subsection{Pennybank}
+
+The pennybank protocol allows to implement bidirectional payment channels without chaining partially signed transactions, and is thus not affected by Bitcoin's malleability issue. As for payment channels, the starting point is a shared multi-signature output. Each participant now builds a chain of hashes with length $N$ starting from a random secret $p^i_0$ where the superscript $i$ denotes the participant. 
+
+\begin{equation*}
+(\text{SHA256}(... \text{SHA256}(\text{SHA256}(\text{SHA256}(p^i_0),p^i_1),p^i_2)...,p^i_N)
+\end{equation*}
+
+$N$ has to be chosen according to the value the pennybank should have, i.e. the value of the output defined in what follows. Brute force searching for $p^i_0$ should be comparably hard as the difficulty to create the coins.  After that both parties cooperatively create a transaction spending the shared multi-signature output and creating a \emph{conditional} 1-of-2 multi-signature output P2CM with the following pubScript:
+
+\begin{lstlisting}
+OP_HASH160 <HASH160(p^A_0)> OP_EQUALVERIFY OP_HASH160 <HASH160(p^B_0)> OP_EQUALVERIFY <OP_1> <A pubkey> <B pubkey> <OP_2> <OP_CHECKMULTISIG>
+\end{lstlisting}
+
+Both parties hold a copy of this transaction and could broadcast the transaction at any time. The P2CM output can be spend by providing only one signature but both secrets have to be provided. Since brute forcing the other secret is expensive they are incentivized to cooperatively close the channel.
+
+
+\subsection{Promissory notes}
+
+\cite{strawpay}
+\cite{filament}
+
+\begin{figure}
 \centering
-\begin{tabular}{lccr}
-    \toprule
-    Design & Characteristic & Payment & Lifetime \\
-    \midrule
-    \bottomrule
-    \label{tbl:pccomparison}
-  \end{tabular}
-  \caption{}
-  \end{table}
+\includegraphics[width=\linewidth]{./externalized/promissorynotes.pdf}
+\caption{Possible participants, relationships and transaction flows in a micropayment scheme based on promissory notes.}
+\label{fig:promissorynotes}
+\end{figure}
 
 
-\subsubsection{Discussion}
+\section{Discussion}
+
+All of the micropayment schemes are based on multi-si
 
 Single funded payment channels and unspendable UTXOs.
- 
+
+Lightning and Duplex need to be online 
+
+Unidirectional Payment channels work offline. Mediated only Hub needs to be online 
 
 
-\section{Economic Objects on Ethereum}
+
+
+\chapter{The Economy of Things}
+\label{sec:economy}
+
+Smart objects are able to compute, to communicate and to sense and act on the physical world. Thus, they represent the building blocks of pervasive systems and the Internet of Things \cite{kortuem2010smart}. But being smart is not enough. Although the importance of interoperability has been highlighted by scholars \cite{zorzi2010} and practitioners \cite{manyika2015unlocking}, most connected devices operate in application-specific silos and communicate not with each other, but solely with the manufacturer's backend services or directly with people via smart phone apps.
+Obstacles on the road to interoperability and \textit{the} Internet of Things are not only technical, e.g. heterogeneity (and thus complexity) and security, but also the lock-in business model of companies.
+Cryptocurrencies and blockchain technology with their prime representative Bitcoin provide a new design space to tackle these issues by providing smart objects with unprecedented economic capabilities and autonomy from central coordination. This economic empowerment of connected devices is particularly well suited for the emergent paradigms of (autonomous) fog computing \cite{Bonomi:2012:FCR:2342509.2342513} and the web of things . Smart objects can get the ability to offer services for payments, pay other smart object autonomously, and even generate cryptocurrency to stay liquid. Moreover, smart objects that \textit{live on a blockchain} can be managed, shared, sold and rented without the need of backend infrastructure provided by the manufacturer. Furthermore new types of ownership and monetization models are conceivable.
+
+
+\section{Building Blocks}
+
+\subsection{Identity or Representation on the Blockchain}
+
+Economic objects can have various representations on a blockchain depending on the capabilities of the object and the specifics of the blockchain. A basic requirement for an economic object is to be able to receive and to send cryptocurrency. Thus, an economic object needs at least an \emph{account} on the respective blockchain.
+
+However, representation of ownership 
+
+\subsection{Interaction with the Blockchain}
+
+Smart objects vary significantly in their capabilities. From tiny battery-powered sensors with restricted computation and communication capabilities to smart TVs and refrigerators that are constantly connected to broadband Internet and continuous power supply. How will these objects interact with the blockchain? How do they initiate and verify transactions? 
+
+\subsection{Micropayments}
+
+
 \section{Case Studies}
 
-\subsection{Methodology}
+\subsection{Data and Method}
 
 The case studies are predominately based on open source code hosted on GitHub. This provides the most objective view on the technology. In addition company websites, white papers, and blog articles have been used. All of the companies, or related projects in the case of Filament, have public Slack channels on which the author was either active or passively monitoring for an extended period of time.
+
+In addition to an technological overview, we present a brief general portrait of the company/project and conclude with remarks concerning the business model. 
 
 \subsection{Filament}
 
 \subsubsection{Portrait}
 
-Filament (2015) provides wireless sensor networks for the (industrial) IoT, e.g. for smart cities or smart agriculture use case. Most IoT platform providers follow a centralized approach by connecting all devices to their respective cloud-infrastructure. This has the major disadvantage that devices depend on a central infrastructure in order to operate. Moreover, it can be argued that this approach cannot keep up technically and economically with the increasing number connected devices.
-Filament is one of the first companies that develop a fully decentralized IoT infrastructure, which encompasses three blockchain-related aspects: (1) Each device is registered on the blockchain providing a verifiable and immutable identity. This enables discovering of and authenticating with other devices/services without the need of a dedicated backend infrastructure. Therefore, devices are technically autonomous and are able to operate independently of Filament. (2) Each device is governed by a “smart” contract, which manages agreements of device control/ownership, data access and financial agreements concerning the device. Ownership can be transferred permanently or temporarily by a simple transaction on the blockchain. Filament implements the financial agreements as a Product-as-a-Service, which means that the owner gets paid directly for the ongoing use of the device. (3) Further- more, each device is able to transfer value in form of bitcoins to other devices in order to get access to data or request some service.
-As described, devices can be operated and governed by using only the blockchain as a backend and therefore without any technical dependence on the platform creator (Filament) or other third parties. This might bare great benefits for customers needing to deploy large Industrial IoT applications with a lifetime of 5-10 years. Because they want to minimize the risk of a lock-in with a specific company. Moreover, according to Filament, customers prefer paying continuously on a real-time basis instead of an upfront investment, which can be solved efficiently by Bitcoin micropayments. Ownership is decoupled from usage and both are independent of the manufacturer or a platform provider.
-Filament itself is a venture capital-backed company formerly known as Pinocc.io. They claim to have their first deployments with Fortune 500 companies in 2016. They will get paid for the ongoing use of their devices (by owning the smart contract). Moreover, they work on a licensing model, i.e. Customers can attach a module version to their own devices, which will give them all the described benefits of
+Filament was already presented in Section \ref{sec:ecofilament}. 
 
 \subsubsection{Technological Overview}
+
+Filaments technological architecture follows the SPADE framework. SPADE is an acronym for secure communications, private interactions, autonomous devices, decentralized network and exchange of value. An illustration of the framework and its more specific implementation is provided in Fig. \ref{fig:filament}. In the following we will investigate the layers of the framework in more detail. 
+
+\begin{figure}
+\centering
+\includegraphics[width=\textwidth]{./externalized/filament.pdf}
+\caption{The SPADE framework and technical implementation as pursued by Filament.}
+\label{fig:filament}
+\end{figure}
+
+
+\paragraph{Secure and Private Communications}
+The communication between devices is based on telehash\footnote{\url{http://telehash.org/}}, \emph{a light-wight interoperable protocol with strong encryption to enable mesh networking across multiple transports and platforms} independent of a centralized messaging broker.  Telehash endpoints are using the same form of self-authentication as users in Bitcoin and Ethereum, i.e their identity is derived from one or multiple self-selected public key(s). Telehash messages are JSON documents. All messages are encrypted (JSON Web Encryption \cite{rfc7516}) and authenticated (JSON Web Signatures \cite{rfc7515}). Furthermore, Telehash implements cloaking mechanisms that allow adding random noise to messages.
+
+\paragraph{Autonomous Devices}
+Filament interprets device autonomy as devices being \emph{first-class citizens} on the network instead of services. Consider the examples of humans in the Internet. Although we think of us as autonomous agents, in the Internet our identity is typically derived from services like Facebook, Google, LinkedIn or Twitter. In order to become independent of central services device autonomy incorporates three parts: (1) Self-authentication, (2) autonomous discovery, and (3) contracts. (1) Self-authentication is described in the last paragraph. (2) Autonomous discovery includes both local, i.e. devices are in the same local physical network, and global discovery.
+Local discovery is straight forward using broadcasts. Global discovery is usually achieved by centralized services, e.g. Facebook, or federated services, e.g. the domain name system (DNS). In contrast, Filament uses \emph{blockname}, a simple DNS resolver based on domain name IP address tuples stored in null data outputs of Bitcoin transactions. An example for a telehash entry is shown in Fig. ref{fig:blockname}. In this system domain names do not have an owner and can not be transferred, but if there are multiple null data outputs concerning the same domain, the one with the highest attached value is considered valid by blockname resolvers. (3) Ownership, access control, pricing of resources is defined in a signed machine-readable data structure, a machine-to-machine contract. Fig. \ref{fig:filament} is showing the general structure of such a contract as envisioned by Filament. Contracts are stored on the devices themselves but receipts may be stored on a blockchain in order to provide a verifiable log of contractual obligations.
+
+\begin{figure}
+\centering
+\includegraphics[width=\textwidth]{./externalized/blockname.pdf}
+\caption{An example of a blockname entry for a telehash name resolution entry in the Bitcoin blockchain.}
+\label{fig:blockname}
+\end{figure}
+
+
+\begin{figure}
+\centering
+\includegraphics[width=\textwidth]{./externalized/filamentcontract.pdf}
+\caption{Contract structure as envisioned by Filament \cite{filament}.}
+\label{fig:filament}
+\end{figure}
+
+\paragraph{Decentralized Network}
+Filament devices support low-power wireless meshed networking. Devices can communicate over long-range links without immediate access to wifi or cellular connection. Wide area network access can be provided at arbitrary points within a network.
+
+
+\paragraph{Exchange of Value}
+
+Filament envisions arbitrary value exchange and barter between autonomous devices. However, only two forms are described in more detail: Payments in bitcoin, and some form of proof of payment. For bitcoin micropayments, Filament has developed the \emph{pennybank} protocol. Furthermore, it provides a mediated method that opposes the principle of device autonomy. Someone, or something, who wants to transact with a device pays the \emph{operator} of the device in exchange for a receipt. Then the payer provides the receipt to the device. 
+
+
+% \subsubsection{Characterization as Economic Object}
+
+% \paragraph{Identity and Representation on the Blockchain}
+% Devices can have different representation on
+
+% \paragraph{Interaction with the Blockchain}
+
+% \paragraph{Micropayments}
+
+\subsubsection{Business Model}
+
+Filament advocates a Hardware-as-a-Service business model with an interesting twist. At least in principle,  devices are viewed as autonomous economic agents that provide services in exchange for some form of payment. Machine-readable contracts may specify revenue-sharing agreements between Filament, and various other stakeholders. Instead of the device-centric interpretation, we can also interpret this approach as a shared ownership of devices. This might be an important model for the IoT industry where shared usage of devices is the norm.
+
 
 \subsection{21 Inc}
 
 \subsubsection{Portrait}
-21 Inc was founded May 2013, but remained stealth until May 2015. In June 2016 the company has a total funding of USD 121.05M. Thereby being the most funded start up in the Bitcoin ecosystem. Their first product, the 21 Bitcoin Computer, was released in November 2015. In March 2016 a micropayment marketplace was opened, and in June 2016, the 21 software library which allows to build bitcoin-payable Representational State Transfer (REST) APIs, UNIX commandline tools, and access to the 21 marketplace became available on other UNIX-based platforms, free and open source under the free BSD license.
+21 Inc was founded May 2013, but remained stealth until May 2015. In June 2016 the company has a total funding of USD 121.05M. Thereby being the most funded start up in the Bitcoin ecosystem. Their first product, the 21 Bitcoin Computer, was released in November 2015. In March 2016 a micropayment marketplace was opened, and in June 2016, the 21 software library which allows to build bitcoin-payable Representational State Transfer (REST) APIs, UNIX command line tools, and access to the 21 marketplace became available on other UNIX-based platforms, free and open source under the free BSD license.
 
 21 aims to make Bitcoin a standard resource for UNIX-based systems and provide the tools and services for developers to build a \emph{machine-payable web} where individual machines can cooperate globally, and potentially autonomously, in exchange for bitcoin micropayments.
+
+A more detailed general introduction of 21 was given in Section \ref{sec:eco21}.
 
 \subsubsection{Technological Overview}
 
@@ -192,7 +276,7 @@ In the following we present the core technology stack provided by 21. Figure \re
 
 \begin{figure}
 \centering
-\includegraphics[scale=0.7]{./externalized/21stack.pdf}
+\includegraphics[width=\textwidth]{./externalized/21stack.pdf}
 \caption{The 21 technology stack and accompanying services.}
 \label{fig:21stack}
 \end{figure}
@@ -201,7 +285,14 @@ In the following we present the core technology stack provided by 21. Figure \re
 
 The 21 BC has an embedded mining chip with a hashing rate of approx. 50 GH/s and an energy efficiency of 0.16 J/GH. The chip contributes its hashing rate to a currently centralized mining pool orchestrated by 21. So far the chip is only deployed in 21 BCs and in data centers operated by 21. 	
 
-In comparison, the total hashing rate of the Bitcoin network is around 1,500,000,000 GH/s in Q2 2016. 
+In comparison, the total hashing rate of the Bitcoin network is around 1,500,000,000 GH/s in Q2 2016.
+
+\begin{figure}
+\centering
+\includegraphics[width=\textwidth]{./externalized/21blocks.pdf}
+\caption{Daily blocks mined by the 21 pool. The total daily block generation rate of the Bitcoin network is 1440 blocks. After March 2016 21 stopped identifying their blocks.}
+\label{fig:21blocks}
+\end{figure} 
 
 \paragraph{Machine Wallet}
 
@@ -273,19 +364,19 @@ In order to interact with the marketplace a user has to open an account with 21.
   \end{table}
  
 
-\subsubsection{Characterization as Economic Object}
+% \subsubsection{Characterization as Economic Object}
 
-\paragraph{Identity and Representation on the Blockchain}
+% \paragraph{Identity and Representation on the Blockchain}
 
-Machines do not have an identity on the blockchain, but represented as IP addresses in a virtual network. A machine can have multiple wallets 
+% Machines do not have an identity on the blockchain, but represented as IP addresses in a virtual network. A machine can have multiple wallets 
 
-\paragraph{Interaction with the Blockchain}
+% \paragraph{Interaction with the Blockchain}
 
-The library provides an abstraction layer for blockchain interaction. 
+% The library provides an abstraction layer for blockchain interaction. 
 
-\paragraph{Micropayments}
+% \paragraph{Micropayments}
 
-Two mechanisms for micropayments are implemented. Simple unidirectional payment channels as presented in Sec. \ref{sec:unipc} and off-chain payments (BitTransfer). 
+% Two mechanisms for micropayments are implemented. Simple unidirectional payment channels as presented in Sec. \ref{sec:unipc} and off-chain payments (BitTransfer). 
 
 \subsubsection{Business Model}
 
@@ -302,7 +393,7 @@ Slock.it was founded in September 2015 by long-term members of the Ethereum comm
 
 \begin{figure}
 \centering
-\includegraphics[scale=0.7]{./externalized/slockit.pdf}
+\includegraphics[width=\textwidth]{./externalized/slockit.pdf}
 \caption{High-level overview of the Slock.it architecture. }
 \label{fig:21marketplace}
 \end{figure}
@@ -315,7 +406,7 @@ For example the eth module keeps track of the current owner and current user of 
 
 \paragraph{Slock Contracts}
 
-The main slock contract defines an owner, a deposit, and a price. The price is time-based in wei per block, i.e. approximately 13 s. In order to rent an object a user has to call the rent method providing the deposit. Upon return the user has to actively call the returnIt function which calculates the fee and distributes the deposit accordingly. 
+The main slock contract defines an owner, a deposit, and a price. The price is time-based in wei per block, i.e. approximately per 13 s. In order to rent an object a user has to call the rent method providing the deposit. Upon return the user has to actively call the returnIt function which calculates the fee and distributes the deposit accordingly. 
 
 \paragraph{Universal Sharing Network}
 
@@ -323,25 +414,70 @@ The main slock contract defines an owner, a deposit, and a price. The price is t
 
 The Team behind Slock.it furthermore implemented a set of smart contracts known as the \emph{Standard DAO Framework} and which have been deployed to the Ethereum blockchain as \emph{The DAO}. The DAO was meant as a shareholder-controlled venture fund. Everyone was able to send ether to the DAO contract in exchange for DAO tokens which provide voting rights and potential rewards. Moreover, everyone was able to send a proposal to the DAO, and token holders were able to vote on proposals. Proposals ask for ether payout under specific conditions. Slock.it wanted to fund the development of the Ethereum Computer by means of a DAO proposal, and provide DAO token holders with a share of the revenue for every trade facilitated by an Ethereum computer. THe DAO collected more than USD 130M worth of ether. However, many problems of the DAO contracts became identified which culminated in the exploitation of a re-entry bug.
 
-\subsubsection{Characterization as Economic Object}
+\subsubsection{Business Model}
 
-\paragraph{Identity and Representation on the Blockchain}
+% \subsubsection{Characterization as Economic Object}
 
-Each physical slock has a Slock contract representation on the Ethereum blockchain. The Slock contract governs the ownership and usage/access control of the digital representation of the physical slock. 
+% \paragraph{Identity and Representation on the Blockchain}
 
-\paragraph{Interaction with the Blockchain}
+% Each physical slock has a Slock contract representation on the Ethereum blockchain. The Slock contract governs the ownership and usage/access control of the digital representation of the physical slock. 
 
-The Ethereum Computer, and thus the slocks, interact with the Ethereum blockchain by watching the corresponding contract. Currently, the Ethereum Computer needs to run a full Ethereum node. There is no communication from the Ethereum Computer, i.e. the eth module, to the slock contract. 
+% \paragraph{Interaction with the Blockchain}
 
-\paragraph{Micropayments}
+% The Ethereum Computer, and thus the slocks, interact with the Ethereum blockchain by watching the corresponding contract. Currently, the Ethereum Computer needs to run a full Ethereum node. There is no communication from the Ethereum Computer, i.e. the eth module, to the slock contract. 
 
-All payments are handled through regular ether transactions and the contract send function. 
+% \paragraph{Micropayments}
 
-\subsection{ADEPT}
+% All payments are handled through regular ether transactions and the contract send function. 
 
+\subsection{IBM ADEPT}
+
+\subsubsection{Portrait}
+The Autonomous Decentralized Peer-to-Peer Telemetry (ADEPT) platform is a proof-of-concept implementation by IBM and Samsung Electronics. The aim was to implement the essential functions that typical IoT platforms provide, i.e. message brokering, data sharing, and device coordination, in a decentralized architecture. The motivation is presented in \cite{devicedemocracy}. 
+Although it was announced that the code for the ADEPT proof-of-concept would be available on GitHub, at time of writing the only information publicly available is in from of white papers \cite{empoweringtheedge}. 
+
+\subsubsection{Technological Overview}
+
+According to \cite{empoweringtheedge} the three main functions of a decentralized IoT platforms are (1) peer-to-peer messaging, (2) distributed file sharing, and (3) autonomous device coordination (c.f. Fig. \ref{fig:adept}). 
+
+\begin{figure}
+\centering
+\includegraphics[width=\textwidth]{./externalized/adept.pdf}
+\caption{The three main functions of the ADEPT platform, and the technologies they are implemented with.}
+\label{fig:adept}
+\end{figure}
+
+\paragraph{Peer-to-peer Messaging}
+
+Peer-to-peer messaging allows endpoints to communicate without the need of a central broker. In practice, messages have to be routed since direct links between endpoints do not always exist. ADEPT uses the same encrypted peer-to-peer messaging protocol, telehash, as Filament. 
+
+\paragraph{Distributed File Sharing}
+
+Messaging protocols are designed for small payloads and thus not suitable to distribute larger files such as firmware updates. Hence, ADEPT uses BitTorrent for distributed file transfer.
+
+\paragraph{Autonomous Device Coordination}
+Device coordination specifies the transaction properties of devices. Who can transact with whom under what conditions. This involves other machines/devices as well as humans physically interacting with a device. Examples are access control and authentication, and contracts, agreements and payments. Autonomous device coordination is envisioned to be blockchain-based, and the proof of concept implementation is based on a private fork of the Ethereum blockchain. 
+
+\subsubsection{Business Model}
+
+The decentralized architecture based on autonomous devices allows for a reduction of data center costs. This does not mean that data centers and cloud services become obsolete. Could services can still provide optional value-added services while base functionality can be provided without cost on the vendors side. This is almost a necessity for long-living IoT devices.
 
 
 \subsection{Results}
+
+\begin{table}[\tiny]
+\centering
+\label{my-label}
+\begin{tabular}[\tiny]{@{}lp{1.5 cm}lp{1.5 cm}p{1.5 cm}p{1.5 cm}p{1.5 cm}@{}}
+\toprule
+Company/Project & Focus                                          & Blockchain & Blockchain Identity  & M2M Payments     & Network Participation       & Status                          \\ \midrule
+Filament        & Autonomous devices, for Industrial IoT          & Bitcoin    & Blockname            & Pennybank, notes              & Light client                & Prototype                       \\
+21              & Machine-payable web                            & Bitcoin    & -                    & On-chain, payment channels, off-chain              & configurable, typically API & Production, but mostly toy apps \\
+Slock.it        & Sharing economy                                & Ethereum   & Slock Contract       & On-chain & Full node (currently)       & Early prototype                 \\
+IBM ADEPT       & Autonomous devices/ decentralized IoT platform & Ethereum   & Yes, but not details & On-chain              & Different levels envisioned & Early prototype                 \\ \bottomrule
+\end{tabular}
+\caption{Blockchain usage of case study companies.}
+\end{table}
 
 \subsection{Discussion}
 

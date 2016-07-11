@@ -8,3 +8,5 @@ INPUT /usr/local/texlive/2013/texmf-dist/fonts/map/fontname/texfonts.map
 INPUT /usr/local/texlive/2013/texmf-dist/fonts/map/fontname/texfonts.map
 INPUT /usr/local/texlive/2013/texmf-dist/fonts/tfm/public/cm/cmbx10.tfm
 INPUT /usr/local/texlive/2013/texmf-dist/fonts/tfm/public/cm/cmti10.tfm
+OUTPUT economy.pdf
+INPUT /usr/local/texlive/2013/texmf-var/fonts/map/pdftex/updmap/pdftex.map
