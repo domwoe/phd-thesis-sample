@@ -1,14 +1,38 @@
+
 \chapter{Machine-to-Machine Micropayments}
 
-Most services that economic objects could provide are low value services relative to our day to day experience as humans. Hence, there is a need for efficient, low-friction micropayments. 
+\section{Motivation}
 
-PayPal considers payments below \$10 as micropayments\footnote{https://www.paypal.com/us/webapps/mpp/merchant-fees}, and the fees for micropayments are 5\% + \$0.05 in June 2016. Hence, for payments below \$1 the fees are at least 10\%, and payments on the order of cents are not viable. 
+Computing capabilities and connectivity are on the way to finally meet the expectations articulated in the 90s of the last century by Mark Weiser and become ubiquitous. Ever more devices become connected. From cars over thermostats and lightbulbs to literally everything. While we are still aware of the data plan of our smartphone and painstakingly connect our gadgets to our wifi or pair them with our phones, this might well be only a transient appearance. Some devices, like the Kindle eBook reader come already with a data plan valid in more than 100 countries. Free and open Low Power Wide Area Network (LPWAN) networks enable the seamless connectivity of sensors around entire cities. In other words a new distributed computing infrastructure is being deployed. Of course not every device will be a powerful general purpose computing device. Form factor and power consumption are restricting. However, many will. This is because of the unprecedented scale of the smartphone supply chain and the accompanying economies of scale. This computing infrastructure will be mostly dormant and underutilized at first. Just as your tablet, your router and your smart TV today. In the same way as Uber and AirBnB already maximize utilization of macroscopic distributed private physical assets, this trend will continue to assets like data, storage, bandwidth, and computing power. 
+In this realm humans do not want to make decisions, because the cognitive load surpasses the value. Therefore machines have to transact autonomously, and in many situations the exchange of value in form of digital currency or game-theoretic protocols with economic incentives can replace a pre-set or user-induced trust relationship between devices. 
+
+\section{Contribution and Outline}
+
+We state necessary requirements for a machine-to-machine micropayment system, and present arguments for a Bitcoin-based system. We survey bitcoin-based micropayment schemes. Thereby we present a scheme for mediated unidirectional payment channels in detail, since the scheme has not been presented before.
+Finally, we evaluate the micropayment schemes based on the requirements.
+
+
+\section{Requirements for M2M Payments}
+
+Exchange of measurement data, temporary file storage or outsourcing computations are services with microscopic, yet non-zero, value. Ascribing value to arbitrary services and requiring payment further inhibits denial service attacks common in open networks. Efficient micropayment schemes are essential. Furthermore, machines have to be able to initiate and verify payments. Payments should not be reversible since delivery might have to be instantaneous. Machines live in the Internet, and while latency might play a role, jurisdiction and local currency should not matter. 
+
+
+\section{Micropayments with PayPal}
+
+PayPal is one the main traditional online payment providers, and will act as an example why traditional systems are not suitable for M2M micropayments.
+
+PayPal considers payments below \$10 as micropayments\footnote{https://www.paypal.com/us/webapps/mpp/merchant-fees}, and the fees for micropayments are 5\% + \$0.05 in June 2016. Hence, for payments below \$1 the fees are at least 10\%, and payments on the order of cents are not viable. Although PayPal provides payment APIs, those are focused on the merchant side. A merchant can use the API using OAuth to initiate an order. However, the user has accept the order via the browser and username/password-based authentication. Furthermore, \emph{Payments are delayed to help ensure a safe environment for both buyers and sellers.}
+
+\section{Bitcoin transactions are expensive slow}
+
 
 In case of Bitcoin, and most other cryptocurrencies, transaction fees can be specified by the creator of a transaction, and miners can individually decide if they are willing to include the respective transaction into a block. Hence, although it is still possible to create zero fee transactions in Bitcoin, most miners expect a non-zero fee. Since blocks currently have maximal size of 1 Megabyte, block space can be considered a scare resource. This effectively leads to a size-based, instead of the common value-based, market price for a transaction. By tracking for how many blocks a transaction of a particular size and a particular fee resides in the mempool until the transaction is included into a block, the minimal fee for a given priority requirement can be determined. Wallets can either do this on their own or rely on web services such as bitcoinfees.21.co. 
 Currently, a transaction with a high chance to be included in the next block has to include a fee of approximately 60 satoshis per byte. A typical P2PKH transaction with one input and two outputs, one for the payment and one for change, has a size of approximately 250 bytes. Hence, the fee is around 15,000 satoshis, and thus almost \$0.1 at the current exchange rate of \$650 per BTC. 
 Normal P2PKH transactions are thus not suitable for micropayments. Another obstacle for naive micropayments in Bitcoin is the UTXO-based architecture. UTXOs with values on the order of satoshis would lead to a drastic increase of the UTXO set, and therefore on the resource requirements of network nodes. Furthermore, spending a macroscopic amount by combining hundreds or thousands of microscopic UTXOs would lead to very large and expensive transactions. 
 
 In addition, confirmation times on the order of tens of minutes are too long for many types of  machine-to-machine transactions.
+
+\section{Bitcoin Micropayments}
 
 \section{Off-Chain Micropayments}
 
@@ -27,7 +51,7 @@ The idea to use Bitcoin contracts to establish payment channels between two part
 \label{fig:paymentchannels}
 \end{figure}
 
-Unidirectional payment channels between two parties involve two on-chain Bitcoin transactions. One funding transaction and one transaction to close the channel. In the unidirectional setting only one party funds the channel and risks locking her funds (temporarily) in case the receiving party is not cooperative. Simple unidirectional payment channels are useful for repeated, metered payments between a single payer and a single payee. Use cases are video streaming\footnote{https://streamium.io/} and WiFi access \cite{Siby2013}.
+Unidirectional payment channels between two parties involve two on-chain Bitcoin transactions. One funding transaction and one transaction to close the channel. Simple unidirectional payment channels are useful for repeated, metered payments between a single payer and a single payee. Use cases are video streaming\footnote{https://streamium.io/} and WiFi access \cite{Siby2013}. 
 
 \subsection{Unidirectional Mediated Payment Channels}
 
@@ -35,10 +59,10 @@ Mediated payment channels allow the routing of payments through intermediate pay
 
 Figure \ref{fig:unimedpc} illustrates the flow of an individual payment over two payment channels. We assume that A and C, as well as C and B have already established payment channels, i.e. there exist shared multisignature outputs with some locktimes $T_0$ and $T_0^{'}$\footnote{The actual locktimes are not important. However, they have to be longer than the HTLC locktimes $T_1$ and $T_2$.}. In order to make it more concrete, we assume that the shared outputs have a value of 1 BTC each, and A wants pay B an amount of 0.1 BTC. Moreover, we assume that the channels are fresh, i.e. no payment transactions have been exchanged. First, the final recipient B creates a payment-specific random secret, computes hash(secret), and communicates hash(secret) to C and A. A creates a payment transaction that consumes the shared multisignature output and creates two outputs: (1) an output assigning 0.9 BTC to her, and (2) a HTLC output with a value of 0.1 BTC\footnote{We neglect necessary fees in order to provide a cleaner explanation.}. Figure \ref{fig:pubScriptHTLC} shows the pubScript of such a HTLC output as used in the payment transactions. A provides her signature for the transaction and sends it to C. C may now sign the transaction as well and broadcast it to the Bitcoin network. However, without the secret, C will not be able to claim the 0.1 BTC. Thus C will store the transaction and create another payment transaction addressing C with a HTLC output requiring the same secret. C signs the transaction and sends it to B. B could sign the transaction and broadcast it to the network. Since he knows the secret, he could claim the 0.1 BTC locked in the HTLC output. But he would have to do it before $T_2$. Otherwise B would be able to claim the output. B would claim the HTLC output by broadcasting a transaction that entails the secret. Thus, the secret would be public and C could use it to claim the HTLC output of the payment transaction from A. To ensure that C is always able to do that before A is able to reclaim the value, $T_1$ has to be sufficiently later than $T_2$. If timelocks are selected appropriately, a payment between A and B mediated by C using HTLCs is atomic, i.e. either both payments succeed or both payments fail. This means also that B can just communicate the secret privately to C and A, and they update their shares accordingly. Hence, A would create a transaction that replaces the HTLC output with an output granting C the 0.1 BTC. After signing and sending the transaction to C, C would do the same concerning the HTLC with B, and the payment is concluded without any on-chain transaction.
 
-Mediated payment channels can be used in a hub and spoke architecture to connect a large number of buyers with a large number of sellers with only one payment channel per buyer/seller. Think of 100 of fitness trackers interested in buying air quality data from 1000 consumer air quality sensors in Bejing in order to suggest a healthy running track. There would have to be 100 000 p2p payment channels, but only 1100 if there were a central mediator (c.f. Figure \ref{fig:nmpaymentchannels} and \ref{fig:hubandspoke}).
+Mediated payment channels can be used in a hub and spoke architecture to connect a large number of buyers with a large number of sellers with only one payment channel per buyer/seller. Think of 100 of fitness trackers interested in buying air quality data from 1000 consumer air quality sensors in Bejing in order to suggest a healthy running track. There would have to be 100 000 p2p payment channels, but only 1100 if there were a central mediator (c.f. Figure \ref{fig:nmpaymentchannels} and \ref{fig:hubandspoke}). In a later chapter we will see an implementation of this concept in order to pay smartphones for providing sensor data.
 
 
-A particular payment transaction might entail a number of HTLC outputs corresponding to payments to multiple sellers concurrently.
+%A particular payment transaction might entail a number of HTLC outputs corresponding to payments to multiple sellers concurrently.
 
 \begin{figure}
 \centering
@@ -86,13 +110,13 @@ OP_ENDIF
 
 \subsubsection{Bidirectional Payment Channels}
 
-In the payment channel design presented in Sec. \ref{sec:unipc} it is not possible to revert a payment, because of the inherent asymmetry of the design. The initial payee is able to broadcast \emph{any} of the subsequent payment transactions, and will thus always broadcast the one with the greatest share allocated to him, and not necessarily the latest, if the payer would try to revert a payment. 
+The simple payment channel design presented in Sec. \ref{sec:unipc} does not allow to invert the payment direction. Although a payment channel could be easily funded by both parties, the first payment locks the direction of the channel, because the receiver of a payment transaction is always able to broadcast the transaction to the network. Therefore, if the payment direction gets inverted, the new payer might just broadcast an old payment transaction.
 
-There are two designs that allow bidirectional payment channels: (1) Replace by timelock, and (2) Revocable commitment transactions.
+The obvious way to enable bidirectional payment channels is to form two independent and opposing unidirectional channels. However, in this case, there is no way to rebalance the channels which leads to unnecessary lock-up of bitcoins and unnecessary channel closings and openings.
+\cite{decker2015Duplex} introduces a mechanism to rebalance two opposing payment channels, however the construction has two issues: (1) Every rebalancing decreases the lifetime of the channel, and (2) the construction hinges on building a chain of off-chain transactions, i.e. a transaction spends an output of a transaction that is kept off-chain. Bitcoin transactions, however, are malleable, i.e. their transaction ID can be changed without breaking the signature.
+A malicious actor can use this fact to keep funds hostage.
 
-The replace by timelock mechanism works by attaching decreasing absolute timelocks to each payment transaction. In contrast to the unidirectional payment channels presented in Sec. \ref{sec:unipc}, in the bidirectional payment channel scenario both parties hold fully-signed, broadcast-ready payment transactions. The decreasing absolute timelock ensures that the latest transaction would always end up in the blockchain first. Since every payment decreases the lifetime of the channel the simple design is not very practical. However, duplex micropayment channels are advancing this mechanism by providing trustless cooperative protocols to reset, i.e. balancing values, and refresh channels, i.e. increasing the timelock. 
-
-Bidirectional payment channels based on revocable commitment transactions work as follows:
+Another design for bidirectional payment channels, called lighting channel, is based on revocable commitment transactions which work as follows:
 Assuming two parties, A and B, the protocol begins with the creation of a transaction that attempts to create a shared multisignature output that is funded by both parties. However, before broadcasting this \emph{funding} transaction, which is not timelocked, both parties create \emph{commitment} transactions. Both commitment transactions attempt to spend the multisignature output of the funding transaction, and create an output with the pubScript depicted in Fig. \ref{fig:pubScriptCommitment}.
 
 \begin{figure}
@@ -110,11 +134,14 @@ OP_ENDIF
 \end{figure}
 
 After the commitment transactions have been exchanged, the funding transaction can be broadcasted. 
+In contrast to duplex micropayment channel, lightning channels can have an infinite lifetime. However, they also suffer from the malleability issue.
+Furthermore, lightning channels require that participants periodically observe the blockchain for commitment transactions. The frequency of blockchain checks is dependent on the relative locktime $\Delta$. 
+
 
 \subsection{Payment Channel Networks}
 \label{sec:paymentchannelnetworks}
 
-Payment channel networks are the generalization of mediated bidirectional payment channels. In principle they allow to interconnect an arbitrary number of payment channels in order to route instant off-chain payments. 
+Payment channel networks are the generalization of mediated bidirectional payment channels. In principle they allow to interconnect an arbitrary number of payment channels using adapted forms of HTLCs in order to route instant off-chain payments. At time of writing, there are multiple groups working on implementations based on the lightning channel design. 
 
 
 \section{Further Micropayment Mechanisms}
@@ -167,7 +194,7 @@ Unidirectional Payment channels work offline. Mediated only Hub needs to be onli
 
 
 
-\chapter{The Economy of Things}
+\chapter{The Status of the Industry}
 \label{sec:economy}
 
 Smart objects are able to compute, to communicate and to sense and act on the physical world. Thus, they represent the building blocks of pervasive systems and the Internet of Things \cite{kortuem2010smart}. But being smart is not enough. Although the importance of interoperability has been highlighted by scholars \cite{zorzi2010} and practitioners \cite{manyika2015unlocking}, most connected devices operate in application-specific silos and communicate not with each other, but solely with the manufacturer's backend services or directly with people via smart phone apps.
@@ -410,6 +437,8 @@ The main slock contract defines an owner, a deposit, and a price. The price is t
 
 \paragraph{Universal Sharing Network}
 
+Each slock is part of the universal sharing network (USV) which provides discoverability and potentially reputation. The participation in the USV was envisioned to be coupled with providing revenue sharing with the DAO. 
+
 \paragraph{The DAO}
 
 The Team behind Slock.it furthermore implemented a set of smart contracts known as the \emph{Standard DAO Framework} and which have been deployed to the Ethereum blockchain as \emph{The DAO}. The DAO was meant as a shareholder-controlled venture fund. Everyone was able to send ether to the DAO contract in exchange for DAO tokens which provide voting rights and potential rewards. Moreover, everyone was able to send a proposal to the DAO, and token holders were able to vote on proposals. Proposals ask for ether payout under specific conditions. Slock.it wanted to fund the development of the Ethereum Computer by means of a DAO proposal, and provide DAO token holders with a share of the revenue for every trade facilitated by an Ethereum computer. THe DAO collected more than USD 130M worth of ether. However, many problems of the DAO contracts became identified which culminated in the exploitation of a re-entry bug.
@@ -491,6 +520,13 @@ Nothing implemented if device is not returned
 
 
 \section{Use Cases and Applications}
+
+\subsection{Fluid Ownership, as-a-Service and the Sharing Economy}
+
+\subsection{}
+
+\subsection{Product self-servicing}
+
 
 \section{Business Model Implications}
 

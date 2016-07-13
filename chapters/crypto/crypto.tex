@@ -136,7 +136,7 @@ The naive (local) rule is to accept the block that arrives first. However, in a 
 
 A block has to have an identifying hash that is smaller than a particular target value. Thus, a miner has to vary the block and re-compute its hash until the target is met. Therefore the consensus protocol is non-interactive and the block generation rate is a function of the combined hash rate of every mining node and the particular target or difficulty. The more hashing power an actor controls, the higher is her chance to find a block. If a node follows the Nakamoto consensus protocol it will broadcast a block as soon as the block has been found. Receiving nodes will check the validity of the transactions, and the Proof-of-work. Mining nodes will stop mining their current block, apply the new block, and start mining on top of this new block. Thereby, the chain with the highest accumulated amount of work is considered the valid chain. 
 
-If nodes adhere to the Bitcoin mining protocol, the system is resilient against double-spending, and censorship, as long as the majority of hash power is controlled by honest nodes. \cite{Eyal2014} have shown that a \emph{rational} miner should divert to a different strategy termed \emph{selfish mining}, by which the miner withholds blocks in order to have a head-start to mine the next block, in order to get an unfair advantage. At time of writing, selfish mining has not been observed in the Bitcoin network, but in other blockchain-based cryptocurrencies. It can be argued that a rational miner should follow the selfish mining strategy to maximize her profits. However, the profits are denominated in bitcoin whereas her expenditures are probably to be paid in a national currency. Since the appearance of selfish mining could harm the Bitcoin system as a whole, and thereby have a negative effect on the bitcoin exchange rate, following the Nakamato protocol may still be the rational choice from an long-term ecosystem perspective. 
+If nodes adhere to the Bitcoin mining protocol, the system is resilient against double-spending, and censorship, as long as the majority of hash power is controlled by honest nodes. \cite{Eyal2014} have shown that a \emph{rational} miner should divert to a different strategy termed \emph{selfish mining}, by which the miner withholds blocks in order to have a head-start to mine the next block, in order to get an unfair advantage. At time of writing, selfish mining has not been observed in the Bitcoin network, but in other blockchain-based cryptocurrencies. It can be argued that a rational miner should follow the selfish mining strategy to maximize her profits. However, the profits are denominated in bitcoin whereas her expenditures are probably to be paid in a national currency. Since the appearance of selfish mining could harm the Bitcoin system as a whole, and thereby have a negative effect on the bitcoin exchange rate, following the Nakamato protocol may still be the rational choice from a long-term ecosystem perspective. 
 
 % Interestingly,elfish mining threshold coincides with the theoretical limit of malicious actors in classical consensus protocols, requiring a fixed number of participants per round, with byzantine faults. At time of this writing there is no known theoretical explanation for the coinciding thresholds in very different settings.
 
@@ -154,7 +154,7 @@ In the original white paper Proof-of-work was introduced as one-CPU-one-vote. Ho
 
 \subsubsection{Digital Bearer Instrument}
 
-"A bearer instrument is a document that entitles the holder of the document rights of ownership or title to the underlying property" \cite{bearer}, i.e. there is no central record of ownership. Because of the duplication or double spending issue there had not been a way to create digital bearer instrument. Ownership of an unique digital asset had always been augmented by a trusted third party. Bitcoin is the first digital bearer instrument. Possession of the private keys or redeemScripts ensures ownership and permissionless control over the corresponding coins.
+\emph{A bearer instrument is a document that entitles the holder of the document rights of ownership or title to the underlying property} \cite{bearer}, i.e. there is no central record of ownership. Because of the double spending issue there had not been a way to create digital bearer instruments. Ownership of an unique digital asset had always been augmented by a trusted third party. Bitcoin is the first digital bearer instrument. Possession of the private keys (or redeemScripts) ensures ownership and permissionless control over the corresponding coins.
 
 Noteworthy, it is straight forward to implement registered instruments in Bitcoin, e.g. using multi-signature outputs that require the signature of a trusted third party. However it is impossible to implement a true digital bearer instruments based on a system administered by centralized third party.
 
@@ -169,6 +169,7 @@ Bitcoin's solution to the double spending problem is the approximation of a logi
 \subsubsection{A New Design Space for Distributed Systems}
 
 Bitcoin can be used as a platform to build distributed applications on top. The foundations for this are Bitcoin as programmable money and Bitcoin as an immutable publication system. In addition Bitcoin has been the basis for an emerging field typically termed Blockchain Technology or Distributed Ledger Technology. This incorporates alternative cryptocurrencies, but also P2P networks designed for other applications. One of the main inspiration thereby is the introduction of economic incentives on protocol level. 
+
 
 \subsection{Open Challenges}
 \label{sec:btc_challenges}
@@ -195,17 +196,48 @@ Bitcoin has two main parameters which directly influence throughput, i.e. the nu
 \subsubsection{Illicit Usage}
 
 
+\section{Applications beyond Currency}
+
+In this section we will discuss how Bitcoin and the underlying technological paradigm, the blockchain, can be used for applications beyond digital currency. 
+As Marc Andreessen put in an op-ed article in the New York Times: \emph{Bitcoin gives us, for the first time, a way for one Internet user to transfer a unique piece of digital property to another Internet user, such that the transfer is guaranteed to be safe and secure, everyone knows that the transfer has taken place, and nobody can challenge the legitimacy of the transfer. The consequences of this breakthrough are hard to overstate} \cite{andreessen2014}. Indeed, already in late 2010, the Bitcoin community targeted a another type of digital property: domain names (https://bitcointalk.org/index.php?topic=1790.0). But how to implement a domain name system on Bitcoin?
+
+\subsection{Alternative Coins}
+One approach is to bootstrap a new, application-specific system. In April 2011, the first block of \emph{Namecoin} was mined. Namecoin is a fork of Bitcoin with a transaction structure adapted to need of a domain lookup system. Then there is the question, how to secure the system? In a proof-of-work-based system there has to be enough decentralized hashing power to make 51\% attacks unfeasible. Due to the enormous hashing power of the Bitcoin network, there are essentially two possibilities for another proof-of-work-based system: (1) The use of an Bitcoin-incompatible proof-of-work schema and boostrapping an entire new network, or (2) merged-mining which allows Bitcoin miners to re-use their proof-of-work to secure the alternative coin concurrently. 
+Namecoin was the first merge-mined coin, and the network is still running. \cite{kalodner2015empirical} provide an interesting empirical investigation of Namecoin. 
+
+\subsection{Colored Coins}
+
+The idea of colored coins is to taint a bitcoin, i.e. a particular transaction output, in order to attach an external value or meaning to it, independent of its bitcoin value. The technique has been used to issue and track/trade securities such as company shares and stocks, as well gift cards on the Bitcoin blockchain. There have been different non-interoperable protocols developed and are used in practice. Typically colored coin transactions utilize a null-data output for protocol instructions. Thus, colored coins are transparent for Bitcoin clients.
+
+The problem with securities as colored coins is that those are not digital bearer assets, since they are aways augmented by an issuing counterparty\footnote{See \cite{swanson2015} for a detailed discussion.}. This is a very important point which is often neglected when various assets are \emph{tokenized and put on a blockchain}. This discussion will come up at a later point again when we discuss smart property.
+
+\subsection{Virtual Chains and Meta Coins}
+
+Virtual chains can be interpreted as embedded consensus system that operate on a layer on top of Bitcoin. Bitcoin is used only for proof-of-publication of virtual chain instructions. The term virtual chain was introduced and formalized as part of Blockstack, the technology stack on which OneName has been built (see \ref{sec:ecoonename}), after switching from the Namecoin blockchain \cite{ali2016blockstack}. 
+
+A similar approach is used by Meta Coins such as Mastercoin (now Omni) and Counterparty to build a general purpose asset and smart contract platform on top of Bitcoin, and thus leverage the security properties of the Bitcoin blockchain. 
+
+\subsection{Sidechains}
+Sidechains are separate networks like alternative coins, however the value of those coins is \emph{pegged} to the value of bitcoins. The idea is, that bitcoins can be frozen on the Bitcoin blockchain, and be unlocked on the sidechain. At a later stage the sidechain coin can be frozen on the sidechain and again unlocked on the mainchain. Thus, the sidechain does not need to bootstrap value.
+In order to allow a trustless \emph{two-way peg}, Bitcoin and the sidechain must be able to perform simplified payment verification of transactions in the other chain. Bitcoin's scripting language does not yet allow SPV verification. A federated sidechain has been introduced by Blockstream. Furthermore, a SPV verification of Bitcoin transactions in form of an Ethereum contract.
+
+\subsection{Non-currency Blockchains}
+
+Alternative blockchains that do not issue their own currency in order to incentive miners use different consensus system than proof-of-work and therefore have different security guarantees. In most cases a fixed set of \emph{validators} is assumed which run traditional byzantine-fault-tolerant consensus algorithm. Therefore, non-currency blockchains tend to be federated systems and their value hinges on the structure of the particular federation.
+
+
 %\section{OPTIONAL: The Cambrian Explosion of Cryptocurrencies}
 
 \section{Ethereum: Towards the World Computer}
+
+
 
 Every state transition is authenticated 
 
 \cite{Luu:2015:DIC:2810103.2813659} verifier's dilemma
 
-\subsection{History and Current State}
+\subsection{The Technology}
 
-\subsection{Comparison with Bitcoin}
 
 \subsection{Smart Contracts}
 
@@ -219,7 +251,15 @@ Every state transition is authenticated
 
 %\section{Participation}
 
-\section{A comparison}
+
+\section{Comparison}
+
+This three-way tradeoff, however, is not inherent in decentralized cryptocurrencies.
+The GHOST protocol [45] of Sompolinsky et al. as well as Lewenberg
+et al. [36] demonstrate that fairness and mining power utilization can be improved
+by changing the chain selection rule, 
+
+\subsection{Smart Contracts vs. Oracles}
 
 \section{Discussion}
 
