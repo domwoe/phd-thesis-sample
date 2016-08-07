@@ -1,10 +1,13 @@
-\chapter{Smart Property}
+\chapter{From smart objects to Smart Property}
 \label{sec:dao}
 
 
 \section{Introduction}
 
-The term smart property was introduced in \cite{szabo1997} as the manifestation of smart contracts. He gives the example of a car:
+Smart objects, i.e. IoT devices, bla bla ownership Internet of Shit ...
+
+
+The term smart property was introduced in \cite{szabo1997} as a manifestation of smart contracts. He gives the example of a car:
 \begin{quote}
 Consider a hypothetical digital security system for automobiles. The smart contract design strategy suggests that we successively refine security protocols to more fully embed in a property the contractual terms which deal with it. These protocols would give control of the cryptographic keys for operating the property to the person who rightfully owns that property, based on the terms of the contract. In the most straightforward implementation, the car can be rendered inoperable unless the proper challenge-response protocol is completed with its rightful owner, preventing theft.
 \end{quote}
@@ -12,7 +15,7 @@ Consider a hypothetical digital security system for automobiles. The smart contr
 And Indeed, modern car keys use smart card technology and cryptographic primitives to authenticate the driver and provide the functionality described by Szabo. However legal ownership is independent of possession of the cryptographic key. Noteworthy, currently the possession of a physical document authenticates the legal ownership. 
 
 With the inception of Bitcoin and blockchain technology, the term smart property usually refers to property whose ownership is controlled by a blockchain.
-The Bitcoin wiki notes that smart property may also include non-physical property like shares in a company or access rights to a remote computer. 
+The Bitcoin Wiki notes that smart property may also include non-physical property like shares in a company or access rights to a remote computer. 
 
 However we beg to differ. We understand smart property as a smart object with a digital representation on a blockchain. The digital representation is controlled by cryptographic keys. These cryptographic keys empower the holder to exert immediate and full control over the smart object. Shares of a company, in contrast, have complex counterparty risk, and are mediated by law. Therefore, company shares are a bad candidate for smart property. At least for now, as we will discuss later on. 
 
@@ -27,17 +30,17 @@ However, if ownership of the car is represented on a blockchain, Alice and Bob c
 
 \section{Capabilities of smart property}
 
-\subsection{Trust-minimized atomic trades}
+\subsection{Low trust atomic trades}
 
 Smart property can be sold via the Internet in an atomic process without third party escrow. Transfer of ownership rights\footnote{We do not necessarily mean legal rights of ownership.} and transfer of money happen at once. 
 
-\subsection{Trust-minimized renting}
+% \subsection{Shared ownership}
+
+% Multi-party ownership of smart property. Complex scenarios are possible. For example selling of a smart property may need approval from all parties and revenue is distributed evenly.
+
+\subsection{Lust-trust renting}
 
 Time-restricted transfer of ownership with adjustable counterparty risk. Smart property can be the basis for a peer-to-peer sharing\footnote{In the sense of Uber and AirBnB.} ecosystem. 
-
-\subsection{Shared ownership}
-
-Multi-party ownership of smart property. Complex scenarios are possible. For example selling of a smart property may need approval from all parties and revenue is distributed evenly.
 
 \subsection{Liquidification of property}
 
@@ -51,24 +54,29 @@ The smart property itself has to be trustworthy. A potential seller has to be su
 
 \subsection{Kill switch}
 
-Liquidification requires that the smart property can be rendered unusable temporarily. Otherwise the contract between lender and borrower is not enforceable remotely, and the borrower is able to use the property without paying the back the loan. Enforcement of the contract would have to happen via the judicature system which is cumbersome and expensive if borrower and lender are in different jurisdictions. 
+Liquidification requires that the smart property can be rendered unusable temporarily. Otherwise the contract between lender and borrower is not enforceable remotely, and the borrower is able to use the property without paying back the loan. Enforcement of the contract would have to happen via the judicature system which is cumbersome and expensive if borrower and lender are in different jurisdictions. 
 
-If the use of a kill switch is possible is dependent of the actual smart property. Cars, for example, are already equipped with immobilizers which are reasonably hard to deactivate. Popular Solar Home Systems as deployed in Africa and South-East Asia can also be remotely deactivated. Smart property where the value of the object itself or its components is high independent of a function that can be switched off is not suitable for this scheme. 
+If the use of a kill switch is possible is dependent of the actual smart property. Cars, for example, are already equipped with immobilizers which are reasonably hard to bypass. Popular Solar home systems, as deployed in Africa and South-East Asia, can also be remotely deactivated. Smart property where the value of the object itself or its components is high independent of a function or server that can be switched off, however, is not suitable for this scheme. 
 
 Then there is the question who is able to flip the kill switch or does it happen automatically?
 
 \subsection{On-chain currency}
-Selling, renting , and liquidification all involves currency. Therefore, a fungible token of value that is easy to procure is necessary. 
-Otherwise protocols like atomic cross-chain swaps or Interledger might be used but complicate the processes.
+Selling, renting, and liquidification all involve currency. Therefore, a fungible token of value on the blockchain is necessary to keep the number of trusted or involved parties low. 
 
 \subsection{Light-client proofs}
 
-In many cases smart property will not be able to interact with the blockchain network directly, but has to rely on proofs. For example a buyer has to be able to prove to the car that it now belongs to him. The underlying blockchain and the protocols should account for such a scenario, since a car should be able to be started even if there is no Internet connectivity. 
+In many cases smart property will not be able to interact with the blockchain network directly, but has to rely on proofs from untrusted parties. For example a buyer has to be able to prove to the car that it now belongs to him. The underlying blockchain and the protocols should account for such a scenario, since e.g. a car should be able to be started even if there is no Internet connectivity. 
 
 
-\section{Basic Implementation}
+\section{Implementation}
 
 \subsection{Bitcoin}
+
+\subsubsection{Low-trust atomic trades}
+
+The simplest way to achieve atomicity in Bitcoin is by executing both parts of the trade in a single transaction. In Fig. \ref{fig:smartproperty} an atomic trade protocol based on \cite{smartproperty2011} is shown. The protocol may either be initiated by the seller (A) or by the buyer (B). We assume A initiates the protocol and sends the price, an Bitcoin address where she would like to receive the payment, and a reference to the UTXO that represents the smart property. (ownership output) to B. B creates a new ownership key pair and prepares a transaction that sends the price to A and transfers the ownership to the new created ownership key. B signs the transaction and sends it to A. To accept the offer A signs the ownership input and broadcasts the transaction to the Bitcoin network. 
+
+After a number of confirmations, B can provide a SPV proof to the smart property. Therefore, B provides a selection of subsequent block headers entailing the header of the block the transaction is in, plus its merkle proof. The smart property is able to reason about the amount of proof-of-work that was spent to generate the blocks. In case of doubt, the smart property can ask for more block headers.
 
 \begin{figure}[!t]
     \centering
@@ -77,88 +85,218 @@ In many cases smart property will not be able to interact with the blockchain ne
     \label{fig:smartproperty}
   \end{figure}
 
+In this protocol the smart property is not part of the Bitcoin network, but is able to verify SPV proofs provided by a potentially untrusted party. 
+
+% \subsubsection{Shared Ownership}
+
+% Shared ownership is trivially implemented in Bitcoin since Bitcoin supports multi-signature outputs. Hence, interpreting a multi-signature output as an ownership output can represent shared ownership.
+
+\subsubsection{Low-trust renting}
+
+The idea is to combine shared ownership and the unidirectional payment channel. Therefore, the parties create a transaction that creates a multi-signature ownership output for A and B, and a 2-of-2 multi-signature output where B deposits some amount. Furthermore, both parties create a timelocked refund transaction that allocates the ownership output back to A, and the deposit back to B. The timelock should cover the maximal renting period, and the deposit should cover the renting price for that period. B can now pay in small increments with off-chain payment transactions that entail an additional ownership output that assign the car ownership back to A. Because of Bitcoins current malleability issue it is important that the order of providing signatures is such that only A is able to broadcast the funding transaction. Furthermore, A needs also a (tiny) payment transaction from B before broadcasting the funding transaction. Otherwise B could just use the smart property without paying for the entire maximal renting period, since A would not have a transaction that is immediately valid. Figure \ref{fig:smartproperty_renting} illustrates the protocol in more detail.
+
+\begin{figure}[!t]
+    \centering
+    \includegraphics[width=\linewidth]{./externalized/smartproperty_renting}
+    \caption{Protocol for trust-minimized renting of smart property using a Bitcoin payment channel.}
+    \label{fig:smartproperty_renting}
+  \end{figure}
+
+\subsection{Liquidification of property}
+
+A Bitcoin-based protocol for smart property as a collateral for loans is described in \cite{smartproperty2011}. However, the protocol has the problem that a creditor has the ability to resell the car. 
+
 \subsection{Ethereum}
 
+Ethereum implements the Turing-complete Ethereum Virtual Machine with a large instruction set (see \cite{wood2014ethereum}). Furthermore, there exist higher-level programming languages which are inspired by popular languages. The most popular is Solidity which is inspired by Java Script. Another important difference to Bitcoin is the statefulness of a Ethereum contract. In the following we present and discuss simple implementations of the economic primitives in illustrative Solidity code.
+
+\subsubsection{Low-trust atomic trades}
+
+The following contract illustrates a contract representing a tradeable smart property in Ethereum. The original issuer of the contract is identified as the owner. In practice this would be the manufacturer. Ethereum does not support collaborative transactions, i.e. transactions with operations authorized by different entities. Therefore, selling has to be implemented in a two-stage process. In the contract below, we've done this by implementing a \emph{sell function} which can be only called by the current owner (through the \emph{onlyOwner modifier}). The \emph{sell function} has two parameters: the price, and a buyer address. The \emph{buyer parameter} allows to explicitly state a seller. Otherwise everyone who would pay the price using the \emph{buy function} would be able to buy the smart property.
+
+\newpage
+\begin{lstlisting}[breaklines,basicstyle=\tiny]
+contract SmartProperty {
+    
+    address owner;
+    address buyer;
+    bool onlyBuyerFlag;
+    bool isOnSale;
+    uint price;
+    
+    modifier onlyOwner() {
+        if (msg.sender != owner) throw;
+    }
+    
+    modifier onlyBuyer(bool flag) {
+        if (flag && msg.sender != buyer) throw;
+    }
+    
+    function SmartProperty() {
+        owner = msg.sender;
+    }
+    
+    function sell(uint _price, address _buyer) onlyOwner() {
+        isOnSale = true;
+        if (_buyer != 0) {
+            onlyBuyerFlag = true;
+            buyer = _buyer;
+        } else {
+            onlyBuyerFlag = false;
+        }
+        price = _price;
+    }
+    
+    function stopSale() onlyOwner() {
+        isOnSale = false;
+    }
+        
+    function buy() onlyBuyer(onlyBuyerFlag) {
+        if (isOnSale) {
+            if (msg.value == price) {
+                isOnSale = false;
+                owner = msg.sender;
+                owner.send(msg.value);
+                
+            } else {
+                msg.sender.send(msg.value);
+            }
+        } else {
+            msg.sender.send(msg.value);
+        }
+    }
+}
+\end{lstlisting}
+
+% \subsubsection{Shared ownership}
+
+% Shared ownership quickly complex
+
+\subsubsection{Low-trust renting}
+
+The following contract implements low-trust renting of smart property on Ethereum. Note that the \emph{Rentable Property} contracts inherits properties and functions from the \emph{SmartProperty} contract. When deploying the contract the owner sets a deposit a renter has to provide and a time based renting price. The main functions are a \emph{rent} and a \emph{returnPropery} function. The \emph{rent} function allows an arbitrary account or contract to rent the smart property by providing a deposit. The deposit is held in the contract, and can only be released by the rules of the contract. Neither the owner, nor the renter have control over the deposit. The contract keeps also track of the block in which the rent function was executed. This \emph{startBlock} serves as the begin of the renting period as measured in time of blocks. The Ethereum network has an average block generation rate of approximately 14s. 
+The software running locally on the smart property has now to be notified that it must obey orders signed by the renter for a maximal period defined by the price and the deposit. 
+The renter can later call the \emph{returnProperty} function which calculates the price for the renting period and distributes the deposit accordingly. If the renter does not return the property in time her access/control rights expire. 
+
+\begin{lstlisting}[breaklines,basicstyle=\tiny]
+contract RentableProperty is SmartProperty {
+    
+    address renter;
+    uint startBlock;
+    uint pricePerBlock;
+    uint deposit;
+    bool isRentable = true;
+    
+    modifier onlyRenter() {
+        if (msg.sender != renter) throw;
+    } 
+    
+    function RentableProperty(uint _pricePerBlock, uint _deposit) {
+    	owner = msg.sender;
+        pricePerBlock = _pricePerBlock;
+        deposit = _deposit;
+    }
+    
+    function notRentable() onlyOwner() {
+        isRentable = false;
+    }
+    
+    function rentProperty() {
+        if (isRentable) {
+            if (msg.value >= deposit) {
+                renter = msg.sender;
+                startBlock = block.number;
+                isRentable = false;
+                if (msg.value > deposit) {
+                    msg.sender.send(msg.value - deposit);
+                }
+            } else throw;
+        } else throw;
+    }
+    
+    function returnProperty() onlyRenter {
+        renter = 0;
+        if (deposit > price*(block.number-startBlock)) {
+            owner.send(price*(block.number-startBlock));
+            msg.sender.send(deposit-price*(block.number-startBlock));
+        } else {
+            owner.send(deposit);
+        }
+        isRentable = true;
+    }
+}
+\end{lstlisting}
+
+\subsubsection{Liquidification of property}
+
+A simple implementation of property liquidification defines a loan and a latest payDay. The owner  
+
+\begin{lstlisting}[breaklines,basicstyle=\tiny]
+contract LiquidProperty is SmartProperty {
+    
+    address lender;
+    uint loan;
+    uint payDay;
+    uint paid = 0;
+    
+    bool isLiquid = false;
+    
+    function LiquidProperty(uint _loan, uint _payDay) {
+        owner = msg.sender;
+        loan = _loan;
+        payDay = _payDay;
+    }
+    
+    function giveLoan() {
+        if (msg.value < loan || isLiquid) throw;
+        isLiquid = true;
+        lender = msg.sender;
+        owner.send(msg.value);
+    }
+    
+    function pay() {
+        if (!isLiquid) throw;
+        paid = paid + msg.value;
+        lender.send(msg.value);
+    }
+    
+    function enforce() {
+        if (!isLiquid) throw;
+        if (paid >= loan) {
+            isLiquid = false;
+        } else if (block.number > payDay) {
+            owner = lender;
+            isLiquid = false;
+        }
+    }
+}
+\end{lstlisting}
 
 \section{Comparison}
 
-\section{Issues}
 
-\subsection{Security properties of the underlying blockchain}
-
-\subsection{Security}
-
-
-\section{A more complex case: Solar micro utilities}
-
-
-
-
-https://www.kpmg.com/IN/en/IssuesAndInsights/ArticlesPublications/Documents/ENRich2015.pdf
-Rooftop solar is already competitive in some areas in India. Storage costs are still high, but falling. Stress the need for private investments and the need to tap global capital markets.
-
-\section{Motivation}
-
-Hundreds of million people globally lack access to energy. Grids are unreliable and last mile connection costs can be inhibitive. Off-grid energy technologies of various sizes are being made available by private companies as well non-profit organizations. In terms of scale, the most important technology are Solar Home Systems (SHS)
-
-A SHS is composed of a small solar panel, a battery, LED lights, and USB charging. The capacity of the system ranges typically between 10 and 250 Watt. Larger systems typically comprise fans and TVs. Small systems can be installed by the user but larger systems need a technician.
-
-World market production of solar panels focuses on a module size of 250 Watt. Hence the price per Watt is lowest for 250 Watt modules. However, 250 Watt exceed the typical demand of a rural off-grid household. Thus micro-utility (c.f. Grameen Shakti) and peer-to-peer microgrids (c.f. uLink) models are appealing. In these models a local entrepreneur shares the generated electricity with her neighbors. Therefore, energy consumption should be able to be metered and the local entrepreneur needs to collect payments.
-
-People that are in need of SHSs are typically at the bottom of the pyramid. They lack the capital to buy a SHS and have no access to traditional financing. Innovative financing schemes that are based on mobile payments and the ability to remote disable the system have been developed to bring those systems to more poor households. These schemes can be divided in two main categories: Pay-for-service and lease-to-own. In the pay-for-service model the SHS manufacturer is the owner of the system and the user pays has to pay fee for its usage. If the user does not pay electricity access is turned off and after some time the system gets taken back. In the lease-to-own model the user also has to pay for the usage but she also pays a principal so that at some point the ownership gets transferred to her and the system gets permanently unlocked. 
-
-A prominent example for the lease-to-own model is M-Kopa which operates in East Africa. M-Kopa offers also that the user may switch back to the lease-to-own model after the user has fully paid the system in order to get financing for some other product. Notably, the user does not get a loan to buy a product somewhere but she gets a product that is distributed by M-Kopa. 
-
-Companies like M-Kopa need large capital in order to finance the distribution of their systems. Besides debt and equity financing some companies have securitized their implicit loans to users. This practice is however only viable for the larger companies that already have reached some scale. 
-
-\section{Problem statement}
-
-
-\section{General Model}
-
-When transaction costs become negligible and contract enforcement gets automated large-scale principles can be applied on ever smaller scales. Joint-stock companies have been invented to share risk but also rewards between shareholders in order to finance large-scale commercial endeavors. However regulatory burden and hence bureaucratic costs of such a structure are high in order to protect shareholders.   
-
-Starting as a Uber driver in Mexico City or as a solar micro-utility provider in India are much smaller endeavors. Nevertheless, financing a car or a solar home system can be challenging. Can we transfer the idea of a join-stock company on the level of a product itself? Let us think of the car or the solar home system as a business entity on its own. Cryptocurrencies allow a connected product to accept payments and to have the revenue at its command. As a business entity it may issue shares as well. If those shares are issued as tokens on the same network on which the cryptocurrency lives, then the revenue can be distributed autonomously. In this scenario there is only one party that has to be trusted: the connected product itself. In principle, dividends can be distributed transparently, in real-time, and around the globe.
-
-It has to be ensured that the product only operates in a well-defined way. Therefore payment and share issuance terms have to be defined in a machine-readable contract that is notarized on the blockchain, and is enforced in a trusted environment on the connected product. 
-
-It is important that the connected product's main utility is in providing a metered service which is disabled automatically in case sufficient payments are missing. Otherwise investors would face a high risk in not getting their expected return on investment since the product may not generate the expected revenue.
-
-Let us go through an example. Linda wants to buy a car for \$ 25 000 USD in order to start working as a driver. However she has only \$ 5000 USD at her disposal. Together with the car manufacturer (or some intermediary) a machine- and human-readable contract is agreed upon which entails the rules under which shares are issued, the service is priced, and dividends are paid. 
-We omit for the moment the complex process of fixing these terms. This is one of the biggest problems I see currently. In addition service prices might be able to be flexible within bounds or governed by some rules. At the same time it should not be possible to defraud investors by somehow creating artificially low prices after selling of shares and then charge customers via side channels.
-The contract is notarized on the blockchain such that the product acknowledges the contract. The product then issues shares according to the contract. Assuming we agreed on an issuance of 25 shares. 5 shares would be allocated to Linda while the rest would be allocated to the manufacturer. The manufacturer would then try to find buyers for the shares. Keeping legal requirements aside, the shares could be sold globally with negligible transaction costs. 
-
-Linda is now the operator (kind of a CEO) and a shareholder of the car. In order to use the car she has to pay a fee to the car. The fee is then distributed among all shareholders according to their holdings. 
- 
-Notes for further discussion
-Issuance policy for additional revenue-based shares to keep the operator incentivized to keep a high revenue stream.
-Locking operator shares at least  for a specific time. Such that the operator keeps skin in the game.
-On-demand Liquidation
-In principle it is the transformation of a collateral-based loan to a cashflow-based loan, isn't it? What are the implications?
-Trade of between enforcement by law/legal system and enforcement by architecture/code
-What happens in case of defects/maintenance?
-
-
-
-
-
-\subsection{Requirements}
-
-\subsubsection{Remote Disablement}
-\section{Bitcoin colored coins}
-
-\section{Ethereum}
-
-\section{Results}
 
 \section{Discussion}
 
-\section{Related Work}
+\subsection{Communication Protocol}
 
-\cite{gsma2014} gives a good overview of energy access in sub-saharan africa. Discusses solar home systems, mini-grids, and on-grid systems. Stresses the role of cellular connectivity and pay-as-you-go models. According to the report around 40\% of on-grid energy gets stolen. Furthermore, they provide a graph on the evolution of electrification rate and the rate for cellular coverage.
+\subsection{Permissioned Blockchains}
 
-\cite{DBLP:journals/corr/QadirSWC16} discuss the approach of resource pooling for wireless networks in the developing world. This could be used if providing connectivity to villages is implemented as an additional service by the DAO.
+A permissioned blockchain is a blockchain, in which transaction processing is performed
+by a predefined list of subjects with known identities \cite{BitFuryPermissioned2015}. In context, a consortium of device manufacturers could operate a permissioned blockchain collaboratively. Permissioned blockchains do not need a native token of value, and typically do not have one since fair distribution of tokens, such that trust and value can emerge, is non-trivial. However, there are ways to bring external value in and out of permissioned blockchains in order to facilitate economic interactions. 
+\paragraph{IOU Issuance}
+One approach is to allow specific parties to issue IOUs on the blockchain. These parties could be the device manufacturers themselves but more probably banks and financial service providers. In this case a buyer interested in a smart property would send money off-chain to a third party which then issues tokens on the blockchain. In addition, the seller has to accept those tokens. 
 
-\section{Conclusion}
+\paragraph{Cross-chain/ledger protocols}
+A better approach that requires less trust is the application of a cross-chain/ledger protocol. We discussed sidechains already, which allow the immobilization of a token in one chain and subsequent unlocking in another chain. In addition, there is the Interledger protocol \cite{hope2016interledger} and the atomic cross-chain trading protocol \cite{atomiccrosschaintrading}
+
+\subsection{Real-word}
+
+\subsection{Issues}
+
+\subsubsection{Security properties of the underlying blockchain}
+
+\subsubsection{Security}
+
 
 

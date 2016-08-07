@@ -3,7 +3,7 @@
 all:		thesis.pdf
 
 thesis.pdf:	thesis.tex force
-			latexmk -pdf $<
+			latexmk -f -pdf $<
 
 force:		;
 

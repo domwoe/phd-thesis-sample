@@ -4,16 +4,29 @@
     footinclude=true,
     headinclude=true
 ]{scrbook}
-\KOMAExecuteOptions{fontsize=11pt}
+%\KOMAExecuteOptions{fontsize=11pt}
 
 %\usepackage{subfig}
 \usepackage{preamble}
 \usepackage{listings}
 \usepackage{algorithm}
+\usepackage{tabularx}
+\usepackage{epigraph}
+
 %\usepackage{pdflscape}
 %\@ifundefined{showcaptionsetup}{}{%
 %\PassOptionsToPackage{caption=false}{subfig}}
 %\usepackage{subfig}
+
+% \epigraphsize{\small}% Default
+\setlength\epigraphwidth{8cm}
+\setlength\epigraphrule{0pt}
+
+\usepackage{etoolbox}
+
+\makeatletter
+\patchcmd{\epigraph}{\@epitext{#1}}{\itshape\@epitext{#1}}{}{}
+\makeatother
 
 \lstset{
 	basicstyle=\footnotesize\ttfamily,
@@ -118,7 +131,20 @@
 \input{\dir/dao.tex}
 
 %----------------------------------------------------------------------------
+% Case: Decentralized Energy and Decentralized Autonomous Organizations
+\def\dir{chapters/display}
+\input{\dir/display.tex}
+
+%----------------------------------------------------------------------------
+% Case: Decentralized Energy and Decentralized Autonomous Organizations
+\def\dir{chapters/industry}
+\input{\dir/industry.tex}
+
+%----------------------------------------------------------------------------
 % Discussion
+
+% Discussion
+
 \def\dir{chapters/discussion}
 \input{\dir/discussion.tex}
 

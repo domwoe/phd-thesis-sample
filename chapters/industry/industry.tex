@@ -1,0 +1,330 @@
+\chapter{The Economy of Things: An Industry Survey}
+\label{sec:economy}
+
+Smart objects are able to compute, to communicate and to sense and act on the physical world. Thus, they represent the building blocks of pervasive systems and the Internet of Things \cite{kortuem2010smart}. But being smart is not enough. Although the importance of interoperability has been highlighted by scholars \cite{zorzi2010} and practitioners \cite{manyika2015unlocking}, most connected devices operate in application-specific silos and communicate not with each other, but solely with the manufacturer's backend services or directly with people via smart phone apps.
+Obstacles on the road to interoperability and \textit{the} Internet of Things are not only technical, e.g. heterogeneity (and thus complexity) and security, but also the lock-in business model of companies.
+Cryptocurrencies and blockchain technology with their prime representative Bitcoin provide a new design space to tackle these issues by providing smart objects with unprecedented economic capabilities and autonomy from central coordination. This economic empowerment of connected devices is particularly well suited for the emergent paradigms of (autonomous) fog computing \cite{Bonomi:2012:FCR:2342509.2342513} and the web of things . Smart objects can get the ability to offer services for payments, pay other smart object autonomously, and even generate cryptocurrency to stay liquid. Moreover, smart objects that \textit{live on a blockchain} can be managed, shared, sold and rented without the need of backend infrastructure provided by the manufacturer. Furthermore new types of ownership and monetization models are conceivable.
+
+
+\section{Building Blocks}
+
+\subsection{Identity or Representation on the Blockchain}
+
+Economic objects can have various representations on a blockchain depending on the capabilities of the object and the specifics of the blockchain. A basic requirement for an economic object is to be able to receive and to send cryptocurrency. Thus, an economic object needs at least an \emph{account} on the respective blockchain.
+
+However, representation of ownership 
+
+\subsection{Interaction with the Blockchain}
+
+Smart objects vary significantly in their capabilities. From tiny battery-powered sensors with restricted computation and communication capabilities to smart TVs and refrigerators that are constantly connected to broadband Internet and continuous power supply. How will these objects interact with the blockchain? How do they initiate and verify transactions? 
+
+\subsection{Micropayments}
+
+
+\section{Case Studies}
+
+\subsection{Data and Method}
+
+The case studies are predominately based on open source code hosted on GitHub. This provides the most objective view on the technology. In addition company websites, white papers, and blog articles have been used. All of the companies, or related projects in the case of Filament, have public Slack channels on which the author was either active or passively monitoring for an extended period of time.
+
+In addition to an technological overview, we present a brief general portrait of the company/project and conclude with remarks concerning the business model. 
+
+\subsection{Filament}
+
+\subsubsection{Portrait}
+
+Filament was already presented in Section \ref{sec:ecofilament}. 
+
+\subsubsection{Technological Overview}
+
+Filaments technological architecture follows the SPADE framework. SPADE is an acronym for secure communications, private interactions, autonomous devices, decentralized network and exchange of value. An illustration of the framework and its more specific implementation is provided in Fig. \ref{fig:filament}. In the following we will investigate the layers of the framework in more detail. 
+
+\begin{figure}
+\centering
+\includegraphics[width=\textwidth]{./externalized/filament.pdf}
+\caption{The SPADE framework and technical implementation as pursued by Filament.}
+\label{fig:filament}
+\end{figure}
+
+
+\paragraph{Secure and Private Communications}
+The communication between devices is based on telehash\footnote{\url{http://telehash.org/}}, \emph{a light-wight interoperable protocol with strong encryption to enable mesh networking across multiple transports and platforms} independent of a centralized messaging broker.  Telehash endpoints are using the same form of self-authentication as users in Bitcoin and Ethereum, i.e their identity is derived from one or multiple self-selected public key(s). Telehash messages are JSON documents. All messages are encrypted (JSON Web Encryption \cite{rfc7516}) and authenticated (JSON Web Signatures \cite{rfc7515}). Furthermore, Telehash implements cloaking mechanisms that allow adding random noise to messages.
+
+\paragraph{Autonomous Devices}
+Filament interprets device autonomy as devices being \emph{first-class citizens} on the network instead of services. Consider the examples of humans in the Internet. Although we think of us as autonomous agents, in the Internet our identity is typically derived from services like Facebook, Google, LinkedIn or Twitter. In order to become independent of central services device autonomy incorporates three parts: (1) Self-authentication, (2) autonomous discovery, and (3) contracts. (1) Self-authentication is described in the last paragraph. (2) Autonomous discovery includes both local, i.e. devices are in the same local physical network, and global discovery.
+Local discovery is straight forward using broadcasts. Global discovery is usually achieved by centralized services, e.g. Facebook, or federated services, e.g. the domain name system (DNS). In contrast, Filament uses \emph{blockname}, a simple DNS resolver based on domain name IP address tuples stored in null data outputs of Bitcoin transactions. An example for a telehash entry is shown in Fig. ref{fig:blockname}. In this system domain names do not have an owner and can not be transferred, but if there are multiple null data outputs concerning the same domain, the one with the highest attached value is considered valid by blockname resolvers. (3) Ownership, access control, pricing of resources is defined in a signed machine-readable data structure, a machine-to-machine contract. Fig. \ref{fig:filament} is showing the general structure of such a contract as envisioned by Filament. Contracts are stored on the devices themselves but receipts may be stored on a blockchain in order to provide a verifiable log of contractual obligations.
+
+\begin{figure}
+\centering
+\includegraphics[width=\textwidth]{./externalized/blockname.pdf}
+\caption{An example of a blockname entry for a telehash name resolution entry in the Bitcoin blockchain.}
+\label{fig:blockname}
+\end{figure}
+
+
+\begin{figure}
+\centering
+\includegraphics[width=\textwidth]{./externalized/filamentcontract.pdf}
+\caption{Contract structure as envisioned by Filament \cite{filament}.}
+\label{fig:filament}
+\end{figure}
+
+\paragraph{Decentralized Network}
+Filament devices support low-power wireless meshed networking. Devices can communicate over long-range links without immediate access to wifi or cellular connection. Wide area network access can be provided at arbitrary points within a network.
+
+
+\paragraph{Exchange of Value}
+
+Filament envisions arbitrary value exchange and barter between autonomous devices. However, only two forms are described in more detail: Payments in bitcoin, and some form of proof of payment. For bitcoin micropayments, Filament has developed the \emph{pennybank} protocol. Furthermore, it provides a mediated method that opposes the principle of device autonomy. Someone, or something, who wants to transact with a device pays the \emph{operator} of the device in exchange for a receipt. Then the payer provides the receipt to the device. 
+
+
+% \subsubsection{Characterization as Economic Object}
+
+% \paragraph{Identity and Representation on the Blockchain}
+% Devices can have different representation on
+
+% \paragraph{Interaction with the Blockchain}
+
+% \paragraph{Micropayments}
+
+\subsubsection{Business Model}
+
+Filament advocates a Hardware-as-a-Service business model with an interesting twist. At least in principle,  devices are viewed as autonomous economic agents that provide services in exchange for some form of payment. Machine-readable contracts may specify revenue-sharing agreements between Filament, and various other stakeholders. Instead of the device-centric interpretation, we can also interpret this approach as a shared ownership of devices. This might be an important model for the IoT industry where shared usage of devices is the norm.
+
+
+\subsection{21 Inc}
+
+\subsubsection{Portrait}
+21 Inc was founded May 2013, but remained stealth until May 2015. In June 2016 the company has a total funding of USD 121.05M. Thereby being the most funded start up in the Bitcoin ecosystem. Their first product, the 21 Bitcoin Computer, was released in November 2015. In March 2016 a micropayment marketplace was opened, and in June 2016, the 21 software library which allows to build bitcoin-payable Representational State Transfer (REST) APIs, UNIX command line tools, and access to the 21 marketplace became available on other UNIX-based platforms, free and open source under the free BSD license.
+
+21 aims to make Bitcoin a standard resource for UNIX-based systems and provide the tools and services for developers to build a \emph{machine-payable web} where individual machines can cooperate globally, and potentially autonomously, in exchange for bitcoin micropayments.
+
+A more detailed general introduction of 21 was given in Section \ref{sec:eco21}.
+
+\subsubsection{Technological Overview}
+
+In the following we present the core technology stack provided by 21. Figure \ref{fig:21stack} illustrates the stack together with additional services that distinguish 21.
+
+\begin{figure}
+\centering
+\includegraphics[width=\textwidth]{./externalized/21stack.pdf}
+\caption{The 21 technology stack and accompanying services.}
+\label{fig:21stack}
+\end{figure}
+
+\paragraph{Embedded Mining Chip}
+
+The 21 BC has an embedded mining chip with a hashing rate of approx. 50 GH/s and an energy efficiency of 0.16 J/GH. The chip contributes its hashing rate to a currently centralized mining pool orchestrated by 21. So far the chip is only deployed in 21 BCs and in data centers operated by 21.   
+
+In comparison, the total hashing rate of the Bitcoin network is around 1,500,000,000 GH/s in Q2 2016.
+
+\begin{figure}
+\centering
+\includegraphics[width=\textwidth]{./externalized/21blocks.pdf}
+\caption{Daily blocks mined by the 21 pool. The total daily block generation rate of the Bitcoin network is 1440 blocks. After March 2016 21 stopped identifying their blocks.}
+\label{fig:21blocks}
+\end{figure} 
+
+\paragraph{Machine Wallet}
+
+The 21 machine wallet is a hierarchical deterministic key Bitcoin wallet that can be interfaced either via command line or, more importantly, programmatically. The machine wallet provides access to on-chain funds and off-chain (BitTransfers)funds, and is the basis for interacting with bitcoin-payable APIs. 
+
+BitTransfers are initiated by sending a serialized JSON document to a 21 server. The JSON document is authenticated by a signature corresponding to the wallets main key. 
+
+\begin{figure}
+\label{lst:21bittransfer}
+\begin{lstlisting}[breaklines]
+        bittransfer = json.dumps({
+            'payer': self.username,
+            'payer_pubkey': compressed_pubkey,
+            'payee_address': payee_address,
+            'payee_username': payee_username,
+            'amount': price,
+            'timestamp': time.time(),
+            'description': response.url
+        })      
+        signature = self.wallet.sign_message(bittransfer)
+        return {
+            'Bitcoin-Transfer': bittransfer,
+            'Authorization': signature
+        }
+\end{lstlisting}
+\caption{Authenticated data structure to initiate a BitTransfer%\footnote{c.f. https://github.com/21dotco/two1-python/blob/master/two1/bitrequests/bitrequests.py.
+}
+\end{figure}
+
+
+\paragraph{Developer Tools}
+
+The 21 library is a collection of libraries that support a developer to build bitcoin-payable services. The most important parts are libraries to serve and consume/pay REST APIs using on-chain payments, payment channels and BitTransfers. Furthermore, there are libraries to work with various Bitcoin-related primitives.  
+
+
+\paragraph{Software Defined Networking}
+
+Most machines in the Internet are behind routers that employ network address translation (NAT) and/or disallow incoming connections from machines in other networks. Furthermore, Internet Service Providers (ISPs) often reassign IP addresses on reconnects. Hence, p2p communication and trading between personal machines is inherently hard given the predominant Internet architecture. 21 solves this problem with software defined networking (SDN). In particular, the SDN technology of ZeroTier\footnote{https://www.zerotier.com} is used. SDN allows to virtualize networks such that machines living in different physical networks connected via TCP/IP can communicate with each other as if they were in a single local area network. This entails that all traffic is encrypted and authenticated. 
+
+\paragraph{Marketplace}
+
+The marketplace allows sellers to publish bitcoin-payable APIs, and allows potential buyers to query and discover bitcoin-payable APIs. Although the marketplace is centrally hosted, trades are peer-to-peer. The marketplace is the first marketplace for digital goods and (micro) services. At time of writing the marketplace is small and most services are directly provided by 21. Fig. \ref{fig:21marketplace} shows the number of APIs offered by each individual seller. In July 2016, there are 86 APIs offered. 49 are provided by 21. Independent sellers mostly provide one single API. Table \ref{tbl:21marketplace} gives an overview of the top five services. All of them are offered by 21. 
+
+In order to interact with the marketplace a user has to open an account with 21. However, only an username and password are required. Social connections such as Twitter, LinkedIn or GitHub can be provided. Analogous to existing marketplaces like Amazon and eBay, buyers are able to publicly rate sellers after purchase.  
+
+\begin{figure}
+\centering
+\includegraphics[scale=0.7]{./externalized/21marketplace_creators.pdf}
+\caption{Number of APIs in the 21 marketplace by individual vendors. The first vendor is 21 itself.}
+\label{fig:21marketplace}
+\end{figure}
+
+
+\begin{table}
+\centering
+\begin{tabular}{lr}
+    \toprule
+    Name & Price [Satoshis] \\
+    \midrule
+    Zip Code Data & 2500 \\
+    Ping21 Aggregator & 3000 \\
+    Part of Speech Tagger & 6000 \\
+    Twitter Influence Ranking & 5000 \\
+    Neural Art & Variable \\
+    \bottomrule
+    \label{tbl:21marketplace}
+  \end{tabular}
+  \caption{The five most popular APIs. All are created by 21.}
+  \end{table}
+ 
+
+% \subsubsection{Characterization as Economic Object}
+
+% \paragraph{Identity and Representation on the Blockchain}
+
+% Machines do not have an identity on the blockchain, but represented as IP addresses in a virtual network. A machine can have multiple wallets 
+
+% \paragraph{Interaction with the Blockchain}
+
+% The library provides an abstraction layer for blockchain interaction. 
+
+% \paragraph{Micropayments}
+
+% Two mechanisms for micropayments are implemented. Simple unidirectional payment channels as presented in Sec. \ref{sec:unipc} and off-chain payments (BitTransfer). 
+
+\subsubsection{Business Model}
+
+21 is positioned at the center of a possible new type of digital economy with various ways for monetization. As of now the main revenue is generated by 21 Bitcoin Computer sales. Furthermore, there is potential revenue from mining, digital services on the marketplace, and embedded mining chip sales. Embedded mining could play a more important role in the future, and the mining chips are already prepared for revenue sharing. 21 is ideally positioned to act as a large payment service provider in payment channel networks (c.f. Sec. \ref{sec:paymentchannelnetworks} and \cite{decker2015Duplex}).
+
+
+\subsection{Slock.it}
+
+\subsubsection{Portrait}
+Slock.it was founded in September 2015 by long-term members of the Ethereum community. Slock.it aims to play a significant role in the sharing economy by disintermediating existing sharing economy platform companies like Uber and AirBnB, as well as by providing \emph{sharing capabilities} to many more objects. At first this is envisioned to be enabled by a device termed the Ethereum Computer. The Ethereum Computer is intended to provide a bridge between the physical objects and smart contracts on the Ethereum blockchain.
+
+
+\subsubsection{Technological Overview}
+
+\begin{figure}
+\centering
+\includegraphics[width=\textwidth]{./externalized/slockit.pdf}
+\caption{High-level overview of the Slock.it architecture. }
+\label{fig:21marketplace}
+\end{figure}
+
+
+\paragraph{Ethereum Computer}
+
+The current prototypical implementation of the Ethereum computer which provides the interface between physical objects and the Ethereum network is a light-weight Node.js application. The main part of the application is the eth module which interacts with an Ethereum node using web3.js. The eth module allows to register smart contracts on the Ethereum network which represent physical objects (slocks). These smart contracts are watched. State changes within the smart contracts trigger local state changes and events.
+For example the eth module keeps track of the current owner and current user of a slock. Owners and users are represented as Ethereum accounts. Besides on-chain interaction with the slocks which will be discussed in more detail in the next paragraph, the Ethereum computer provides a websocket API. Messages received through the websocket API have to be signed, and are validated within the eth module. Thereby owners and users of slocks are able to authenticate themselves to the Ethereum computer. Hence, access control is in principle provided by the Ethereum network.
+
+\paragraph{Slock Contracts}
+
+The main slock contract defines an owner, a deposit, and a price. The price is time-based in wei per block, i.e. approximately per 13 s. In order to rent an object a user has to call the rent method providing the deposit. Upon return the user has to actively call the returnIt function which calculates the fee and distributes the deposit accordingly. 
+
+\paragraph{Universal Sharing Network}
+
+\paragraph{The DAO}
+
+The Team behind Slock.it furthermore implemented a set of smart contracts known as the \emph{Standard DAO Framework} and which have been deployed to the Ethereum blockchain as \emph{The DAO}. The DAO was meant as a shareholder-controlled venture fund. Everyone was able to send ether to the DAO contract in exchange for DAO tokens which provide voting rights and potential rewards. Moreover, everyone was able to send a proposal to the DAO, and token holders were able to vote on proposals. Proposals ask for ether payout under specific conditions. Slock.it wanted to fund the development of the Ethereum Computer by means of a DAO proposal, and provide DAO token holders with a share of the revenue for every trade facilitated by an Ethereum computer. THe DAO collected more than USD 130M worth of ether. However, many problems of the DAO contracts became identified which culminated in the exploitation of a re-entry bug.
+
+\subsubsection{Business Model}
+
+% \subsubsection{Characterization as Economic Object}
+
+% \paragraph{Identity and Representation on the Blockchain}
+
+% Each physical slock has a Slock contract representation on the Ethereum blockchain. The Slock contract governs the ownership and usage/access control of the digital representation of the physical slock. 
+
+% \paragraph{Interaction with the Blockchain}
+
+% The Ethereum Computer, and thus the slocks, interact with the Ethereum blockchain by watching the corresponding contract. Currently, the Ethereum Computer needs to run a full Ethereum node. There is no communication from the Ethereum Computer, i.e. the eth module, to the slock contract. 
+
+% \paragraph{Micropayments}
+
+% All payments are handled through regular ether transactions and the contract send function. 
+
+\subsection{IBM ADEPT}
+
+\subsubsection{Portrait}
+The Autonomous Decentralized Peer-to-Peer Telemetry (ADEPT) platform is a proof-of-concept implementation by IBM and Samsung Electronics. The aim was to implement the essential functions that typical IoT platforms provide, i.e. message brokering, data sharing, and device coordination, in a decentralized architecture. The motivation is presented in \cite{devicedemocracy}. 
+Although it was announced that the code for the ADEPT proof-of-concept would be available on GitHub, at time of writing the only information publicly available is in from of white papers \cite{empoweringtheedge}. 
+
+\subsubsection{Technological Overview}
+
+According to \cite{empoweringtheedge} the three main functions of a decentralized IoT platforms are (1) peer-to-peer messaging, (2) distributed file sharing, and (3) autonomous device coordination (c.f. Fig. \ref{fig:adept}). 
+
+\begin{figure}
+\centering
+\includegraphics[width=\textwidth]{./externalized/adept.pdf}
+\caption{The three main functions of the ADEPT platform, and the technologies they are implemented with.}
+\label{fig:adept}
+\end{figure}
+
+\paragraph{Peer-to-peer Messaging}
+
+Peer-to-peer messaging allows endpoints to communicate without the need of a central broker. In practice, messages have to be routed since direct links between endpoints do not always exist. ADEPT uses the same encrypted peer-to-peer messaging protocol, telehash, as Filament. 
+
+\paragraph{Distributed File Sharing}
+
+Messaging protocols are designed for small payloads and thus not suitable to distribute larger files such as firmware updates. Hence, ADEPT uses BitTorrent for distributed file transfer.
+
+\paragraph{Autonomous Device Coordination}
+Device coordination specifies the transaction properties of devices. Who can transact with whom under what conditions. This involves other machines/devices as well as humans physically interacting with a device. Examples are access control and authentication, and contracts, agreements and payments. Autonomous device coordination is envisioned to be blockchain-based, and the proof of concept implementation is based on a private fork of the Ethereum blockchain. 
+
+\subsubsection{Business Model}
+
+The decentralized architecture based on autonomous devices allows for a reduction of data center costs. This does not mean that data centers and cloud services become obsolete. Could services can still provide optional value-added services while base functionality can be provided without cost on the vendors side. This is almost a necessity for long-living IoT devices.
+
+
+\subsection{Results}
+
+\begin{table}
+\centering
+\label{my-label}
+\begin{tabular}[\tiny]{@{}lp{1.5 cm}lp{1.5 cm}p{1.5 cm}p{1.5 cm}p{1.5 cm}@{}}
+\toprule
+Company/Project & Focus                                          & Blockchain & Blockchain Identity  & M2M Payments     & Network Participation       & Status                          \\ \midrule
+Filament        & Autonomous devices, for Industrial IoT          & Bitcoin    & Blockname            & Pennybank, notes              & Light client                & Prototype                       \\
+21              & Machine-payable web                            & Bitcoin    & -                    & On-chain, payment channels, off-chain              & configurable, typically API & Production, but mostly toy apps \\
+Slock.it        & Sharing economy                                & Ethereum   & Slock Contract       & On-chain & Full node (currently)       & Early prototype                 \\
+IBM ADEPT       & Autonomous devices/ decentralized IoT platform & Ethereum   & Yes, but not details & On-chain              & Different levels envisioned & Early prototype                 \\ \bottomrule
+\end{tabular}
+\caption{Blockchain usage of case study companies.}
+\end{table}
+
+\subsection{Discussion}
+
+\subsubsection{Slock.it}
+
+
+Full node
+Physical changes and reorganizations
+Re-entry bug in returnIt function
+Nothing implemented if device is not returned
+
+
+\section{Use Cases and Applications}
+
+\section{Business Model Implications}
+
+
+
+

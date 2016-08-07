@@ -1,0 +1,94 @@
+\chapter{Privacy and Interoperability in The Consumer Internet of Things}
+
+
+Technology advertised as Internet of Things (IoT) is steadily making its way into our everyday lives. Common objects such as light bulbs, thermostats, and smoke detectors are getting connected. The quantified self movement is being embraced by the industry and has led to all kinds of health and fitness trackers. Today the connection of an object is usually obvious since the process of connecting needs active and conscious user involvement. Objects have to be connected to the local Wi-Fi or special gateways have to be attached to Internet routers. Moreover, in many cases users have to sign up to a web service the vendor provides, link their identities, and agree to various terms of service. However as new routers and gateways are becoming ubiquitous, or new inexpensive long-range IoT networks get deployed we will become increasingly unaware of which objects are connected and which are not. 
+
+These objects typically entail a plethora of sensors: Motion, light, sound, and many more depending on the specific object. Economies of scale and System on a Chip technology leads to standardized platforms with many more components such as additional sensors that would not be necessary in most of the applications. In addition, they collect data about how we use the object, and they may have access to a lot more since they live inside our non-protected local network. 
+
+This data can be used to enhance the functionality of the object itself, it can be used to give the vendor hints to improve the performance, build better products and provide additional services. In some cases, such as wearable health devices, there is even societal value in the collected data. 
+
+On the other hand, an ever more complete picture of our daily life, our behavior, our personality and our health is stored in the databases of a few large corporations. This data can be used in our interest but also against our interest, and an ever-growing list of data breaches shows that even if we trust in the vendor’s good intentions there is still a high risk of our data getting into the wrong hands.
+
+Currently we are mostly unaware what data is collected and streamed into the vendor’s database. Only in rare cases the user is able to get a dump of the raw data, and even then there might be still revealing logs that are kept without reach. In most cases however the user has only restricted access through websites, smartphone apps, and application programming interfaces (APIs) provided by the vendor, and the user is neither aware of what data is going where, nor does he have any enforceable control of it. A digital representation of a physical object has a lot of benefits, but in most cases this digital representation exists somewhere in the cloud, and is out of the user’s control.
+
+The problem is not new.  When we are using search engines, when we are browsing the web, or when we are using apps on our smartphones and tablets, we are leaving a digital trail behind that gets collected. However, in these cases we are actively using a service, and quietly agreeing to pay with our attention and data. In the Internet of Things, mere \emph{being} will leave a trail with increasing dimensionality and detail.  
+
+The prevailing terminology of \emph{data as a new asset class}, or emph{data is the new oil} intensives the situation even more. Although these expressions have a true core, their scope is too broad and leads to misinterpretation. In effect, driven by a fear of missing out, many companies are collecting as much as data as possible without having a clear idea of how the data might be useful. 
+
+On the other hand, although a lot of data gets collected it may not be available for other parties to create the biggest benefit for the user and the society. 
+
+We argue that we need a new user-centric architecture for the consumer-oriented IoT that allows for conscious control over smart products and the data they co-produce in collaboration with their users. This architecture should be guided by the following principles:
+
+\begin{itemize}
+
+•	Ownership of the digital representation of an object should be owned by the user in the same way the physical object itself does.
+•	Data sharing should be dependent on user preference instead of vendor decisions and missing technical interoperability.
+•	Extract value of data as immediate as possible. Share only refined information instead of raw data.
+•	Data should be meaningful and discoverable by local and global agents, such that beneficial transactions can happen.
+•	All transactions should be auditable by the user.
+
+\end{itemize}
+
+In the following we will discuss each of these principle with the aim to derive architectural constraints that will eventually lead us to beneficial architectures.
+Ownership of the digital representation of an object should be owned by the user in the same way the physical object itself does
+
+In the past it was natural that buying a product implies ownership and control in addition to mere physical possession. When software became part of products and thereby products became programmable vendors already started to artificially restrict users and limit their control over the product. However, as products became connected the power has shifted tremendously from the user to the vendor and the boundaries of ownership blurred. Examples are the repeated remote deletions of books on Amazon Kindle eBook readers, and the recent deactivation of Revolv smart home hubs. 
+
+Consumer IoT is still a very recent development. There are hundreds of start-up companies with all kinds of experimental products and cautious steps of large vendors. Almost all of the products are younger than 5 years, but many aim to replace common household objects with typical lifetimes of 10 to 20 years. 
+
+Both arguments suggest that connected products should be able to provide their main functionality autonomously, i.e. without consulting web services provided by a vendor’s backend infrastructure. Furthermore authentication and authorization should be managed by the user and not by the vendor.
+
+
+Data should be meaningful and discoverable by local and global agents, such that beneficial transactions can happen.
+
+Interoperability is one of the main challenges discussed in the context of IoT. Products, and their capabilities and constraints vary tremendously. Thus, a number of have been formed and many protocols and standards have been proposed, but no winner has emerged yet, and it not obvious if a winner will emerge at all. 
+Extract value of the data as close as possible. Share only refined information instead of raw data.
+
+
+All transactions should be auditable by the user.
+
+
+\subsection{State of the art}
+
+
+\subsubsection{Silos}
+
+Today most manufacturers store collected data in dedicated databases either on premise or in managed databases offered by third party providers. Consumers usually give up the rights on collected data by agreeing to terms of service, and are able to access data only through  restricted APIs. Only in rare cases the raw data is available. Hence, the manufacturer acts as a gatekeeper. Data might lie dormant and underutilized in a database or is sold to third parties without explicit consent or revenue sharing. Privacy is only guaranteed by law and trust. Data sharing is non-existent or only with selected parties. There is huge technological complexity if different data sources have to be combined because manufacturers may use different data schemes and different APIs. 
+
+\subsubsection{Centralized platform}
+
+During recent years a plethora of centralized IoT platforms have emerged. \cite{DBLP:journals/corr/MineraudMST15a} provides a comprehensive overview. These platforms provide Platform-as-a-Service solutions for IoT device manufacturers and/or allows individuals to connect their devices using standard protocols. Data is stored centrally and can be accessed through APIs. Some platforms allow to make data publicly available or to create additional credentials yo share data with selected APIs
+
+\subsection{Novel approaches}
+
+\subsubsection{Nervousnet}
+
+The Planetary Nervous System is a distributed platform aiming to provide real-time data mining services as a public good. Although integration of various IoT devices is planned the platform is currently based on a mobile smartphone application called Nervousnet. The application exposes different physical and software sensors of the underlying system. For each sensor the user can control if measurement data is stored locally and/or shared with other platform participants. From an API perspective the primitive is a virtual sensor model which is able to transform a number of input streams to virtual sensor output stream by applying aggregation and filtering functions. Thus far only \emph{local} virtual sensors are implemented, i.e. computations involving measurement data of multiple users cannot be executed on the network, but all individual users' measurements have to be exposed to the requester. 
+
+Real-time
+Distributed
+How is discovery fascilitated? Payments? Governance?
+
+
+\subsubsection{Global Data Plane}
+
+The Global Data Plane (GDP) is a data-centric abstraction based on the concept of a single-writer append-only log. In this model each sensor generates an authenticated timestamped log. Interested (and authorized) readers are able to either access the log or to subscribe to the log. Confidentiality is envisioned to be provided by encryption. Location-independent routing based on a distributed hash table (DHT) allows an abstraction from the actual location of the data. In order to provide developers a coherent view to interface with different logs a common access API (CAAPI) is proposed. 
+
+\paragraph{Critique}: 
+The concept is best suited for open data that is of interest for many consumers. If logs need to be confidential the approach is to use symmetric encryption to encrypt the data and create an additional \emph{access log} on which new symmetric keys appended. Every symmetric key has thereby encrypted with the public key of every authorized consumer. This is only viable if the set of authorized consumers is small and relatively fixed. 
+Other open questions are: who will store the data and keep it available, and who will maintain the DHT ?
+
+
+\subsubsection{OpenPDS}
+
+Personal data stores aim to collect data from devices owned by an individual by providing open APIs that can be integrated by device manufactures. Personal data stores can either be hosted locally, e.g. as part of an Internet router, smart home hub, or set-top box, or can be hosted by a trusted third party. Personal data stores then provide standardized APIs for third party services to access a user's data. In addition openPDS implements an analytics engine called SafeAnswers. Thereby third party services do not need to ask for permission to access raw data, but can request permission to execute certain computations within the PDS. Hence, only specific answers are sent to the third party instead of the data itself. OpenPDS will typically run on reasonably powerful hardware with continuous network connectivity. Thus, the platform is suitable to take part in multi-party computation protocols. This would allow to implement APIs that combine data of multiple PDS. However, data of one user may exposed to instances running on an other user's machine. 
+
+\subsubsection{Hub of All Things}
+
+\subsubsection{Enigma}
+
+Enigma utilizes various aspects of the Bitcoin Blockchain to provide a practical implementation of distributed encrypted storage based on secret sharing and secure multi-party computation on an open network of voluntary, untrusted nodes. From a practical point of view Enigma is able to provide the same functionality as the multi-party version of openPDS, with additional privacy guarantees, and without the need to run a node. Hence, Enigma feels like a cloud platform but without the usual privacy implications. Participation in the network is incentivized by providing payments in bitcoin. Correct behavior is enforced through game-theoretic mechanism design involving security deposits and an immutable audit trail on the blockchain. 
+
+Gap Analysis
+
+Synthesis
