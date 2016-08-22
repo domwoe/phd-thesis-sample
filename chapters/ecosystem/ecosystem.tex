@@ -2,148 +2,114 @@
 
 \section{Introduction}
 
-Incepting from a white paper (Nakamoto, 2008) published under the pseudonym Satoshi 
-Nakamoto on a cypherpunk mailing list in late 2008 the first peer-to-peer electronic 
-cash system - bitcoin - has developed into a global network of thousands of computers 
-(with more than 5000 full nodes), a cryptocurrency with a market capitalization 
-of more than \$5B (Nov. 2015), and a vivid ecosystem of open source projects, start-up 
-companies, as well as industry endeavors. According to recent data, almost \$1B 
-of Venture Capital has been invested in the bitcoin ecosystem since 2011 (CoinDesk, 
-2015). 
+It took quite some time until academia noticed Bitcoin. The first academic disciplines gaining interest were computer science, in particular information security \parencite{Karame:2012:DFP:2382196.2382292,Barber2012} and distributed computing \parencite{Babaioff:2012:BRB:2229012.2229022}, as well as law \parencite{Grinberg2011,Ewing2012}. Wide spread interest came with the extraordinary price rally in autumn 2013. The increasing value and media attention of Bitcoin led to an increase of venture capital fueling the ecosystem, and thus to more experimentation and variety of entrepreneurial activities. Bitcoin had the reputation of \emph{funny Internet money} that is used to buy drugs on the dark web \parencite{Christin:2013:TSR:2488388.2488408}. As we will see in this chapter, the first companies that have been founded were exchanges, payment processors, and ASCI miner manufacturers.
+Naturally, entrepreneurs focus initially on the low-hanging fruits and this means Bitcoin's value proposition of peer-to-peer electronic cash was taken literally to apply it for disintermediation in the financial service industry, e.g. payments, peer-to-peer lending, global remittances, and Over-The-Counter securities trading. 
 
-Bitcoin is a particular implementation of a novel information technology, called 
-blockchain, combining cryptography, peer-to-peer computing, and economic incentives 
-to enable systems with networked trust. Instead of trusting a single custodian, 
-system-wide consensus is reached by an ever-growing proof of computational work. 
-Arguably, this technology has the potential for disintermediation and disruption 
-(Baiyere et al., 2015), which is not limited to the financial service industry. 
-
-As shown by the literature review of Morisse (2015), the recent phenomena of cryptocurrencies 
-has not yet reached mainstream IS research. Although there are several interesting 
-links to IS research domains. For example, the social context of Bitcoin as a currency 
-has already been investigated by IS scholars: Glaser et al. (2014) and Hur et al. 
-(2015) analyzed the participation and intentions of Bitcoin users. Ingram et al. 
-(2015) explored the resilience of the Bitcoin entrepreneurs facing the early crashes 
-of the bitcoin currency like the bankruptcy of Mt. Gox (Dougherty and Huang, 2014). 
-
-However, as Giaglis and Kypriotaki  (2014) have highlighted: an interesting area 
+Argubly, this technology has the potential for disintermediation and disruption, which is not limited to the financial service industry. \cite{Giaglis2014} have highlighted: an interesting area 
 for IS scholars could be \emph{to assist the transition from the first era of applications 
-[...] (i.e. Bitcoin as currency) to more disruptive uses of theBbitcoin protocol 
+[...] (i.e. Bitcoin as currency) to more disruptive uses of the Bitcoin protocol 
 as an enabler of decentralized trusted peer-to-peer transaction ledger systems 
-and applications.} (p. 3) We've followed the development of the Bitcoin ecosystem 
-closely over the last years and acknowledge that practitioners are far ahead of 
-IS scholars. A first technical taxonomy for decentralized consensus systems has 
-been developed (Glaser et al., 2015). Moreover, digital business models of Bitcoin 
-start-ups that depend mainly on the currency aspect of Bitcoin have been inspected 
-in form of case studies (Kazan et al., 2015). We aim to advance the discussion 
-beyond the cryptocurrency aspect and the financial service industry. Therefore 
-our contribution is twofold. (1) We categorize the venture-backed Bitcoin start-up 
+and applications.} (p. 3)
+
+In this chapter, we categorize the venture-backed Bitcoin start-up 
 ecosystem along two dimensions, i.e. the potential for disruption and the particular 
 sector, and present the evolution of the ecosystem since its inception. (2) Based 
 on the categories, we investigate six companies in case studies with the aim to 
 extract the core innovations and the features of Bitcoin that fuel those innovations, 
-and critically discuss their potential for disruption.
+and critically discuss their potential for disruption. Two of these companies, Filament and 21 Inc., can be seen as representatives of the micro economy of things, and will be investigates on a more technical level in Chapter \ref{sec:economy}
 
-The structure of the paper is as follows. In Section 2 we give a slightly technical 
+The structure of the Chapter is as follows. In Section \ref{sec:eco:primer} we give a slightly technical 
 introduction to Bitcoin as an implementation of a novel information technology. 
 The focus thereby is on explaining the features that are utilized by the representative 
-cases. In Section 3 we present the methodology by which we collected data, how 
-we selected the cases, and how we analyzed them. Section 4 is dedicated to the 
+cases. In Section \ref{sec:eco:method} we present the methodology by which we collected data, how 
+we selected the cases, and how we analyzed them. Section \ref{sec:sec:eco} is dedicated to the 
 introduction and categorization of the Bitcoin start-up ecosystem, and we discuss 
-its evolution over time. Thereafter, we present the case studies in Section 5, 
-followed by key findings in Section 6. We conclude with a critical discussion of 
+its evolution over time. Thereafter, we present the case studies in Section \ref{sec:eco:cases}, 
+followed by key findings in Section \ref{sec:eco:findingss} We conclude with a critical discussion of 
 the disruptive potential and avenues for future research.
 
-\section{Innovation, Disruption and Disruptive Innovation}
+\section{Primer: Innovation, Disruption and Disruptive Innovation}
+\label{sec:eco:primer}
 
 In a broader definition, innovation can be described as \emph{the generation, acceptance, 
-and implementation of new ideas, processes, products or services.} (Thompson, 
-1965, p. 2). Depending on the context, the term \emph{innovation} incorporates divergent 
-attributes, such as different process stages or underlying constructs (Baregheh 
-et al., 2009). Hence, the purpose of an innovation process could be to change or 
-improve products as well as entire business models (Bucherer et al., 2012). Business 
+and implementation of new ideas, processes, products or services.} \parencite[][2]{10.2307/2391646}. Depending on the context, the term \emph{innovation} incorporates divergent 
+attributes, such as different process stages or underlying constructs \parencite{doi:10.1108/00251740910984578}. Hence, the purpose of an innovation process could be to change or 
+improve products as well as entire business models \parencite{CAIM:CAIM637}. Business 
 models can be described as \emph{the rationale of how an organization creates, delivers 
-and captures value} (Osterwalder and Pigneur, 2010). Describing the logic of a 
-company's business activities (Linder and Cantrell 2000), the business model comprises 
+and captures value} \parencite{osterwalder2010business}. Describing the logic of a 
+company's business activities \parencite{linder2000so}, the business model comprises 
 four high-level components including value proposition, operational model, financial 
-model and customer relations. (Bucherer et al., 2012). 
+model and customer relations. \parencite{CAIM:CAIM637}. 
 
 Depending on whether a company introduces a new service or changes its current 
 business model, innovations can be characterized by their \emph{degree of newness}, 
-a metric, which Garcia and Calantone (2002) describe as \emph{Innovativeness} and 
-\emph{the degree of discontinuity in marketing and/or technological factors} (Garcia 
-and Calantone, 2002, p. 112). In recent years the two notions \emph{radical} and \emph{disruptive}
+a metric, which \cite{JPIM:JPIMJPIM192_0110.XML} describe as \emph{Innovativeness} and 
+\emph{the degree of discontinuity in marketing and/or technological factors} \parencite[][112]{JPIM:JPIMJPIM192_0110.XML}. In recent years the two notions \emph{radical} and \emph{disruptive}
 have received increased attention from scholars and practitioners alike to describe 
-innovations with a high degree of innovativeness (Christensen et al., 2015; Latzer, 
-2009). 
+innovations with a high degree of innovativeness \parencite{Latzer01062009,christensen2015disruptive}. 
 
-Radical innovations refer to highly discontinuous (technological) changes (Latzer, 
-2009) and are characterized by totally new features, high uncertainty and the necessity 
+Radical innovations refer to highly discontinuous (technological) changes \parencite{Latzer01062009} and are characterized by totally new features, high uncertainty and the necessity 
 for companies to acquire new capabilities to fully exploit emerging opportunities 
-(Latzer, 2009). Additionally, these often technology-driven innovations can have 
+\parencite{Latzer01062009}. Additionally, these often technology-driven innovations can have 
 the potential to shift existing paradigms and might possibly disrupt industries 
-(Latzer, 2009). Following Christensen's theory, disruptive innovation can be described 
+\parencite{Latzer01062009}. Following Christensen's theory, disruptive innovation can be described 
 as a \emph{new product [or service] encroach[ing] on the low end of the existing market} 
-(Schmidt and Druehl, 2008, p. 348) with the potential to move upward to satisfy 
-higher customer expectations (Christensen, 1997, 2006). This is possible because 
+\parencite[][348]{JPIM:JPIM306} with the potential to move upward to satisfy 
+higher customer expectations \parencite{clayton1997innovator,ISI:000234127700008}. This is possible because 
 incumbents focus on improving their offerings along performance dimensions that 
 are valued specifically by the majority of demanding customers, while entrants 
 focus on different performance dimensions that are (initially) valued only by niche 
-segments, which are usually neglected by incumbents. At the same time, Christensen 
-et al. (2015) define \emph{disruption} as \emph{a process whereby a smaller company with 
+segments, which are usually neglected by incumbents. At the same time, \cite{christensen2015disruptive} define \emph{disruption} as \emph{a process whereby a smaller company with 
 fewer resources is able to successfully challenge established incumbent businesses}. 
 Hence, a disruptive innovation does not inevitably leads to the disruption of a 
 market, nor does a disruption of a market necessarily has to be triggered by a 
 disruptive innovation. 
 
-The literature on disruptive innovation is currently still in an early stage (Markides, 
-2006) and it remains controversial, how to define the concept (Danneels, 2004; 
-Yu and Hang, 2010). While some researchers support Christensen's understanding, 
+The literature on disruptive innovation is currently still in an early stage \parencite{JPIM:JPIM177} and it remains controversial, how to define the concept \parencite{ISI:000283729100005}. While some researchers support Christensen's understanding, 
 contributing own thoughts to the theory, others generally \emph{criticize the vagueness 
-of the concept} (Yu and Hang, 2010, p. 438). According to its critics Christensen's 
+of the concept} \parencite[][438]{ISI:000283729100005}. According to its critics Christensen's 
 theorization does not allow for a clear differentiation between underperforming 
 technologies and potentially disruptive technologies with initially inferior performance 
-(Tellis, 2006) Finally, a main criticism focuses on the lack of measurability of 
-disruptive innovation (Govindarajan and Kopalle, 2006). To overcome this gap, Govindarajan 
-and Kopalle (2006), define the following criteria to identify disruptive innovations. 
+\parencite{JPIM:JPIM179}. Finally, a main criticism focuses on the lack of measurability of 
+disruptive innovation \parencite{JPIM:JPIM176}. To overcome this gap, \parencite{JPIM:JPIM176}, define the following criteria to identify disruptive innovations. 
 The innovation should (1) possess inferior attributes regarding what mainstream 
 customers would value; (2) attract new customer segments by offering new value 
-propositions; (3) be offered at lower costs; and (4) start from niche markets (Yu 
-and Hang, 2006; Govindarajan and Kopalle, 2006).
+propositions; (3) be offered at lower costs; and (4) start from niche markets \parencite{ISI:000283729100005,JPIM:JPIM176}.
 
 \section{Methodology}
+\label{sec:eco:method}
 
-\textbf{Mapping the Bitcoin ecosystem}: To attain a wide dataset that adequately 
+\textbf{Mapping the Bitcoin ecosystem:} To attain a wide dataset that adequately 
 represents the presently existing Bitcoin start-up ecosystem, we utilized a variety 
-of publically available online sources: The start-up platform AngelList (2015), 
+of publically available online sources: The start-up platform AngelList\footnote{https://angel.co/}, 
 searched with the broad keyword \emph{cryptocurrency}, a compiled list of crypto technology 
-companies by industry expert William Mougayar (2015) and Coindesk (2015), a reputable 
+companies by industry expert \cite{Mougayar2015} and \cite{Coindesk2015}, a reputable 
 and well known bitcoin news site, which maintains a comprehensive list of venture 
 capital invested into Bitcoin start-ups. To validate and add additional data to 
 the compiled set we used the websites of the individual companies as well as press 
-releases and the Crunchbase database (2015). We identified a total of 704 start-ups 
+releases and the Crunchbase database\footnote{https://crunchbase.com}. We identified a total of 704 start-ups 
 and projects in the cryptocurrency and blockchain space, which are existent today. 
 Of these, 599 belong to the Bitcoin ecosystem, and 65 received venture capital. 
 
 Following an iterative process, we identified representative categories that help 
 understanding the Bitcoin ecosystem. 
 
-\textbf{Selecting and analyzing the representative companies: }Based on this classification 
+\textbf{Selecting and analyzing the representative companies:}Based on this classification 
 and our focus beyond financial services, we identified six application-specific 
 subsectors for investigation by representative case studies. The particular companies 
 were selected based on funding and attention by the community. The case studies 
 are grounded in a rich set of secondary data sources. Besides company websites, 
-white papers and press releases, there are detailed founder interviews on Zapchain 
-(2015) and Epicenter Bitcoin (2015). 
+white papers and press releases, there are detailed founder interviews on Zapchain\footnote{https://www.zapchain.com/} and Epicenter Bitcoin\footnote{https://epicenterbitcoin.com/}. 
 
 Although our research approach was inherently exploratory we had two guiding questions 
 in mind: (1) What is the core innovation of the company, and (2) on which Bitcoin 
 features is this innovation based.
 
 \section{The Bitcoin Start-up Ecosystem}
+\label{sec:sec:eco}
 
 The open and permissionless nature of Bitcoin has led to a Cambrian explosion of 
-projects and start-up companies. Table 1 provides an overview of the diversity 
+projects and start-up companies. Table \ref{tbl:ecosystem} an overview of the diversity 
 of the ecosystem. Notably, the table is restricted to the venture-backed Bitcoin 
 ecosystem. Projects and companies without funding as well as the growing extended 
 ecosystem, consisting of Bitcoin-inspired alternative coins and blockchains, were 
@@ -154,18 +120,17 @@ not taken into account.
 \includegraphics[width=449pt, height=118pt, keepaspectratio=true]{./externalized/ecis-fig002.png}
 \caption{Distinction between challengers and the Bitcoin ecosystem without 
 challengers.}
-\ref{fig:challengers}
+\label{fig:challengers}
 \end{figure}
 
-We divide the ecosystem in two main categories (see Figure 2 for illustration). 
+We divide the ecosystem in two main categories (see Figure \ref{fig:challengers} for illustration). 
 The first category consists of start-up companies that act mainly inside the Bitcoin 
 ecosystem itself. Examples are wallet providers, mining operations and Bitcoin 
 exchanges. We refer to this category as \emph{Bitcoin ecosystem without challengers}. 
 Hence, the second category is termed challengers. Those are companies that use 
 Bitcoin technology to attack traditional companies and business models outside 
-the Bitcoin ecosystem. Examples of this category are payment processors like BitPay 
-(2015), challenging traditional online payment processors like PayPal, and remittance 
-services like Abra (2015), challenging incumbents like Western Union by cutting 
+the Bitcoin ecosystem. Examples of this category are payment processors like BitPay\footnote{https://bitpay.com/}, challenging traditional online payment processors like PayPal, and remittance 
+services like Abra\footnote{https://www.goabra.com/}, challenging incumbents like Western Union by cutting 
 down transaction fees through disintermediation and decreased vulnerability to 
 fraud. The classification of companies is not always clear-cut and may change as 
 the ecosystem develops, but provides a lens to identify sectors, which might get 
@@ -181,26 +146,29 @@ integrity, as well as identity registries, which are not tied to a particular id
 provider. Marketplaces provide a decentralized infrastructure where physical as 
 well as digital goods and services can be traded for bitcoins. The digital assets 
 sector is concerned with the management of \emph{anything that exists in a binary format 
-and comes with the right to use} (Wikipedia, 2015). This entails digital art, 
+and comes with the right to use} \parencite{wikipedia2016da}. This entails digital art, 
 photographs, music, but also coupons and tickets. Furthermore, we extended the 
 concept of digital assets to incorporate the Internet of Things (IoT), since it 
 is concerned with the digital representation of physical devices. We will discuss 
-these sectors in more detail by looking at representative cases in Section 5.
+these sectors in more detail by looking at representative cases in Section \ref{sec:eco:cases}
 
 \begin{figure}
 \centering
 \includegraphics[width=\textwidth]{./externalized/projects.pdf}
 \caption{Number of new Bitcoin projects over time.}
+\label{fig:eco:projects}
 \end{figure}
 
 \begin{figure}
 \centering
 \includegraphics[width=\textwidth]{./externalized/scatter.pdf}
 \caption{Evolution of the venture-backed Bitcoin start-up ecosystem.}
+\label{fig:eco:evolution}
 \end{figure}
 
-Figures 3 and 4 give an overview of the temporal evolution of the ecosystem. Figure 
-3 shows the evolution of all Bitcoin projects whereas Figure 4 is restricted to 
+Figures \ref{fig:eco:projects} and \ref{fig:eco:evolution} give an overview of the temporal evolution of the ecosystem. Figure 
+\ref{fig:eco:projects} shows the evolution of all Bitcoin projects whereas Figure 
+Figures \ref{fig:eco:projects} and \ref{fig:eco:evolution} is restricted to 
 the venture-backed Bitcoin start-up ecosystem. Notably, there are no companies 
 that were founded in the first two years of Bitcoin's existence. Projects that 
 started earlier have not survived (e.g. Mt. Gox, 2015) or have not attracted venture 
@@ -209,6 +177,7 @@ the infrastructure for the Bitcoin ecosystem. From 2014 on, the number of challe
 has grown, and the sectors beyond the financial sector have gained traction. Hence, 
 these companies are very young and are just in the process of entering the market.
 
+\begin{table}
 \resizebox{\textwidth}{!}{
 \tiny
 \begin{tabular}{|>{\raggedright}p{17pt}|>{\raggedright}p{46pt}|>{\raggedright}p{68pt}|>{\raggedright}p{115pt}|>{\raggedright}p{53pt}|>{\raggedright}p{85pt}|}
@@ -276,20 +245,23 @@ your customer. AML: Anti money laundering. Both are bank regulations} & Elliptic
 BlockScore & Transaction fee (\%)\tabularnewline
 \hline
 \end{tabular}}
+\label{tbl:ecosystem}
+\caption{A categorization of the (venture-backed) Bitcoin start-up ecosystem.}
+\end{table}
 
-\textit{Table 1.  A categorization of the (venture-backed) Bitcoin start-up ecosystem.}
 
 \section{Case Studies}
+\label{sec:eco:cases}
 
 
 In the following, we investigate the challengers beyond financial services in more 
-detail. Therefore, we present six comprehensive case studies (marked bold in Table 
-1).
+detail. Therefore, we present six comprehensive case studies (marked as bold in Table 
+\ref{tbl:ecosystem}).
 
 \subsection{Filament (Internet of Things)}
 \label{sec:ecofilament}
 
-Filament (2015) provides wireless sensor networks for the (industrial) IoT, e.g. 
+Filament\footnote{https://filament.com/} provides wireless sensor networks for the (industrial) IoT, e.g. 
 for smart cities or smart agriculture use case. Most IoT platform providers follow 
 a centralized approach by connecting all devices to their respective cloud-infrastructure. 
 This has the major disadvantage that devices depend on a central infrastructure 
@@ -301,7 +273,7 @@ which encompasses three blockchain-related aspects: (1) Each device is registere
 on the blockchain providing a verifiable and immutable identity. This enables discovering 
 of and authenticating with other devices/services without the need of a dedicated 
 backend infrastructure. Therefore, devices are technically autonomous and are able 
-to operate independently of Filament. (2)~Each device is governed by a ``smart'' 
+to operate independently of Filament. (2) Each device is governed by a \emph{smart} 
 contract, which manages agreements of device control/ownership, data access and 
 financial agreements concerning the device. Ownership can be transferred permanently 
 or temporarily by a simple transaction on the blockchain. Filament implements the 
@@ -333,10 +305,10 @@ Filament.
 \subsection{Ascribe (Intellectual Property)}
 \label{sec:ecoascribe}
 
-Ascribe (2015) aims to provide provenance of intellectual property. Digital work, 
+Ascribe\footnote{https://www.ascribe.io/} aims to provide provenance of intellectual property. Digital work, 
 like art, photos, and music, can be registered publicly on the bitcoin blockchain 
 together with its accompanying terms and conditions. The technological basis is 
-the spool protocol (De Jonghe and McConghy, 2015), an overlay protocol that uses 
+the spool protocol\footnote{https://github.com/ascribe/spool}, an overlay protocol that uses 
 Bitcoin transactions to represent unforgeable ownership transfers and licensing 
 agreements for digital work. Thus, authenticity of ownership and usage rights can 
 always be proven. Ascribe focuses on digital art in particular. Although art is 
@@ -363,7 +335,7 @@ immutability of the bitcoin blockchain, instead of an authority.
 \subsection{OpenBazaar (E-Commerce Marketplace)}
 \label{sec:ecobazaar}
 
-OpenBazaar (2015) is an open source project consisting of a protocol and a reference 
+OpenBazaar\footnote{https://www.openbazaar.org/} is an open source project consisting of a protocol and a reference 
 implementation that enables a decentralized peer-to-peer e-commerce marketplace. 
 In comparison to traditional e-commerce market places like eBay and Amazon, there 
 is no central server or authority that is running the market place. Thus, there 
@@ -375,7 +347,7 @@ increases the global reach. Besides sellers and buyers there are notaries and ar
 for dispute resolution participating in the marketplace. Those latter participants 
 are involved by using bitcoin multi-signature transactions. Thus, OpenBazaar unbundles 
 the functions of traditional marketplaces. Trades on the OpenBazaar network are 
-based on Ricardian Contracts (Grigg, 2004), i.e. an electronic document that defines 
+based on Ricardian Contracts \parencite{1319505}, i.e. an electronic document that defines 
 the terms of a trade such that it is readable by computers and humans, and is cryptographically 
 signed. Apart from selling physical and digital products, OpenBazaar can also be 
 used to trade speculative contracts, which can be readily represented by Ricardian 
@@ -394,10 +366,10 @@ protocol and its reference implementation. As outlined above, OB1 is not able to
 profit directly from transactions on the marketplace in the way traditional revenue 
 mechanics on centralized marketplaces work. 
 
-\subsection{21 (Digital Micro Commerce Marketplace}
+\subsection{21 (Digital Micro Commerce Marketplace)}
 \label{sec:eco21}
 
-At first sight, the categorization of 21 Inc. (2015) as a challenger seems odd, 
+At first sight, the categorization of 21 Inc.\footnote{https://www.21.co} as a challenger seems odd, 
 since 21 is an infrastructure and platform provider for the bitcoin ecosystem. 
 Indeed, it is often categorized as a mining company. However, we argue that 21 
 is better classified as a marketplace for digital micro services, which has the 
@@ -413,15 +385,15 @@ they released their first product, the 21 Bitcoin computer. Essentially the 21
 Bitcoin computer is a full-stack development platform to build bitcoin-payable 
 digital services, which can be published and discovered on 21's digital marketplace. 
 Individual service consumptions, like an API call, can be billed at as little as 
-1 satoshi\footnote{ Satoshi is the smallest denominator of a bitcoin. 100,000,000 
+1 satoshi\footnote{Satoshi is the smallest denominator of a bitcoin. 100,000,000 
 satoshi correspond to 1 bitcoin. Thus, 1 satoshi is currently worth approximately 
 USD 0.000003.}. The embedded mining chip, which is currently coupled to a mining 
-pool (Antonopoulos, 2014, pp. 209-211) operated by 21, supplies the device with 
+pool operated by 21, supplies the device with 
 a continuous stream of satoshis.
 
 21 aims to embed their chips into any connected device (e.g. smart phones) to establish 
 bitcoin as a system resource like CPU, bandwidth or disk space, but for the purpose 
-of buying and selling digital goods and services (Srinivasan, 2015). It is crucial 
+of buying and selling digital goods and services \parencite{Balaji2015}. It is crucial 
 to understand that it does not make sense to sell the small amounts of mined bitcoins 
 for Fiat currency on an exchange. Instead, the idea is to supply every device with 
 a continuous stream of bitcoin from the point of commissioning on so that it can 
@@ -458,7 +430,7 @@ available yet because of missing incentives
 \subsection{Factom (Records Management)}
 \label{sec:ecofactom}
 
-Factom (2015) is an open source software project that provides businesses with 
+Factom\footnote{http://factom.org/} is an open source software project that provides businesses with 
 the ability to prove data integrity and to create verifiable and immutable audit 
 trails. 
 
@@ -469,10 +441,10 @@ issues of bitcoin, and on the other hand because of transaction fees. Therefore,
 Factom consists of a peer-to-peer network that is independent of the bitcoin network. 
 Customers of Factom generate hashes of their data and send them for recordkeeping 
 to the Factom network. There, all hashes are compressed to a single hash by building 
-a Merkle tree (Merkle, 1980) and taking the root of the tree. This single hash 
+a Merkle tree and taking the root of the tree. This single hash 
 value is then stored in the bitcoin blockchain. This provably time-stamps all individual 
 records without having to write all records individually into the bitcoin blockchain. 
-The network maintains its own crypto-currency, ``factoids'', which is used to incentivize 
+The network maintains its own crypto-currency, \emph{factoids}, which is used to incentivize 
 participants of the peer-to-peer network to provide their resources. A factoid 
 can be transformed into entry credits, which can be used to submit new records. 
 The price of a factoid depends on the market value, but the price of an entry credit 
@@ -484,7 +456,7 @@ in the blockchain. This offers an efficient and cheap alternative for businesses
 institutions and governments to have a proof of existence, proof of process or 
 proof of audit for their data. Their first publicly announced project is using 
 Factom for an official land title registry in partnership with the government of 
-Honduras (Chavez-Dreyfuss, 2015). In fact, Factom is an interesting option for 
+Honduras \parencite{Chavez2015}. In fact, Factom is an interesting option for 
 governments in developing countries. They often face mismanagement and corruption, 
 but cannot afford or enforce infrastructure and processes to guarantee compliance 
 of their administration. Moreover, the Factom solution offers also an opportunity 
@@ -494,7 +466,7 @@ regulations without hiring expensive professional companies for that.
 \subsection{Onename (Identity)}
 \label{sec:ecoonename}
 
-Onename (2015) allows registering identities on the Bitcoin blockchain. This blockchain 
+Onename\footnote{https://onename.com/} allows registering identities on the Bitcoin blockchain. This blockchain 
 identity can be connected to various online identities like Facebook, Twitter, 
 PGP keys and a Bitcoin address. Thus, it provides a probabilistic identity which 
 reliability grows with the number of verified connected accounts. Onename is based 
@@ -530,6 +502,7 @@ open source protocols and advocating their adoption, instead of having a revenue
 model in place.
 
 \section{Key Findings}
+\label{sec:eco:findings}
 
 Table 2 presents the key findings concerning our main research questions. We state 
 the core innovation of the company in the respective sector and list the features 
@@ -584,22 +557,19 @@ Notary & Records Management & Factom & Commoditizing data integrity and auditabi
 
 
 
-
-
 \section{Discussion}
+\label{sec:eco:discussion}
 
 In the title of this work we stated the question on whether the Bitcoin ecosystem 
 may disrupt sectors beyond the financial service industry. We would argue that 
 the companies we investigated in this paper are leveraging Bitcoin as global programmable 
 money and as an immutable public database to foster radical innovations in their 
 respective sectors. Central authorities are eliminated and new markets are created. 
-But as shown in Section 2.2 radical innovations are not necessarily disruptive 
+But as shown in Section \ref{sec:eco:primer} radical innovations are not necessarily disruptive 
 innovations and disruptive innovations may or may not disrupt a market eventually. 
-Thus \emph{identifying disruptive innovation is a complex process} (Kaltenecker et 
-al., 2015). The current literature still lacks a thorough theoretical foundation, 
-on how to define disruptive innovations (Yu and Hang, 2010). Additionally it remains 
-unclear to what degree disruptive innovations can be predicted ex ante (Barney, 
-1997; Tellis, 2006). This article aims to offer an overview on the fast developing 
+Thus \emph{identifying disruptive innovation is a complex process} \parencite{Kaltenecker2015234}. The current literature still lacks a thorough theoretical foundation, 
+on how to define disruptive innovations \parencite{ISI:000283729100005}. Additionally it remains 
+unclear to what degree disruptive innovations can be predicted ex ante \parencite{JPIM:JPIM179}. This article aims to offer an overview on the fast developing 
 blockchain ecosystem highlighting mainly the potential inherent to these technologies. 
 Most sectors that we considered are underdeveloped. The commoditization of registration 
 of digital work and intellectual property in general could be counted as a new-market 
@@ -619,7 +589,7 @@ of the start-ups, open source protocols and decentralization can help entering
 a market that is dominated by a central institution. However, it becomes much harder 
 to capture value and thus to find a sustainable business model.
 
-As shown in Figure 4, most of the ecosystem beyond financial services is younger 
+As shown in Figure \ref{fig:eco:evolution}, most of the ecosystem beyond financial services is younger 
 than two years. The companies are in a very early stage and the focus is clearly 
 on creating value and on advocating the use of their protocols. Some of the companies 
 are experimenting with ways to capture value. But it is too early to investigate 
@@ -631,22 +601,21 @@ emergent value networks as soon as the platforms get populated.
 
 Despite these first insights, more research will be required to gain a better understanding 
 of the theory of disruptive innovation in general, as well as in the context of 
-blockchain technologies in particular (cf. Danneels, 2004). We encourage other 
+blockchain technologies in particular \parencite[cf.]{ISI:000222662900002}. We encourage other 
 scholars to take this article as a starting point to investigate more precise measurements 
-(cf. Govindarajan and Kopalle, 2006) and clearer definitions (cf. Markides, 2006) 
+\parencite[cf.]{JPIM:JPIM176} and clearer definitions \parencite{JPIM:JPIM177} 
 of disruptive innovation in a Fintech context as well as to draw clear distinctions 
-to related research fields such as radical or open innovation (cf. Yu and Hang, 
-2010). 
+to related research fields such as radical or open innovation \parencite[cf.]{ISI:000283729100005}. 
 
-In this work, we deliberately restricted our scope on start-up companies building 
-on Bitcoin technology. However, there are numerous implementations of cryptocurrencies 
-and blockchains. While most of them are mere copies with different parameter choices, 
-there are also developments with the potential to advance the technology and applications 
-significantly. Most notably there is Ethereum, which e.g. replaces the restricted 
-scripting language of Bitcoin with a Turing-complete programming language that 
-allows programs \emph{living} on the Ethereum blockchain, so called contracts, to 
-govern over funds autonomously. This empowers developers to build richer decentralized 
-applications on top of the (Ethereum) blockchain. The Ethereum network launched 
-as recently as July 2015 and has still to prove its resilience. Thus far, there 
-are hardly any venture-backed companies in sectors beyond financial services that 
-use alternative cryptocurrencies and blockchains. However, this might change soon.
+% In this work, we deliberately restricted our scope on start-up companies building 
+% on Bitcoin technology. However, there are numerous implementations of cryptocurrencies 
+% and blockchains. While most of them are mere copies with different parameter choices, 
+% there are also developments with the potential to advance the technology and applications 
+% significantly. Most notably there is Ethereum, which e.g. replaces the restricted 
+% scripting language of Bitcoin with a Turing-complete programming language that 
+% allows programs \emph{living} on the Ethereum blockchain, so called contracts, to 
+% govern over funds autonomously. This empowers developers to build richer decentralized 
+% applications on top of the (Ethereum) blockchain. The Ethereum network launched 
+% as recently as July 2015 and has still to prove its resilience. Thus far, there 
+% are hardly any venture-backed companies in sectors beyond financial services that 
+% use alternative cryptocurrencies and blockchains. However, this might change soon.

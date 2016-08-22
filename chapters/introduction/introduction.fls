@@ -1,6 +1,10 @@
 PWD /Users/dowoerne/Development/phd-thesis/chapters/introduction
-INPUT /usr/local/texlive/2013/texmf.cnf
-INPUT /usr/local/texlive/2013/texmf-dist/web2c/texmf.cnf
-INPUT /usr/local/texlive/2013/texmf-var/web2c/pdftex/pdflatex.fmt
+INPUT /usr/local/texlive/2016/texmf.cnf
+INPUT /usr/local/texlive/2016/texmf-dist/web2c/texmf.cnf
+INPUT /usr/local/texlive/2016/texmf-var/web2c/pdftex/pdflatex.fmt
 INPUT introduction.tex
 OUTPUT introduction.log
+INPUT /usr/local/texlive/2016/texmf-dist/fonts/map/fontname/texfonts.map
+INPUT /usr/local/texlive/2016/texmf-dist/fonts/tfm/public/cm/cmti10.tfm
+OUTPUT introduction.pdf
+INPUT /usr/local/texlive/2016/texmf-var/fonts/map/pdftex/updmap/pdftex.map

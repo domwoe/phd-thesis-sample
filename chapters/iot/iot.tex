@@ -3,165 +3,145 @@
 
 \epigraph{We're building a world-sized robot, and we don't even realize it.}{--- \textup{Bruce Schneier}}
 
-\section{Taking a Step Back}
 
-\subsection{The Internet}
+\section{What is the Internet of Things?}
 
-There have been other communication networks before the Internet. However only the Internet spread over the globe. What are the reasons for this inimitable success story?
+Semantically, an Internet of Things is a world-wide network network of interconnected objects uniquely addressable, based on standard communication protocols \parencite{infso2008networked}. However, in practice the term is used in very different settings and has been evolved into a suitcase word for various technologies. Various organizations have given \emph{vision statements} from different perspectives. \cite{Atzori20102787} classify them as \emph{Things}-oriented, \emph{Internet}-oriented, and \emph{Semantic}-oriented, and argues that the Internet of Things can be seen as the convergence of these perspectives. In this thesis, we view the Internet of Things similar to the vision articulated by the CASAGRAS consortium as \emph{a world where things can automatically communicate to computers and each other providing services to the benefit of the human kind} \parencite[c.f. ][]{\cite{Atzori20102787}}. Arguably, this definition is close to the vision Mark Weiser, when the distinction between thing and computer becomes increasingly blurry. The Internet of Things extends the digital world into the physical world by providing web services access to physical resources. Sensors are the eyes and ears of the Internet, actuators are the hands. On the other hand, the Internet of Things provides a digital shadow for physical objects, extending their local capabilities and providing global capabilities.
 
-\subsubsection{Architectural Design Principles}
+In the following, we provide a short review of the evolution of the Internet of Things, before we discuss the current state and issues from different perspectives. We waive the introduction of the various technologies and their individual application scenarios, advantages and disadvantages. The interested may consult e.g. \parencite{Atzori20102787,Mattern2010,Gubbi20131645} for excellent overviews. We approach the IoT from a practical perspective and focus on the issues with the prevailing centralized architecture, and discuss approaches towards a more decentralized IoT. We further discuss the role of an electronic form of cash in this regard.
 
-The Internet followed different design principles than its predecessors and competitors. The Internet is fundamentally about open standards and open software that implements those standards. Another important choice is known as the End-to-End (e2e)principle \cite{Saltzer:1984:EAS:357401.357402}. The e2e principle states that \emph{intelligence} should be at the edges, at the top of a layered system. This implies the strict separation of application-specific matter and the actual means of communication and transport. This is what allows the uncountable applications and use cases of the Internet, and low cost for communication.
+\subsection{Auto-Identification}
 
-Internet protocol suite
+The term Internet of Things was coined by Kevin Ashton in 1999 \parencite[c.f ][]{ashton2009internet}, then director of the Massachusetts Institute of Technology (MIT) Auto-ID Center which started to develop a global inter-corporate Radio-Frequency-Identification (RFID) infrastructure. RFID chips can be passive, i.e. do not need an own power supply, and can be integrated in all kinds of products to automatically identify individual products. Today, RFID technology is used in key access cards, to track books in libraries, and in supply chain management in general. RFID allows to track and uniquely identify all kinds of objects around us. It may also allow those objects to transmit part of the context they perceive through sensors. Using RFID physical objects get a digital identity. Often this identity is fixed, sometimes it changes with context, but the interactivity is fairly limited. RFID-enable products might be largest category of today's Internet of Things. In this thesis, however we are concerned with more powerful smart objects.  
 
-\subsection{The Web}
-"It's not the computers which are interesting, it is the documents!"
+\subsection{Wireless Sensor (and Actuator) Networks}
 
-http application layer
+Wireless sensor networks (WSN) aim to digitize the physical environment and are based on various kinds of open and proprietary communication technologies. WSNs are typically deployed by a single company for a single application. Sensor data is transferred from individual sensing nodes to gateways, connecting local area networks with wide area networks, and finally to corporate databases. Important applications are in agriculture and monitoring technical infrastructure such as electricity grids. The term WSN is mostly used in the academic community while the industry has embraced terms such as Industrial IoT, smart city, smart agriculture etc. Although the term IoT is often used, we recognize a big gap to the vision stated above.
 
+\subsection{The iPhone and the Rise of Consumer IoT}
 
-\subsection{Web 2.0}
+In 2007, the iPhone heralded a new era. Are smartphones part of the Internet of Things? At least smartphones are the most pervasive wireless sensor (and computing) platform that has ever existed. The ubiquity of smartphones in the developed world, and increasingly in the developing world, came with an unprecedented global supply chain and rapidly decreasing prices for Systems-on-Chip (SoC) combining microprocessors, storage and different communication technologies. The smartphone has become a programmable interface, and its parts low-cost, easy to procure building blocks for all kinds of \emph{smart products}. This consumer Internet of Things has been driven predominantly by startup companies. Crowdfunding platforms such as Kickstarter\footnote{https://www.kickstarter.com/} and Indiegogo\footnote{https://www.indiegogo.com/} allow early adopters to fund new product categories and demonstrate interest to venture capital investment. Cloud computing on the other hand has allowed to access computing, bandwidth, and storage infrastructure on a \emph{pay-as-you-go} basis. Startups need comparably little initial capital to operate backend infrastructure and are able to scale the infrastructure elastically with customer demand. Additionally, IoT platforms have emerged, provided \emph{as-a-Service}, and entailing various functions from device provisioning to data analytics. These developments have led to a predominantly cloud-centric architecture of the IoT. Figure \ref{fig:smarthome} illustrates the cloud-centric architecture in the smart home context.
 
-The second paradigm is the web as a platform \cite{o2007web}. Instead of unidirectional broadcasting from servers to clients, and from content producers to content consumers, the web 2.0 embraced the concepts of co-creation and collective intelligence. Monolithic server applications became lightweight service oriented architectures which led to more experimentation, more compositions, and more user involvement. Google, Wikipedia, and social networks like Facebook are children of this era.
 
-Ever more software became open source and the value shifted towards network effects and user data.
+\begin{figure}
+\centering
+\includegraphics[width=\textwidth]{./externalized/smarthome_data_noplatfrom.eps}
+\caption{Prevailing cloud-centric architecture in the smart home context.}
+\label{fig:smarthome}
+\end{figure}
 
-The thriving business models of the web 2.0 are (targeted) advertisement and the ability to leverage the long tail. In fact advertisement was in many cases the only chance to generate revenue from a website.  
+%\subsection{Application Domains}
 
 
+% \subsubsection{Architectural Design Principles}
 
-\subsection{Cloud Computing and The As-a-Service Paradigm}
+% The Internet followed different design principles than its predecessors and competitors. The Internet is fundamentally about open standards and open software that implements those standards. Another important choice is known as the End-to-End (e2e)principle \cite{Saltzer:1984:EAS:357401.357402}. The e2e principle states that \emph{intelligence} should be at the edges, at the top of a layered system. This implies the strict separation of application-specific matter and the actual means of communication and transport. This is what allows the uncountable applications and use cases of the Internet, and low cost for communication.
 
-\section{History of the Internet of Things}
-Ubiquitous computing
-IOT 
+\section{The Internet of Things from different Perspectives}
 
-\section{Where are we now?}
+% \subsection{Research Perspective}
 
 
-\subsection{Industry perspective}
 
-Heterogeneity and complexity lead to the establishment of a plethora of middleware solutions commonly termed IoT platforms
+% Cisco gives a definition of fog computing.
+% Discussion of cloud and fog. \cite{Yi:2015:SFC:2757384.2757397} briefly discusses the problems of cloud computing. Namely, unreliable latency, lack of mobility support, and location awareness. Issue of fog computing are also discussed. One issue is the missing programming model, but I would argue microservices architectures are step in the right direction. Accounting, billing and monitoring is another issue. So is security and privacy.
 
-SigFox, The Thing Network
 
-\subsection{Consumer perspective}
+% \cite{DBLP:journals/corr/RomanLM16} provide a thorough overview of the security threads and challenges of mobile edge computing and fog computing.
 
-\subsection{Research perspective}
 
-The IoT industry has successfully embraced the economic model of the cloud. Consumer good and device manufacturers are able to connect their products easily and cheaply by utilizing one of the many aspiring cloud-based IoT platforms. Those IoT platforms themselves are using cloud providers such as Amazon, Google, Microsoft or Rackspace, which offer computing and storage infrastructure as pay-as-you-go services. This has led to a paradigm where devices do not communicate directly with each other but interaction is mediated through cloud-based web services.
+% Cloud Computing - the business perspective\cite{Marston2011176}
 
-Cisco gives a definition of fog computing.
-Discussion of cloud and fog. \cite{Yi:2015:SFC:2757384.2757397} briefly discusses the problems of cloud computing. Namely, unreliable latency, lack of mobility support, and location awareness. Issue of fog computing are also discussed. One issue is the missing programming model, but I would argue microservices architectures are step in the right direction. Accounting, billing and monitoring is another issue. So is security and privacy.
+% Integration of cloud computing and internet of things a survey \cite{botta2016integration}
 
+% \cite{7123563} surveys IoT research focusing on technology and protocols. It gives a good overview over CoAP, MQTT, XMPP, AMQP etc.
 
-\cite{DBLP:journals/corr/RomanLM16} provide a thorough overview of the security threads and challenges of mobile edge computing and fog computing.
+% \cite{Roman20132266} discuss challenges and opportunities for a distributed IoT. Mention the problem of identity and authentication. Authentication is naturally simpler in a centralized model.
 
 
-Cloud Computing - the business perspective\cite{Marston2011176}
+\subsection{Industry and Business Model Perspective}
 
-Integration of cloud computing and internet of things a survey \cite{botta2016integration}
+The Internet of Things ecosystem is a lively mixture of established technology companies, startup companies, and traditional hardware and consumer goods companies. The digitization of physical objects is stimulated by the aspiration to get real-time data of products and their life cycle in order to allow for high-resolution management \parencite{fleisch2010internet}, to provide new services to the consumer, and to explore and implement new business models \parencite{Fleisch2015}.	
 
-\cite{7123563} surveys IoT research focusing on technology and protocols. It gives a good overview over CoAP, MQTT, XMPP, AMQP etc.
+Off-the-shelf SoCs and Systems in Package (SiP) as well as a multitude of IoT platforms provided as a service \parencite{ISI:000379632700002}, allow small startups, and non-specialized companies to bring an ever growing number of connected products to market. Analysts predict the IoT will generate trillions of dollars per year within the next decade \parencite{manyika2015unlocking}, and there will tens to hundreds of billions connected devices. Thus, the Internet will will undergo a phase transition. Currently the Internet's dominant applications are social, connecting humans, and human-machine communication such as video and music streaming. However, in the future, the dominant application will most likely be autonomous machine-to-machine communications. 
 
-\cite{Roman20132266} discuss challenges and opportunities for a distributed IoT. Mention the problem of identity and authentication. Authentication is naturally simpler in a centralized model.
+Although the marginal cost of connecting a product has become almost negligible, the maintenance and operating costs over the product lifetime are of concern. Therefore, vendors aim to use the digital capabilities of a product to reframe the product as a service with the aim to manifest recurring payments in form of subscriptions. Examples are Tado offering a subscription-based thermostat, Comcast\footnote{https://www.xfinity.com/home-security.html} offering a subscription-based security system, and also SolarCity\footnote{http://www.solarcity.com/} offering solar panels based on a pay as you go model. We assume that these models will be even more important in developing countries where upfront costs are an obstacle. However, at the same time financial infrastructure such as banking accounts and credit cards necessary to implement subscription-based services are underdeveloped. Successful examples can already be seen in markets where mobile payment systems such as M-Pesa have become pervasive \parencite{hughes2007m}. M-Kopa is offering solar home systems, a combination of a small solar panel, a battery, a few LED lights, and a mobile phone charger, based on a pay as you go model \parencite{ISI:000351842100012}. Each solar home system is connected via cellular networks and can be remotely disabled, in case of late payments. 
 
-\section{Opportunities}
+However, it is rather unlikely that this service orientation can be applied to all kinds of connected products. Many consumers  are reluctant concerning recurrent payments. Tado for example started with a subscription-only model but had to offer a one-time payment option soon. Many products that are becoming connected such as LED light bulbs, door locks, washing machines, and refrigerators have a life expectancy of many years. It remains to be seen if enough additional value can be created and extracted to pay for operational costs of the backend infrastructure.
 
-\section{Security}
+In addition, with increasing distribution of connected devices there will be an increasing demand for interconnectivity of these devices. We see this already in the smart home. A simple example is the communication between the Nest protect smoke alarm and the Lifx LED bulbs. If the smoke detector recognizes a fire the light bulbs begin to blink in an alarming red. However, instead of local communication, the communication is facilitated between the backend services of the two vendors (c.f. Figure \ref{fig:smarthome}). With increasing demand for interconnectivity and communication this cloud-centric mode of operation will produce significant costs for the vendor.
 
-Secure Socket Layer (SSL) and its successor Transport Layer Security (TLS) are protocols designed to provide confidentiality, authenticity, and integrity for communication between two parties on top of TCP/IP. Both protocols rely on public key cryptography. Hence, they have to know the public key of their respective counterparty, and they have to be sure that the key really belongs to the party they want to communicate with. SSL/TLS is based on Certificate Authorities (CAs), which issue x.509 certificates that attest the correspondence between a public key and a party\footnote{Typically this party is a web server}. A SSL/TLS client verifies a certificate based on a list of trusted keys that is typically preinstalled on the operating system. However, there have been multiple incidents where forged certificates led web browsers to trust malicious servers. 
+Finally, as data is increasingly viewed as an asset, vendors store huge amounts of customer data. However, only few are able to leverage these data to create value. In any case, the collection of sensitive customer data is also a liability, because of the risk of caber attacks. A recent estimate for the average cost of a data breach involving customer data is \$4 million USD\footnote{https://www-03.ibm.com/security/data-breach/}.
 
+% It is important to note that our discussion here was centered on the consumer IoT. We assume that in the long run the consumer IoT will surpass IoT in the industrial and enterprise context. IoT technology applied to Industrie 4.0 scenarios such as machine monitoring, predictive maintenance, and warehouse management, as well as business-to-business scenarios such as supply chain management 
 
-\section{Challenges}
-\cite{Singh2016} compiled a list of 20 security considerations for the cloud-supported IoT and r
+\subsection{Consumer Perspective}
 
-Internet of Crappy Thing, The Internet of Shit, The Internet of Fails.
+Simple connected security systems, user-aware thermostats, health and fitness trackers, and many more connected products provide new levels of convenience, security and data-driven knowledge for self-improvement to consumers. Most IoT products are stand-alone and propitiatory, but APIs allow at least for restricted interoperability. These APIs are typically not standardized but hub products and services have emerged, that allow the orchestration of multiple devices from different vendors. Examples of such devices are the Nest learning thermostat\footnote{https://nest.com/thermostat/meet-nest-thermostat/} and the Amazon Echo\footnote{https://www.amazon.com/echo} voice control. An example of a popular web service to interconnect devices and various web services is IFTTT\footnote{https://ifttt.com/}. 
 
-Cloud is not the center but the edge (diagram)!
+Besides the conveniences, the current instantiation of the IoT has various downsides for the consumer. First, products that are augmented with digital services come with terms of service. Usage of the product, or at least the usage of a significant set of features, requires agreement to these terms. In many cases, these terms are repeatedly subject to change, and the customer has essentially no choice but to agree. These terms of service usually define what data the vendor is allowed to collect and to use.
+This practice interferes with the privacy of the customer. Even if the vendor itself is trustworthy, data breaches are common\footnote{See e.g. https://www.privacyrights.org/data-breach}. We have briefly discussed the role of IoT in emergent economies from the vendor perspective. Provacy issues from the consumer perspective are of  particularly concern, since privacy and consumer rights are underdeveloped. For example  a recent Bloomberg article states that \emph{M-Kopa’s current customer contract stipulates that the data the company amasses can be used only to improve customer experience, but the company has plans to collect listener and viewership data from its radios and televisions} \parencite{Faris2015}. 
 
-\subsection{Scale}
-\subsection{Heterogeneity}
-\subsection{Discovery}
-\subsection{Security}
-Challenge two: The Internet after trust
-\subsection{Privacy}
-\subsection{Economic viability}
-Challenge three: Not future-proof
-Challenge one: The cost of connectivity
-Challenge five: Broken business mod
-\subsection{Bandwidth}
-IoT shifts downstream shipping of data to upstream shipping of data. LTE peak download 100Mbit/s, peak upload 50Mbit/s.
+Besides data breaches, IoT devices often lack necessary security features. Vulnerabilities of hundreds of thousands of devices have been demonstrated \parencite{7546527,Bodenheim2014114,184449,garcia2016lock}. Vendors are often reluctant to invest in patching older generation devices, and if they do, consumers are often not aware of the need for an update. Automatic updates may help, but provide a new opportunity for hackers to centrally attack a large number of devices.
 
-\subsection{Latency}
-Upper limit for latency to avoid human notice is about 100 ms [53]
+If important features of a product are dependent on services provided solely by the manufacturer's backend, the notion of ownership becomes blurry. Even though a customer is in physical possession of a product, the functionality is owned by the manufacturer. We have seen multiple instances of manufactures discontinuing backend services and hence rendering the connected products useless \parencite{Cox2016}. While this may be expected only for small startup companies, the case of Revolv, owned by Nest, an Alphabet company, proved the contrary \parencite{Gilbert2016}.
 
-\subsection{Quality of Service}
-Temporary web service unavailability typically not a problem but if you cannot enter your home or your light cannot be switched on 
+The Twitter handle @internetofshit\footnote{https://twitter.com/internetofshit} provides an entertaining account of the issues with the current status of the consumer IoT.
 
+\subsection{Societal Perspective}
 
-The Internet of Things has a gateway problem \cite{Zachariah:2015:ITG:2699343.2699344}
+An Internet of Things is the basis of a data-driven society. Collection and fusion of real-time data enables a more efficient usage of resources. Smart Grids allow the integration of decentralized renewable energy sources. Connected buildings and smart cities enable more efficient energy usage. Connected traffic control systems and connected cars allow for a more efficient usage of the physical infrastructure. Smart agriculture allows for more precise usage of pesticides and fertilizers. Health trackers and smart pills will lead to a better understanding of human health and allows for earlier interventions, and thus cost savings. A data-driven society 
 
-The Cloud is not enough: Saving IoT from the cloud \cite{Zhang:2015}. Argue that the cloud-centric architecture does not scale for the IoT and suggest a distributed platform, called the Global Data Plane (GDP), based on a data-centric design. It is focused on transport, replication, preservation, and integrity of streams of data while enabling transparent optimization for locality and quality of service. The foundation is a single-writer append-only log, coupled with location-independent routing, overlay multicast and higher level interfaces such as common access APIs.
+However, the Internet of Things does not come without risks. We have already mentioned the impact on personal privacy in the context of connected consumer products. In a connected world we will leave digital traces everywhere. Since smartphones have cameras, the cost of them has rapidly decreased. In many cases a camera in combination with image recognition is cheaper than adding a specialized sensor. Connected cars have cameras, drones have cameras, humans might have cameras in their visual field. If only a subset of these data sources can be accessed and combined we will enter a surveillance society. 
 
+The interconnectedness, complexity and automated control loops involving connected actuators may allow individual hackers, even without the resources of governmental agencies, to attack our physical infrastructure in a large scale. Stuxnet \parencite{5772960} was only an early example. Every year at the hacker conference Defcon\footnote{https://www.defcon.org/} new connected devices are getting hacked. The situation is particularly severe, when large parts of the connected infrastructure are centrally controlled with single points of failure. 
 
-\section{Interoperability}
 
-An important aspect of IoT is the ability to digitize the physical world. This is the objective of networked sensors. In order to integrate a physical sensor into a software stack a digital representation has to be given. First efforts of standardization date back to the late nineties. An interesting viewpoint is provided in \cite{Chen:2008}. The title, Sifting through the jungle of sensor standards, is explanatory. Up to the time of writing the situation has not changed much. There are multiple competing standards with different foci and there is none that has overarching backing of manufacturers. 
-\\
-\emph{ECHONET}: Object-oriented design targeted for home appliances. Needs certification.
-\\
-\emph{IEEE 1451}: Low-level IEEE standard for smart transducer interfaces which entails descriptions of calibration, correction, and measurement range.
-\\
-\emph{SensorML}: Data-oriented standard to allow the description complex data modeling and post-processing as a high-level web service-based interface.
-\\
-\emph{Device kit}: XML-based markup language to model hardware devices. Focused on the integration into OSGi-based service-oriented architectures (SOA).
-\\
-\emph{Device Description Language (DDL)}: Low-level description language to enable networked devices discover capabilities of physically attached sensors.
+\section{Decentralizing the Internet of Things}
 
-Orthogonal to the actual description of resources is the standardization of communication protocols. 
+Many of the issues encountered in the former sections can be addressed by decentralizing the IoT infrastructure and providing more autonomy to individual devices or sub networks. \cite{ISI:000379632700002} provide a comprehensive stop gap analysis of the current IoT platform landscape. Out of 39 investigated platforms only 3 are categorized as decentralized. These platforms are research projects and are not ready for productive deployment. LinkSmart and OpenIoT are open source middlewares. Hub of all Things is a personal data store in the early steps of commercialization \parencite{ng2014engineering}. Personal data stores provide means to keep data produced by personal connected devices under control. In particular, if personal data stores allow for selective computation on personal data as proposed by the SafeAnswers system \parencite{10.1371/journal.pone.0098790}. Instead of giving service providers access to raw data, service provider are able to send vetted algorithms to the personal data store. However the idea of personal data stores is not new, still there a no successful implementations. \cite{DBLP:journals/corr/abs-1202-4503} discuss this phenomenon based on technical, economical and usability considerations. Neither manufacturers of connected products push these architectures, nor is there a real consumer pull at the moment. Hub of all Things and Enigma \parencite{7163223} try to establish multi-sided markets and thus provide financial incentives and positive feedback loops to foster participation. In particular in the case of Enigma are cryptocurrencies and blockchain technology at the core.
 
-Here the situation is more coherent. 
-On the application layer a lot of devices allow the usage of standard web protocols such as HTTP. For constrained devices that have to live on battery an adapted version called CoAP has been developed and standardized \cite{shelby2014constrained}. A very well written introduction to web services for embedded systems can be found in \cite{Shelby:2010}. Besides RESTful approaches, publish/subscribe-oriented messaging protocols are used. The two most important are XMPP \cite{saint2011extensible} and MQTT \cite{Hunkeler:2008}. 
-Newer developments with a greater focus on privacy and security are Telehash and Whisper. We will discuss them later in more detail.   
+An approach towards autonomy of individual devices can be seen with the Web of Things paradigm \parencite{Guinard2011}. Individual devices employ web servers and interact with each other and cloud services via RESTful APIs and machine and human readable JSON documents. Thus, proved security and authentication mechanism from the traditional web such as SSL/TLS and Oauth \parencite{Leiba2012} can be reused. We will later discuss the machine-payable web which can be seen as an extension to the web in general, and the Web of Things in particular. The machine-payable web reintroduces the \emph{402 payment required code} and allows to pay for individual HTTP requests using Bitcoin. 
 
+In the Web of Things and machine-payable web approach connected devices become servers in addition to clients as in a cloud-centric architecture. This provides the basis for the concepts of peer-to-peer \parencite{Rodrigues:2010:PS:1831407.1831427}and grid computing \parencite{Anderson2004boinc}. Peer-to-peer computing can be entirely decentralized, where all nodes are equal. However, most peer-to-peer networks are not based on standardized web protocols, but on specialized protocols (c.f. BitTorrent or Bitcoin). In the grid computing paradigm, a network of nodes is considered as one big computer sharing work. However, the work gets typically distributed and aggregated by a central controller. Grid computing has only be successful in the scientific context. People all over the world have contributed CPU cycles to identify extraterrestrial life and to simulate the folding of proteins. However participation based on altruism and scientific interest can not be extended to general application domains.   
 
+Another paradigm is known as edge or fog computing that aims to extend the cloud paradigm to edge devices \parencite{ISI:000343986300007,Yi:2015:SFC:2757384.2757397}. The focus thereby is in increased utilization of resources at the edge, lower upstream bandwidth requirements and decreased latency. Data analytics at the edge also enables increased privacy since raw data can be contained at the device level and does need to be transferred and processed in the cloud. \cite{ISI:000343986300007} propose a definition: \emph{Fog computing is a scenario where a huge number of heterogeneous (wireless and sometimes autonomous) ubiquitous and decentralized devices communicate and potentially cooperate among them and with the network to perform storage and processing tasks without the intervention of third-parties. These tasks can be for supporting basic network functions or new services and applications that run in a sandboxed environment. Users leasing part of their devices to host these services get incentives for doing so}. They further highlight the need for accountability and monetization in order to provide incentives for device cooperation. 
 
-Sandboxing IoT applications. Embedded scripting language \cite{Kovatsch:2012}
+On a similar line \cite{Zhang:2015} argue that the cloud-centric architecture does not scale for the IoT and suggest a distributed platform, called the Global Data Plane (GDP). It is based on a data-centric design with focus on transport, replication, preservation, and integrity of streams of data while enabling transparent optimization for locality and quality of service. The foundation is a single-writer append-only log, coupled with location-independent routing, overlay multicast and higher level interfaces such as common access APIs. However, as is known from peer-to-peer-based distributed hash tables (DHT) like Kademillia, without proper incentivization nodes will leave the network and data may be lost. 
 
+Finally, motivated by \cite{Giannotti2012}, the Nervousnet architecture, partly described in \parencite{7097988}, envisions the IoT as a distributed participatory sensing platform \emph{to provide real-time data for all and an AppStore for Internet-of-Things applications}.
 
-Cloudlets \cite{Verbelen:2012,Satyanarananan:2013}
+We are still in the early days of the evolution towards an Internet of Things. In those days, it is natural that successful commercial applications utilize centralized solutions. Central control and a unified view of data simplifies complexity, and economies of scale decrease costs. However, this may only be true up to a specific scale. We already motivated the need for a digital cash equivalent in order to build a decentralized but cooperative IoT -- an \emph{Economy of Things}. In the next section, we discuss the need for digital cash in more detail.
 
 
-Hypercat
 
- ToS;DR84 (Terms of Service; Didn’t Read)
+\section{The Need for Digital Cash}
 
- \section{Grid}
-
- When the network is as fast as the computer's internal links, the machine disintegrates across the net into a set of special purpose appliances.
--- Gilder Technology Report, June 2000.
-
-The opportunity represented by idle computers has been recognized for some time. In 1985, Miron Livny showed that most workstations are often idle1, and proposed a system to harness those idle cycles for useful work. Exploiting the multitasking possible on the popular Unix operating system and the connectivity provided by the Internet, Livny's Condor system is now used extensively within academia to harness idle processors in workgroups or departments.
-
- In 1997, Scott Kurowski established the Entropia network to apply idle computers worldwide to problems of scientific interest. In just two years, this network grew to encompass 30,000 computers with an aggregate speed of over one teraflop per second. Among its several scientific achievements is the identification of the largest known prime number.
-
- SETI@home, XtremLab, ClimatePrediction.net
-[2], Einstein@home [1], MilkyWay@home [30]
-and Rosetta@home [5] projects.
-
-
-\section{Peer-to-peer}
-\parencite{Rodrigues:2010:PS:1831407.1831427}
-Properties:
 \begin{itemize}
-\item High degree of decentralization. 
-\item Self-Organization
-\item Multiple administrative domains
-\item Low barrier to deployment
-\item Organic growth
-\item Resilience to faults and attacks
-\item Abundance and diversity of resources
+\item Anonymous payments instead of subscriptions
+\item Ad-hoc payments instead of subscriptions
+\item Global payments without banking infrastructure
+\item Micropayments to incentivize collaboration
+\item Pay-as-you-go and loans with more privacy
+\item MAchines can not assess trustworthyness
 
 \end{itemize}
+
+
+  
+
+
+
+% \section{Peer-to-peer}
+% \parencite{Rodrigues:2010:PS:1831407.1831427}
+% Properties:
+% \begin{itemize}
+% \item High degree of decentralization. 
+% \item Self-Organization
+% \item Multiple administrative domains
+% \item Low barrier to deployment
+% \item Organic growth
+% \item Resilience to faults and attacks
+% \item Abundance and diversity of resources
+
+% \end{itemize}

@@ -1,6 +1,8 @@
 \chapter{Decentralized Cryptocurrencies and Blockchain Technology}
 \label{sec:crypto}
 
+\epigraph{The Times 03/Jan/2009 Chancellor on brink of second bailout for banks.}{--- \textup{Coinbase of Bitcoin genesis block}}
+
 
 \section{Bitcoin: The first decentralized Cryptocurrency}
 
@@ -98,7 +100,7 @@ The P2SH pubScript takes the following form:
 OP_HASH160 <Hash160(redeemScript)> OP_EQUAL
 \end{lstlisting}
 
-Thereby, the pubScript reveals very little information about what is needed to spend the output. The spending party then has to provide a \emph{redeemScript} that hashes to the required 20 byte value. Thus, the pubScript is very small and concise, but the redeemScript in the sigScript can be up to 520 bytes (see \cite{bip16} for more information). 
+Thereby, the pubScript reveals very little information about what is needed to spend the output. The spending party then has to provide a \emph{redeemScript} that hashes to the required 20 byte value. Thus, the pubScript is very small and concise, but the redeemScript in the sigScript can be up to 520 bytes (see \parencite{bip16} for more information). 
 
 An example implementing P2PK as P2SH is as follows:
 
@@ -168,7 +170,7 @@ Therefore, Bitcoin uses a data structure called a merkle tree \parencite{merkle1
 
 \subsubsection{Digital Bearer Instrument}
 
-\emph{A bearer instrument is a document that entitles the holder of the document rights of ownership or title to the underlying property} \cite{bearer}, i.e. there is no central record of ownership. Because of the double spending issue there had not been a way to create digital bearer instruments. Ownership of an unique digital asset had always been augmented by a trusted third party. Bitcoin is the first digital bearer instrument. Possession of the private keys (or redeemScripts) ensures ownership and permissionless control over the corresponding coins.
+\emph{A bearer instrument is a document that entitles the holder of the document rights of ownership or title to the underlying property} \parencite{bearer}, i.e. there is no central record of ownership. Because of the double spending issue there had not been a way to create digital bearer instruments. Ownership of an unique digital asset had always been augmented by a trusted third party. Bitcoin is the first digital bearer instrument. Possession of the private keys (or redeemScripts) ensures ownership and permissionless control over the corresponding coins.
 
 Noteworthy, it is straight forward to implement registered instruments in Bitcoin, e.g. using multi-signature outputs that require the signature of a trusted third party. However it is impossible to implement a true digital bearer instruments based on a system administered by centralized third party.
 
@@ -197,35 +199,84 @@ Although often characterized as a distributed system, Bitcoin, and every other c
 \cite{croman2016scaling} investigated Bitcoin along key metrics and provided evidence about Bitcoin's scaling behavior without drastic architectural changes.
 The most important metrics are as follows:
 \paragraph{Maximum Throughput} 
-Bitcoin has two main parameters which directly influence throughput, i.e. the number of transactions per second. First, the \emph{block generation rate} which is controlled to have an expectation value of 10 min, and second the \emph{block size limit} which Satoshi Nakamoto introduced later to prevent denial of service attacks. This leads to an effective throughput of about 3.5 transactions per second. In contrast VISA handles on average about 2,000 transactions per second and has a peak capacity of 56,000 transactions per second \cite{visa}. 
+Bitcoin has two main parameters which directly influence throughput, i.e. the number of transactions per second. First, the \emph{block generation rate} which is controlled to have an expectation value of 10 min, and second the \emph{block size limit} which Satoshi Nakamoto introduced later to prevent denial of service attacks. This leads to an effective throughput of about 3.5 transactions per second. In contrast VISA handles on average about 2,000 transactions per second and has a peak capacity of 56,000 transactions per second \parencite{visa}. 
 \paragraph{Latency} The time until a transaction is \emph{confirmed}, i.e. the time until the transaction is included into a valid block, is roughly 10 min in expectation, but may be longer if the network load is high and a transaction provides not enough fees. For transactions of higher value it is advisable to wait for more than one confirmation, i.e. to wait until the block is sufficiently deep in the blockchain, and reorganization attacks become unfeasible. The standard number of confirmations as stated in the original white paper is six. 
 \paragraph{Bootstrap time} A node that joins the network has to download and process the entire transaction history. This bootstrap time scales linearly with time and is already on the order of days.
 
 
-Bitcoin-NG, ByzCoin, GHOST, DAGs
+Bitcoin-NG \parencite{194906}, ByzCoin, GHOST \parencite{kiayias2016trees,Lewenberg2015,Sompolinsky2015}, DAGs
 Graph of Blockchain size
+
+HoneyBadger \parencite{millerhoney}
 
 Sharding
 
 \subsubsection{Usability}
 
+Keymanagement \parencite{eskandari2015first}, Apps, Merchant acceptance, Volatility \parencite{Luther2014,Sapuric2014}
+
+\parencite{Decker2014}
+
+Covenants \parencite{moserbitcoin}
+
 
 
 \subsubsection{Privacy}
 
+\parencite{Ron2013}
+\parencite{Androulaki2013}
+\parencite{Reid2013}
+\parencite{Babaioff:2012:BRB:2229012.2229022}
+\parencite{fi5020237}
+\parencite{Moser2014}
+
+
+\parencite{Spagnuolo2014}
+
+Light-client privacy \parencite{Gervais:2014:PPB:2664243.2664267}
+
+
+
+https://skry.tech/
+https://www.chainalysis.com/
+
+P2P Network level
+\parencite{Koshy2014}
+\parencite{Biryukov:2014:DCB:2660267.2660379}
+
+
 De-anonymization
 businesses
 
-Payment channel networks, Confidential Transactions, CoinJoin
+Payment channel networks,
 
-Zcash Monero
+ Confidential Transactions \parencite{Androulaki2014}
 
+CoinJoin \parencite{maxwellcoinjoin}
+Mixcoin \parencite{Bonneau2014}
+CoinShuffle \parencite{Ruffing2014}
+Mixing \parencite{Bissias:2014:SMB:2665943.2665955,Valenta2015}
+
+Privacy-enhancing overlay \parencite{Meiklejohn2015}
+
+Zerocoin \parencite{6547123}
+Zcash \parencite{6956581}
+Monero
+
+\subsubsection{Incentive Compatibility}
+
+Block withholding \parencite{DBLP:journals/corr/CourtoisB14}
+
+\parencite{sapirshtein2015optimal}
+
+Reward for information propagation \parencite{Babaioff:2012:BRB:2229012.2229022}
 
 \subsubsection{Governance}
 
 Blocksize debate.
-Arvinds Post
-Complex eco system
+
+Update/Forks \parencite{narayanan2015}
+
 
 
 
@@ -233,10 +284,14 @@ Complex eco system
 
 Proof of work energy consumption. Argued that this provides the value anchor.
 
+\parencite{6912770}
+
+\parencite{Becker2013}
+
 
 \subsubsection{Illicit Usage}
 
-Silk Road, Money Laundering, Ransom ware
+Silk Road \parencite{ADD:ADD3709,popper2015digital}, Money Laundering \parencite{bryans2014bitcoin,6805780}, Ransom ware, Botnets \parencite{Ali2015}
 
 
 \section{Applications beyond Currency}
@@ -250,6 +305,7 @@ One approach is to bootstrap a new, application-specific system. In April 2011, 
 Namecoin was the first merge-mined coin, and the network is still running. \cite{kalodner2015empirical} provide an interesting empirical investigation of Namecoin. 
 
 \subsection{Colored Coins}
+\label{sec:coloredcoins}
 
 The idea of colored coins is to taint a bitcoin, i.e. a particular transaction output, in order to attach an external value or meaning to it, independent of its bitcoin value \parencite{coloredcoins} The technique has been used to issue and track/trade securities such as company shares and stocks, as well gift cards on the Bitcoin blockchain. There have been different non-interoperable protocols developed and are used in practice. Typically colored coin transactions utilize a null-data output for protocol instructions. Thus, colored coins are transparent for regular Bitcoin clients.
 
@@ -397,7 +453,7 @@ Bitcoin's main scope is to provide a peer-to-peer electronic cash system. Theref
 
 \subsubsection{End-to-End Principle}
 
-One of the main design principles that led to the success of today's internet is the End-to-End (e2e) principle \parencite{Saltzer:1984:EAS:357401.357402}. The e2e principle states that \emph{intelligence} should be at the edges, at the top of a layered system. This implies the strict separation of application-specific matter and the actual means of communication and transport. This is what allows the uncountable applications and use cases of the internet, and low cost for communication. Taking this perspective, what does it mean for blockchains? To answer this, we would have to define the basic function of a blockchain. Is it a decentralized, censorship-resistant publication platform? Is it a peer-to-peer value transfer system? Or is it general purpose decentralized state-transition system? We do not know yet, however all blockchains today employ the notion of a digital asset, i.e. value, that can be transferred between accounts augmented by public key cryptography. Therefore, we will take the perspective, that the basic functionality is a peer-to-peer value transfer system. Just as the Internet transfers duplicate-able information, a blockchain transfers non-duplicable information, i.e. digital scarcity. From this perspective Bitcoin follows the e2e principle. Particular applications, e.g. the transfer of a special asset, is done on a higher level (c.f. colored coins, meta coins and virtual chains), and logic is contained mainly in application-specific clients. In contrast, in Ethereum, every node is aware of every application.
+One of the main design principles that led to the success of today's Internet is the End-to-End (e2e) principle \parencite{Saltzer:1984:EAS:357401.357402}. The e2e principle states that \emph{intelligence} should be at the edges, at the top of a layered system. This implies the strict separation of application-specific matter and the actual means of communication and transport. This is what allows the uncountable applications and use cases of the Internet, and low cost for communication. Taking this perspective, what does it mean for blockchains? To answer this, we would have to define the basic function of a blockchain. Is it a decentralized, censorship-resistant publication platform? Is it a peer-to-peer value transfer system? Or is it general purpose decentralized state-transition system? We do not know yet, however all blockchains today employ the notion of a digital asset, i.e. value, that can be transferred between accounts augmented by public key cryptography. Therefore, we will take the perspective, that the basic functionality is a peer-to-peer value transfer system. Just as the Internet transfers duplicate-able information, a blockchain transfers non-duplicable information, i.e. digital scarcity. From this perspective Bitcoin follows the e2e principle. Particular applications, e.g. the transfer of a special asset, is done on a higher level (c.f. colored coins, meta coins and virtual chains), and logic is contained mainly in application-specific clients. In contrast, in Ethereum, every node is aware of every application.
 
 %\subsubsection{Oracles vs. On-chain Complexity}
 
