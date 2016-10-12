@@ -1,14 +1,30 @@
-\chapter{Economic objects}
+% \chapter{Economic objects}
 
-In this short chapter we introduce the notion of an economic objects. 
+% In this short chapter we introduce the notion of an economic objects. 
 
-\begin{itemize}
-\item Are able to pay for services
-\item Are able to provide service in exchange for payment
-\item Can be traded / owned non-custodial
-\item Can be shared and rented
-\item Can be securitized
-\end{itemize}
+  
+% \section{Building Blocks}
+
+% \subsection{Identity or Representation on the Blockchain}
+
+% Economic objects can have various representations on a blockchain depending on the capabilities of the object and the specifics of the blockchain. A basic requirement for an economic object is to be able to receive and to send cryptocurrency. Thus, an economic object needs at least an \emph{account} on the respective blockchain.
+
+% However, representation of ownership 
+
+% \subsection{Interaction with the Blockchain}
+
+% Smart objects vary significantly in their capabilities. From tiny battery-powered sensors with restricted computation and communication capabilities to smart TVs and refrigerators that are constantly connected to broadband Internet and continuous power supply. How will these objects interact with the blockchain? How do they initiate and verify transactions? 
+
+% \subsection{Micropayments}
+
+
+% \begin{itemize}
+% \item Are able to pay for services
+% \item Are able to provide service in exchange for payment
+% \item Can be traded / owned non-custodial
+% \item Can be shared and rented
+% \item Can be securitized
+% \end{itemize}
 
 
 
@@ -18,17 +34,17 @@ In this short chapter we introduce the notion of an economic objects.
 
 \section{Introduction}
 
-Web micropayments have a long history. In the late 1990s, IBM and Compaq hat micropayment divisions, and Venture capital funded start ups like iPIN offered solutions to aggregate payments. The World Wide Web Consortium (W3C) operated a micropayments markup working group which released a specification to allow interoperability between the different micropayment systems \parencite{w3c1999}. Already the IETF standard for the Hypertext Transfer Protocol (HTTP/1.1) contained the \emph{402 Payment Required} status code \parencite{fielding1999hypertext}.
+Web micropayments have a long history. In the late 1990s, IBM and Compaq had micropayment divisions, and venture capital funded start ups like iPIN offered solutions to aggregate payments. The World Wide Web Consortium (W3C) operated a micropayments markup working group which released a specification to allow interoperability between the different micropayment systems \parencite{w3c1999}. Already the IETF standard for the Hypertext Transfer Protocol (HTTP/1.1) contained the \emph{402 Payment Required} status code \parencite{fielding1999hypertext}.
 
-However, non of the micropayment solutions of the big companies, nor the startup companies focusing on micropayments survived. A reason for this is that most online transactions have involved human decision making. \cite{szabo1999micropayments} argues that mental transaction costs easily surpass the value of micropayments, and similarly \cite{shirky2000} points out the \emph{anxiety of buying}. Thus, consumers refuse to consume services that involve repeated decisions to weigh if the service is worth the costs. In effect, today's prevailing business models on the web are advertisements and subscriptions. However, machine-to-machine communications, driven by microservices, IoT, and artificial intelligence, will become the norm on the Internet, direct human involvement the exception. In case of machine-to-machine interactions, there are no eyeballs involved, and therefore advertisement-based business models are not applicable. On the other hand, mental transaction costs do not apply to machines. Hence, the era of online micropayments may finally arrive.
+However, non of the micropayment solutions of the big companies, nor the startup companies focusing on micropayments survived. One reason for this is that most online transactions have involved human decision making. \cite{szabo1999micropayments} argues that mental transaction costs easily surpass the value of micropayments, and similarly \cite{shirky2000} points out the \emph{anxiety of buying}. Thus, consumers refuse to consume services that involve repeated decisions to weigh if the service is worth the cost. In effect, today's prevailing business models on the web are advertisements and subscriptions. However, machine-to-machine communications, driven by microservices, IoT, and artificial intelligence, will become the norm on the Internet, direct human involvement the exception. In case of machine-to-machine interactions, there are no eyeballs involved, and therefore advertisement-based business models are not applicable. On the other hand, mental transaction costs do not apply to machines. Hence, the era of online micropayments may finally arrive.
 
-Before cryptocurrencies, online payments were dependent on various intermediaries. Micropayments usually added even more intermediaries for payment aggregation. These intermediaries have to achieve large scale and market share in order to be profitable. Service providers and consumers have to persuaded. If they achieve this large scale, they are able to use their position to extract more value. These dynamics inhibit the formation of a sustainable ecosystems. Cryptocurrencies, however, are open and permissionless systems, that allow payments between machines without intermediaries.
+Before cryptocurrencies, online payments were dependent on various intermediaries. Micropayments usually added even more intermediaries for payment aggregation. These intermediaries have to achieve large scale and market share in order to be profitable. Service providers and consumers have to be persuaded. If large scale is achieved, companies are able to exploit their position to extract more value. These dynamics inhibit the formation of a sustainable ecosystems. Cryptocurrencies, however, are open and permissionless systems, allowing payments between machines without intermediaries.
 
 Bitcoin is by far the most secure, the most stable, and the most pervasive representative. Thus, we will focus on Bitcoin micropayments.
 
 The structure of this chapter is as follows. First, we present the issues with on-chain Bitcoin micropayments. Then we present different approaches for viable micropayments using Bitcoin. Thereafter, we discuss the presented micropayment schemes from an IoT perspective, and present possible applications of machine-to-machine micropayment schemes.
 
-\section{Motivating Example}
+% \section{Motivating Example}
 
 \section{State of the art}
 
@@ -38,13 +54,15 @@ The most successful online payment company PayPal considers payments below \$10 
 
 \subsection{Bitcoin} 
 
-In case of Bitcoin, and most other cryptocurrencies, transaction fees can be specified by the creator of a transaction, and miners can individually decide if they are willing to include the respective transaction into a block. Hence, although it is still possible to create zero fee transactions in Bitcoin, most miners expect a non-zero fee. Since blocks currently have maximal size of 1 Megabyte, block space can be considered a scare resource. This effectively leads to a size-based, instead of the common value-based, market price for a transaction. By tracking for how many blocks a transaction of a particular size and a particular fee resides in the mempool, the local store of unconfirmed transactions, until the transaction is included into a block, the minimal fee for a given priority requirement can be determined. Wallets can either do this on their own or rely on web services such as bitcoinfees.21.co. 
+In case of Bitcoin, and most other cryptocurrencies, transaction fees can be specified by the creator of a transaction, and miners can individually decide if they are willing to include the respective transaction into a block. Hence, although it is still possible to create zero fee transactions in Bitcoin, most miners expect a non-zero fee. Since blocks currently have a maximal size of 1 Megabyte, block space can be considered a scare resource. This effectively leads to a size-based, instead of the common value-based, market price for a transaction. By tracking for how many blocks a transaction of a particular size and a particular fee resides in the mempool, the local store of unconfirmed transactions, until the transaction is included into a block, the minimal fee for a given priority requirement can be determined. Wallets can either do this on their own or rely on web services such as bitcoinfees.21.co. 
 Currently, a transaction with a high chance to be included in the next block has to include a fee of approximately 60 satoshis per byte. A typical P2PKH transaction with one input and two outputs, one for the payment and one for change, has a size of approximately 250 bytes. Hence, the fee is around 15,000 satoshis, and thus almost \$0.1 at the current exchange rate of \$650 per BTC. 
 Normal P2PKH transactions are thus not suitable for micropayments. Another obstacle for naive micropayments in Bitcoin is the UTXO-based architecture. UTXOs with values on the order of satoshis would lead to a drastic increase of the UTXO set, and therefore on the resource requirements of network nodes. Furthermore, spending a macroscopic amount by combining hundreds or thousands of microscopic UTXOs would lead to very large and expensive transactions. 
 
 In addition, confirmation times on the order of tens of minutes are too long for many types of  machine-to-machine transactions.
 
 \section{Bitcoin Micropayments}
+
+In order to enable micropayments with Bitcoin we need efficient methods for payment aggregation. In the following, we will present and discuss a variety of methods varying levels of trust in third parties.
 
 \subsection{Off-Chain Micropayments}
 
@@ -57,7 +75,7 @@ Another issue of centralized third party services, independent of Bitcoin-based 
 \subsubsection{Unidirectional Payment Channels}
 \label{sec:unipc}
 
-The idea to use Bitcoin contracts to establish payment channels between two parties was introduced by Hearn and Spilman \cite{Hearn}. An unidirectional payment channel allows a single payer to pay a single payee repeatedly by sending signed transactions over some communication channel. Individual payments can be as low as 1 satoshi and the payee is able to accept payments instantly without double-spending risk. This is achieved by using the blockchain as a trustless escrow service in form of a timelocked multisignature output that is funded by the payer. A graphical representation and a description of a non-interactive implementation of the protocol is depicted in Figure \ref{fig:paymentchannels}.
+The idea to use Bitcoin contracts to establish payment channels between two parties was introduced by Hearn and Spilman \parencite{Hearn2013,Spilman2013}. An unidirectional payment channel allows a single payer to pay a single payee repeatedly by sending signed transactions\footnote{In practice it is even sufficient to communicate signatures only.} over some direct communication channel instead of broadcasting individual transactions to the Bitcoin network. Individual payments can be as low as 1 satoshi and the payee is able to accept payments instantly without double-spending risk. This is achieved by using the blockchain as a trustless escrow service in form of a timelocked multi-signature output that is funded by the payer. A graphical representation and a description of a non-interactive implementation of the protocol is depicted in Figure \ref{fig:paymentchannels}.
 
 \begin{figure}
 \includegraphics[scale=.7]{./externalized/paymentchannel.pdf}
@@ -65,7 +83,7 @@ The idea to use Bitcoin contracts to establish payment channels between two part
 \label{fig:paymentchannels}
 \end{figure}
 
-Unidirectional payment channels between two parties involve two on-chain Bitcoin transactions. One funding transaction and one transaction to close the channel. In the unidirectional setting only one party funds the channel and risks locking her funds (temporarily) in case the receiving party is not cooperative. Simple unidirectional payment channels are useful for repeated, metered payments between a single payer and a single payee. Use cases are video streaming\footnote{https://streamium.io/} and WiFi access \cite{Siby2013}.
+Unidirectional payment channels between two parties involve two on-chain Bitcoin transactions. One funding transaction and one transaction to close the channel. In the unidirectional setting only one party funds the channel and risks locking her funds (temporarily) in case the receiving party is not cooperative. Simple unidirectional payment channels are useful for repeated, metered payments between a single payer and a single payee. Use cases are for example video streaming\footnote{https://streamium.io/} and WiFi access \cite{Siby2013}.
 
 \subsubsection{Unidirectional Mediated Payment Channels}
 
@@ -76,7 +94,7 @@ Figure \ref{fig:unimedpc} illustrates the flow of an individual payment over two
 Mediated payment channels can be used in a hub and spoke architecture to connect a large number of buyers with a large number of sellers with only one payment channel per buyer/seller. Think of 100 of fitness trackers interested in buying air quality data from 1000 consumer air quality sensors in Bejing in order to suggest a healthy running track. There would have to be 100 000 p2p payment channels, but only 1100 if there were a central mediator (c.f. Figure \ref{fig:nmpaymentchannels} and \ref{fig:hubandspoke}).
 
 
-A particular payment transaction might entail a number of HTLC outputs corresponding to payments to multiple sellers concurrently.
+A particular payment transaction might entail a number of HTLC outputs corresponding to payments to multiple sellers concurrently (c.f. Fig. \ref{fig:htlcflow}.
 
 \begin{figure}
 \centering
@@ -128,10 +146,10 @@ In the payment channel design presented in Sec. \ref{sec:unipc} it is not possib
 
 There are two designs that allow bidirectional payment channels: (1) Replace by timelock, and (2) Revocable commitment transactions.
 
-The replace by timelock mechanism works by attaching decreasing absolute timelocks to each payment transaction. In contrast to the unidirectional payment channels presented in Sec. \ref{sec:unipc}, in the bidirectional payment channel scenario both parties hold fully-signed, broadcast-ready payment transactions. The decreasing absolute timelock ensures that the latest transaction would always end up in the blockchain first. Since every payment decreases the lifetime of the channel the simple design is not very practical. However, duplex micropayment channels are advancing this mechanism by providing trustless cooperative protocols to reset, i.e. balancing values, and refresh channels, i.e. increasing the timelock. 
+The replace by timelock mechanism works by attaching decreasing absolute timelocks to each payment transaction. In contrast to the unidirectional payment channels presented in Sec. \ref{sec:unipc}, in the bidirectional payment channel scenario both parties hold fully-signed, broadcast-ready payment transactions. The decreasing absolute timelock ensures that the latest transaction would always end up in the blockchain first. Since every payment decreases the lifetime of the channel the simple design is not very practical. However, duplex micropayment channels \parencite{decker2015Duplex} are advancing this mechanism by providing trustless cooperative protocols to reset, i.e. balancing values, and refresh channels, i.e. increasing the timelock. 
 
-Bidirectional payment channels based on revocable commitment transactions work as follows:
-Assuming two parties, A and B, the protocol begins with the creation of a transaction that attempts to create a shared multisignature output that is funded by both parties. However, before broadcasting this \emph{funding} transaction, which is not timelocked, both parties create \emph{commitment} transactions. Both commitment transactions attempt to spend the multisignature output of the funding transaction and create an output with the pubScript depicted in Fig. \ref{fig:pubScriptCommitment}.
+Bidirectional payment channels based on revocable commitment transactions, as used in Lightning channels \parencite{poonbitcoin},  work as follows:
+Assuming two parties, A and B, the protocol begins with the creation of a transaction that attempts to create a shared multi-signature output that is funded by both parties. However, before broadcasting this \emph{funding} transaction, which is not timelocked, both parties create \emph{commitment} transactions. Both commitment transactions attempt to spend the multi-signature output of the funding transaction and create an output with the pubScript depicted in Fig. \ref{fig:pubScriptCommitment}.
 
 \begin{figure}
 \begin{lstlisting}[breaklines,mathescape=true]
@@ -152,47 +170,46 @@ After the commitment transactions have been exchanged, the funding transaction c
 \subsubsection{Routable Payment Channel Networks}
 \label{sec:paymentchannelnetworks}
 
-Payment channel networks are the generalization of mediated bidirectional payment channels. In principle they allow to interconnect an arbitrary number of payment channels in order to route instant off-chain payments. 
-
+Payment channel networks are the generalization of mediated bidirectional payment channels. In principle they allow to interconnect an arbitrary number of payment channels in order to route instant off-chain payments. It is not yet clear what kind of topology payment channel networks will evolve. In order to prevent single points of failure a decentralized topology where regular wallets can act as intermediary nodes is preferred. First developments towards a payment routing protocol are presented in \parencite{BitFuryFlare2016}.
 
 \subsection{Further Micropayment Mechanisms}
+
+\subsubsection{Digital Promissory Note}
+
+In general, a promissory note is a written financial instrument, in which an issuer promises the bearer to pay a specific amount of money under specified terms. Thereby, a payee is able to accept payments by different payers without having to trust them individually, but by only having to the trust the issuer that he will be able to redeem the promissory notes eventually. Micropayments in form of promissory notes can be aggregated, and redeemed at the issuer as soon as a substantial amount is reached. An implementation of this concept is the Stroem protocol \parencite{strawpay}. In this protocol, promissory notes are dedicated to a specific purpose, i.e. a specific purchase. Thus, the payer needs to procure the promissory note at time of the transaction. Procurement of promissory notes is a perfect application for unidirectional payment channels. A payer can open a payment channel with an issuer an purchase low-value promissory notes in order to keep the counterparty risk low. Depending on how many parties accept the promissory notes of the particular issuer the effective reach and usefulness of the payment channel may be increased significantly. An illustration of payments based on promissory notes is shown in Fig. \ref{fig:promissorynotes}.
+
+\begin{figure}
+\centering
+\includegraphics[width=.9\linewidth]{./externalized/promissorynotes.pdf}
+\caption{Possible participants, relationships and transaction flows in a micropayment scheme based on promissory notes.}
+\label{fig:promissorynotes}
+\end{figure}
 
 \subsubsection{Probabilistic Payments}
 
 Probabilistic payments \cite{wheeler1996transactions,rivest1996payword,rivest1997electronic} are lottery-based payments. The lottery is biased in such a way that a single draw has an expected value according to the aspired micropayment.
 \cite{Pass:2015:MDC:2810103.2813713} present such a lottery-based micropayment scheme for ledger-based transaction systems, and discuss implementations in Bitcoin. However an implementation that does not rely on a semi-trusted third party would need a new signature verification primitive in the Bitcoin scripting language. 
 
-\subsubsection{Pennybank}
+In principle, probabilistic payments could be combined with payment channels in order to allow for sub-satoshi payments.
 
-The pennybank protocol allows to implement bidirectional payment channels without chaining partially signed transactions, and is thus not affected by Bitcoin's malleability issue. As for payment channels, the starting point is a shared multi-signature output. Each participant now builds a chain of hashes with length $N$ starting from a random secret $p^i_0$ where the superscript $i$ denotes the participant. 
+% \subsubsection{Pennybank}
 
-\begin{equation*}
-(\text{SHA256}(... \text{SHA256}(\text{SHA256}(\text{SHA256}(p^i_0),p^i_1),p^i_2)...,p^i_N)
-\end{equation*}
+% The pennybank protocol allows to implement bidirectional payment channels without chaining partially signed transactions, and is thus not affected by Bitcoin's malleability issue. As for payment channels, the starting point is a shared multi-signature output. Each participant now builds a chain of hashes with length $N$ starting from a random secret $p^i_0$ where the superscript $i$ denotes the participant. 
 
-$N$ has to be chosen according to the value the pennybank should have, i.e. the value of the output defined in what follows. Brute force searching for $p^i_0$ should be comparably hard as the difficulty to create the coins.  After that both parties cooperatively create a transaction spending the shared multi-signature output and creating a \emph{conditional} 1-of-2 multi-signature output P2CM with the following pubScript:
+% \begin{equation*}
+% (\text{SHA256}(... \text{SHA256}(\text{SHA256}(\text{SHA256}(p^i_0),p^i_1),p^i_2)...,p^i_N)
+% \end{equation*}
 
-\begin{lstlisting}
-OP_HASH160 <HASH160(p^A_0)> OP_EQUALVERIFY OP_HASH160 <HASH160(p^B_0)> OP_EQUALVERIFY <OP_1> <A pubkey> <B pubkey> <OP_2> <OP_CHECKMULTISIG>
-\end{lstlisting}
+% $N$ has to be chosen according to the value the pennybank should have, i.e. the value of the output defined in what follows. Brute force searching for $p^i_0$ should be comparably hard as the difficulty to create the coins.  After that both parties cooperatively create a transaction spending the shared multi-signature output and creating a \emph{conditional} 1-of-2 multi-signature output P2CM with the following pubScript:
 
-Both parties hold a copy of this transaction and could broadcast the transaction at any time. The P2CM output can be spend by providing only one signature but both secrets have to be provided. Since brute forcing the other secret is expensive they are incentivized to cooperatively close the channel.
+% \begin{lstlisting}
+% OP_HASH160 <HASH160(p^A_0)> OP_EQUALVERIFY OP_HASH160 <HASH160(p^B_0)> OP_EQUALVERIFY <OP_1> <A pubkey> <B pubkey> <OP_2> <OP_CHECKMULTISIG>
+% \end{lstlisting}
 
-
-\subsubsection{Promissory notes}
-
-\cite{strawpay}
-\cite{filament}
-
-\begin{figure}
-\centering
-\includegraphics[width=\linewidth]{./externalized/promissorynotes.pdf}
-\caption{Possible participants, relationships and transaction flows in a micropayment scheme based on promissory notes.}
-\label{fig:promissorynotes}
-\end{figure}
+% Both parties hold a copy of this transaction and could broadcast the transaction at any time. The P2CM output can be spend by providing only one signature but both secrets have to be provided. Since brute forcing the other secret is expensive they are incentivized to cooperatively close the channel.
 
 
-\section{Comparison from an IoT Perspective}
+\section{Comparison}
 
 All of the micropayment schemes are based on multi-si
 
@@ -204,7 +221,7 @@ Unidirectional Payment channels work offline. Mediated only Hub needs to be onli
 
 \section{Applications}
 
-\subsection{Sensing-as-Service}
+\subsection{Sensing-as-a-Service}
 \label{sec:micro:apps:s2aas}
 
 The \emph{as a service} model originates from cloud computing. From an economic perspective of the consumer side it is often equivalent to \emph{pay as you go}. Business models like Software-as-a-Service, Platform-as-a-Service or Infrastructure-as-a-Service have offered an alternative to high initial capital costs for computing infrastructure and skilled employees. However, individuals and companies, in principle, still could decide between having their infrastructure and software on premise or in the cloud, i.e. in a data center operated by another company. Sensing-as-a-Service is fundamentally different in this regard. Sensing-as-a-Service is in most cases local, i.e. fixed to a particular position in space (and time). Deploying company-specific sensors would not only be mediocre from an economic point of view, but in general impossible. 
@@ -214,10 +231,10 @@ The Sensing-as-a-Service model is still in its infancy. The data producing, and 
 Research mainly considers cloud-centric Sensing-as-a-Service models, where sensing tasks and billing are administered by a centralized platform. Machine-to-Machine micropayments allow complementary and alternative architectures, where payments and data exchange can happen directly between devices. We will discuss this in more detail in a later chapter, and in the Filament and 21 case studies.
 
 
-\parencite{Perera:2014iz}
-\parencite{Abdelwahab:2014dx}
-\parencite{Sheng2013sensing}
-\parencite{Distefano2012sensing}
+% \parencite{Perera:2014iz}
+% \parencite{Abdelwahab:2014dx}
+% \parencite{Sheng2013sensing}
+% \parencite{Distefano2012sensing}
 
 
 \subsection{Machine-payable APIs}
@@ -259,11 +276,6 @@ Smart objects relying on LPWAN to stream their data might need a faster Internet
 \subsection{Energy}
 
 Cars are moving from internal combustion engines and gas tanks to electric engines and battery storage. Since the energy density of gas is much higher than the energy density of a battery, an electric needs to recharge more often than a car has to stop at a gas station. On the other hand electric energy is much cheaper. RWE has presented a prototypical system that allows to charge a car while waiting at a traffic light. Streets and parking spots may become wireless charging stations. The value of an individual transaction between a car and a local charging infrastructure will be rather low, and a car will likely use charging infrastructure provided by various companies, communities, cities and individuals. Thus, direct micropayments between the car and the charging infrastructure are more efficient than many or complex contractual agreements.
-
-\section{Human Micropayments on the Web}
-
-http://evonomics.com/beyond-advertising-micropayments-sustain-new-internet/
-Aggregation let users disavowls
 
 
 \section{Conclusion}

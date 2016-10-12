@@ -7,7 +7,7 @@
 Smart objects, i.e. IoT devices, bla bla ownership Internet of Shit ...
 
 
-The term smart property was introduced in \cite{szabo1997} as a manifestation of smart contracts. He gives the example of a car:
+The term smart property was introduced in \cite{szabo1997} as a manifestation of smart contracts. Szabo gives the example of a car:
 \begin{quote}
 Consider a hypothetical digital security system for automobiles. The smart contract design strategy suggests that we successively refine security protocols to more fully embed in a property the contractual terms which deal with it. These protocols would give control of the cryptographic keys for operating the property to the person who rightfully owns that property, based on the terms of the contract. In the most straightforward implementation, the car can be rendered inoperable unless the proper challenge-response protocol is completed with its rightful owner, preventing theft.
 \end{quote}
@@ -15,24 +15,25 @@ Consider a hypothetical digital security system for automobiles. The smart contr
 And Indeed, modern car keys use smart card technology and cryptographic primitives to authenticate the driver and provide the functionality described by Szabo. However legal ownership is independent of possession of the cryptographic key. Noteworthy, currently the possession of a physical document authenticates the legal ownership. 
 
 With the inception of Bitcoin and blockchain technology, the term smart property usually refers to property whose ownership is controlled by a blockchain.
-The Bitcoin Wiki notes that smart property may also include non-physical property like shares in a company or access rights to a remote computer. 
+The Bitcoin Wiki notes that smart property may also include non-physical property like shares in a company or access rights to a remote computer \parencite{smartproperty2011}. 
 
-However we beg to differ. We understand smart property as a smart object with a digital representation on a blockchain. The digital representation is controlled by cryptographic keys. These cryptographic keys empower the holder to exert immediate and full control over the smart object. Shares of a company, in contrast, have complex counterparty risk, and are mediated by law. Therefore, company shares are a bad candidate for smart property. At least for now, as we will discuss later on. 
+However we beg to differ. We understand smart property as a smart object with a digital representation on a blockchain. The digital representation is controlled by cryptographic keys. These cryptographic keys empower the holder to exert immediate and full control over the smart object. Shares of a company, in contrast, have complex counterparty risk, and are mediated by law. Thus, today, company shares are not a suitable candidate for smart property.
 
 In this chapter, we will first discuss the necessity of a blockchain. Thereafter, we list and describe capabilities of smart property. These capabilities lay down certain requirements for the smart property and the associated blockchain. Next, we present conceptual protocols based on Bitcoin and Ethereum, followed by a discussion. 
 
 \section{Why has smart property to live on a blockchain?}
 
-Let us stay with the example of a car. Alice owns the car and the ownership is augmented by the possession of a cryptographic key. Assume Alice wants to transfer the ownership to Bob. Of course, she can not send him the keys, since the key is a nothing more than a digital file, and copying a digital file has zero marginal cost. In other words, we face the classic double spending problem. However, we can think of a more complex protocol. Instead of sending a key to Bob, Bob is creating a new private-public ownership key pair. Bob sends the public part to Bob, and Alice uses her current ownership key to initiate an ownership transfer to Bob's key. The car itself acts as a deterministic trusted party. We will later discuss avenues to give Bob more certainty about the trustworthiness of the smart property.
+Let us stay with the example of a car. Alice owns the car and the ownership is augmented by the possession of a cryptographic key. Assume Alice wants to transfer the ownership to Bob. Of course, she can not send him the keys, since the key is nothing more than a digital file, and copying a digital file has zero marginal cost. In other words, we face the classic double spending problem. However, we can think of a more complex protocol. Instead of sending a key to Bob, Bob is creating a new private-public ownership key pair. Bob sends the public part to Bob, and Alice uses her current ownership key to initiate an ownership transfer to Bob's key. The car itself acts as a deterministic trusted party. We will later discuss avenues to give Bob more certainty about the trustworthiness of the smart property.
 So far, we only used public key cryptography, and there was no need for a blockchain. However, typically someone does not just transfer ownership to someone else. Alice wants something in return. In most cases this something is money. If Alice and Bob meet in person they are able to do the ownership transfer protocol and the cash payment concurrently. However, if the trade happens via the Internet, one party has always be the first and may be defrauded by the counterparty. Traditional payments can be undone. Thus, inhibiting risk for the seller. Simple bitcoin payments mitigate this risk, but expose the buyer to the risk of not getting the car. Traditionally, third party escrow has been used to solve this dilemma.
-However, if ownership of the car is represented on a blockchain, Alice and Bob can perform an atomic trade. Ownership and money is exchanged in one single process. If one part fails, the other part will fail as well. If one part succeeds, the other part will succeed as well. A similar logic can be applied to all of the capabilities smart property is able to provide.
-
+However, if ownership of the car is represented on a blockchain, Alice and Bob can perform an atomic trade. Ownership and money is exchanged in one single process. If one part fails, the other part will fail as well. If one part succeeds, the other part will succeed as well. A similar logic can be applied to all of the capabilities smart property provides.
 
 \section{Capabilities of smart property}
 
+In the following we briefly present the capabilities of smart property.
+
 \subsection{Low trust atomic trades}
 
-Smart property can be sold via the Internet in an atomic process without third party escrow. Transfer of ownership rights\footnote{We do not necessarily mean legal rights of ownership.} and transfer of money happen at once. 
+Smart property can be sold via the Internet in an atomic process without third party escrow. Transfer of ownership\footnote{We do not necessarily mean legal rights of ownership, but the ability to control the property} and transfer of money happen at once. 
 
 % \subsection{Shared ownership}
 
@@ -44,37 +45,36 @@ Time-restricted transfer of ownership with adjustable counterparty risk. Smart p
 
 \subsection{Liquidification of property}
 
-Smart property can be used as collateral for loans. Various models are possible. The underlying principle is that ownership is transferred to the lender automatically if repayment terms are not met. Thereby the loan is securitized by the smart property. Because of the global permissionless nature of cryptocurrencies, a global market for loans on individual smart properties can emerge which lowers the cost of the loan. Moreover, since transactions are public, a borrower is able to prove timely payments of earlier loans. 
+Smart property can be used as collateral for loans. The underlying principle is that property ownership is transferred to the lender if repayment terms are not met. Thereby the loan gets securitized by the smart property. Because of the global permissionless nature of cryptocurrencies, a global market for loans on individual smart properties can emerge which lowers the cost of loans. Moreover, since transactions are public, a borrower is able to prove timely payments of earlier loans. 
 
 \section{Requirements}
 
 \subsection{Trustworthy hardware and software}
 
-The smart property itself has to be trustworthy. A potential seller has to be sure that the software running the smart property follows the protocol. In particular, after a sale the smart property has to be controlled by the buyers ownership key, whereas the sellers ownership key is disabled. Hard- and software of the smart property must be able to ensure that is has not been tampered with. Ideally software is open source and independently verifiable. Smart property may prove its integrity to a third party using trusted computing. Thereby the smart property may also prove its current state, i.e mileage and services in the case of a car. A certificate by the manufacturer may be used to ascertain provenance. Alternatively, provenance could be inferred from the signature of the original registrar.
+The smart property itself has to be trustworthy. A potential seller has to be sure that the software running the smart property follows the protocol. In particular, after a sale the smart property has to be controlled by the buyers ownership key, whereas the sellers ownership key is disabled. Hard- and software of the smart property must be able to ensure that is has not been tampered with. Ideally, software is open source and independently verifiable. Smart property may prove its integrity to a third party using trusted computing. Thereby the smart property may also prove its current state, i.e mileage and services in the case of a car. A certificate by the manufacturer may be used to ascertain provenance. Alternatively, provenance could be inferred from the signature of the original registrar.
 
 \subsection{Kill switch}
 
-Liquidification requires that the smart property can be rendered unusable temporarily. Otherwise the contract between lender and borrower is not enforceable remotely, and the borrower is able to use the property without paying back the loan. Enforcement of the contract would have to happen via the judicature system which is cumbersome and expensive if borrower and lender are in different jurisdictions. 
+Liquidification requires that the smart property can be rendered temporarily unusable. Otherwise the contract between lender and borrower is not remotely enforceable, and the borrower is able to use the property without paying back the loan. Enforcement of the contract would have to happen via the judicature system which is expensive and cumbersome if borrower and lender are in different jurisdictions. 
 
-If the use of a kill switch is possible is dependent of the actual smart property. Cars, for example, are already equipped with immobilizers which are reasonably hard to bypass. Popular Solar home systems, as deployed in Africa and South-East Asia, can also be remotely deactivated. Smart property where the value of the object itself or its components is high independent of a function or server that can be switched off, however, is not suitable for this scheme. 
+If the use of a kill switch is possible is dependent of the actual smart property. Cars, for example, are already equipped with immobilizers which are reasonably hard to bypass. Popular solar home systems, as deployed in Africa and South-East Asia, can also be remotely deactivated. Smart property where the value of the object itself or its components is high independent of a function or service that can be switched off, however, is not suitable for this scheme. 
 
-Then there is the question who is able to flip the kill switch or does it happen automatically?
-
-\subsection{On-chain currency}
-Selling, renting, and liquidification all involve currency. Therefore, a fungible token of value on the blockchain is necessary to keep the number of trusted or involved parties low. 
+\subsection{Native on-chain currency}
+Selling, renting, and liquidification all involve currency. Only a fungible native token of value allows these processes without additional counterparty risk. 
 
 \subsection{Light-client proofs}
 
-In many cases smart property will not be able to interact with the blockchain network directly, but has to rely on proofs from untrusted parties. For example a buyer has to be able to prove to the car that it now belongs to him. The underlying blockchain and the protocols should account for such a scenario, since e.g. a car should be able to be started even if there is no Internet connectivity. 
-
+In many cases smart property will not be able to interact with the blockchain network directly, but has to rely on proofs provided by untrusted parties. For example, a buyer has to be able to prove to the car that it now belongs to him. The underlying blockchain and the protocols should account for such a scenario, since e.g. a car should be able to be started even if there is no Internet connectivity.
 
 \section{Implementation}
+
+In this section we present protocols that implement the aforementioned capabilities of smart property. In all protocols there are three actors: The two contractual parties and the smart property itself. First, we present protocols based on the Bitcoin system. After that, we present implementations as Ethereum smart contracts. 
 
 \subsection{Bitcoin}
 
 \subsubsection{Low-trust atomic trades}
 
-The simplest way to achieve atomicity in Bitcoin is by executing both parts of the trade in a single transaction. In Fig. \ref{fig:smartproperty} an atomic trade protocol based on \cite{smartproperty2011} is shown. The protocol may either be initiated by the seller (A) or by the buyer (B). We assume A initiates the protocol and sends the price, an Bitcoin address where she would like to receive the payment, and a reference to the UTXO that represents the smart property. (ownership output) to B. B creates a new ownership key pair and prepares a transaction that sends the price to A and transfers the ownership to the new created ownership key. B signs the transaction and sends it to A. To accept the offer A signs the ownership input and broadcasts the transaction to the Bitcoin network. 
+The simplest way to achieve atomicity in Bitcoin is by executing both parts of the trade in a single transaction. In Fig. \ref{fig:smartproperty} an atomic trade protocol based on \cite{smartproperty2011} is shown. The protocol may either be initiated by the seller (A) or by the buyer (B). We assume A initiates the protocol and sends the price, a Bitcoin address where she would like to receive the payment, and a reference to the UTXO that represents the smart property (ownership output) to B. B creates a new ownership key pair and prepares a transaction that sends the price to A and transfers the ownership to the newly created ownership key. B signs the transaction and sends it to A. To accept the offer A signs the ownership input and broadcasts the transaction to the Bitcoin network. 
 
 After a number of confirmations, B can provide a SPV proof to the smart property. Therefore, B provides a selection of subsequent block headers entailing the header of the block the transaction is in, plus its merkle proof. The smart property is able to reason about the amount of proof-of-work that was spent to generate the blocks. In case of doubt, the smart property can ask for more block headers.
 
@@ -93,7 +93,7 @@ In this protocol the smart property is not part of the Bitcoin network, but is a
 
 \subsubsection{Low-trust renting}
 
-The idea is to combine shared ownership and the unidirectional payment channel. Therefore, the parties create a transaction that creates a multi-signature ownership output for A and B, and a 2-of-2 multi-signature output where B deposits some amount. Furthermore, both parties create a timelocked refund transaction that allocates the ownership output back to A, and the deposit back to B. The timelock should cover the maximal renting period, and the deposit should cover the renting price for that period. B can now pay in small increments with off-chain payment transactions that entail an additional ownership output that assign the car ownership back to A. Because of Bitcoins current malleability issue it is important that the order of providing signatures is such that only A is able to broadcast the funding transaction. Furthermore, A needs also a (tiny) payment transaction from B before broadcasting the funding transaction. Otherwise B could just use the smart property without paying for the entire maximal renting period, since A would not have a transaction that is immediately valid. Figure \ref{fig:smartproperty_renting} illustrates the protocol in more detail.
+The idea is to combine shared ownership and the unidirectional payment channel. Therefore, the parties create a transaction that creates a multi-signature ownership output for A (owner) and B (renter), and a 2-of-2 multi-signature output where B deposits some amount. Furthermore, both parties create a timelocked refund transaction that allocates the ownership output back to A, and the deposit back to B. The timelock should cover the maximal renting period, and the deposit should cover the renting price for that period. B can now pay in small increments with off-chain payment transactions that entail an additional ownership output that assign the car ownership back to A. Because of Bitcoin's current malleability issue it is important that the order of providing signatures is such that only A is able to broadcast the funding transaction. Furthermore, A needs also a (tiny) payment transaction from B before broadcasting the funding transaction. Otherwise B could just use the smart property without paying for the entire maximal renting period, since A would not have a transaction that is immediately valid. Figure \ref{fig:smartproperty_renting} illustrates the protocol in more detail.
 
 \begin{figure}[!t]
     \centering
@@ -104,15 +104,34 @@ The idea is to combine shared ownership and the unidirectional payment channel. 
 
 \subsection{Liquidification of property}
 
-A Bitcoin-based protocol for smart property as a collateral for loans is described in \cite{smartproperty2011}. However, the protocol has the problem that a creditor has the ability to resell the car. 
+We will implement the following contract. The owner of a smart property (B) wants a loan of size $L$ and provides the property as security for a creditor (A). If the owner (and debtor) does not repay the loan (plus interest) until time $T$, ownership of the property will be transferred to the creditor.
+
+After A and B agreed on terms, B creates the \emph{loan transaction} spending his ownership output and creating a timelocked 2-of-2 multi-signature ownership output that can be redeemed either collaboratively by A and B, or by A alone after time $T$. Furthermore, B adds an output that credits him with loan $L$, leaving the input, providing the loan, for A to add. 
+\begin{figure}
+\begin{lstlisting}
+OP_IF 
+    2 <pubKeyA><pubKeyB> 2
+    OP_CHECKMULTISIG
+OP_ELSE
+    <T> OP_CHECKLOCKTIMEVERIFY OP_DROP
+OP_END    
+\end{lstlisting}
+\caption{PubScript of timelocked 2-of-2 multi-signature ownership output.}
+\end{figure}
+
+B sends the partial transaction to A, who prepares the \emph{settlement transaction}. The settlement transaction reassigns the ownership back to B, and credits A with the loan plus interest. A completes the loan transaction and partially signs the settlement transaction, and sends both transactions back to B. B can then broadcast the loan transaction to the Bitcoin network. 
+If B can provide an input to the settlement transaction covering $L+\Delta$ before time $T$, B can complete the settlement transaction and regain sole ownership of the property. However, if the settlement transaction does not enter the blockchain before $T$, then A is able to claim sole ownership.
+
+Another Bitcoin-based protocol for smart property as a collateral for loans is described in \cite{smartproperty2011}. However, the protocol has the problem that a creditor has the ability to resell the property immediately without giving the debtor a chance to repay the loan. In the protocol described above this is prevented by use of the multi-signature. 
 
 \subsection{Ethereum}
 
-Ethereum implements the Turing-complete Ethereum Virtual Machine with a large instruction set (see \cite{wood2014ethereum}). Furthermore, there exist higher-level programming languages which are inspired by popular languages. The most popular is Solidity which is inspired by Java Script. Another important difference to Bitcoin is the statefulness of a Ethereum contract. In the following we present and discuss simple implementations of the economic primitives in illustrative Solidity code.
+Ethereum implements the Turing-complete Ethereum Virtual Machine with a large instruction set (see \cite{wood2014ethereum}). Furthermore, there exist higher-level programming languages which are inspired by popular languages. The most popular is Solidity which is inspired by JavaScript. Another important difference to Bitcoin is the statefulness of an Ethereum contract. In the following we present and discuss simple implementations of the economic primitives in illustrative Solidity code.
+
 
 \subsubsection{Low-trust atomic trades}
 
-The following contract illustrates a contract representing a tradeable smart property in Ethereum. The original issuer of the contract is identified as the owner. In practice this would be the manufacturer. Ethereum does not support collaborative transactions, i.e. transactions with operations authorized by different entities. Therefore, selling has to be implemented in a two-stage process. In the contract below, we've done this by implementing a \emph{sell function} which can be only called by the current owner (through the \emph{onlyOwner modifier}). The \emph{sell function} has two parameters: the price, and a buyer address. The \emph{buyer parameter} allows to explicitly state a seller. Otherwise everyone who would pay the price using the \emph{buy function} would be able to buy the smart property.
+The following contract illustrates a contract representing a tradable smart property in Ethereum. The original issuer of the contract is identified as the owner. In practice this would be the manufacturer. Ethereum does not support collaborative transactions, i.e. transactions with operations authorized by different entities. Therefore, selling has to be implemented in a two-stage process. In the contract below, we do this by implementing a \emph{sell function} which can be only called by the current owner (through the \emph{onlyOwner modifier}). The \emph{sell function} has two parameters: the price, and a buyer address. The \emph{buyer parameter} allows to explicitly state a seller. Otherwise everyone who would pay the price using the \emph{buy function} would be able to buy the smart property.
 
 \newpage
 \begin{lstlisting}[breaklines,basicstyle=\tiny]
