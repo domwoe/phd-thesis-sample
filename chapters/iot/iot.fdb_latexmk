@@ -1,13 +1,14 @@
 # Fdb version 3
-["pdflatex"] 1471819135 "iot.tex" "iot.pdf" "iot" 1471819137
+["pdflatex"] 1476714960 "iot.tex" "iot.pdf" "iot" 1476714963
   "/usr/local/texlive/2016/texmf-dist/fonts/map/fontname/texfonts.map" 1272929888 3287 e6b82fe08f5336d4d5ebc73fb1152e87 ""
   "/usr/local/texlive/2016/texmf-dist/fonts/tfm/public/cm/cmbx10.tfm" 1136768653 1328 c834bbb027764024c09d3d2bf908b5f0 ""
   "/usr/local/texlive/2016/texmf-dist/fonts/tfm/public/cm/cmti10.tfm" 1136768653 1480 aa8e34af0eb6a2941b776984cf1dfdc4 ""
   "/usr/local/texlive/2016/texmf-dist/web2c/texmf.cnf" 1463093894 31953 b9489e6e586f798610c60aec1f5ec548 ""
+  "/usr/local/texlive/2016/texmf-var/fonts/map/pdftex/updmap/pdftex.map" 1468600288 1888048 f2c5faed5981a516f406b2ccc20bff71 ""
   "/usr/local/texlive/2016/texmf-var/web2c/pdftex/pdflatex.fmt" 1468600360 3873397 efe445b8da5e1664babc000a7dc9807b ""
   "/usr/local/texlive/2016/texmf.cnf" 1463979140 577 2938757e76f31531e65cc647e3507693 ""
   "iot.aux" 1465428541 8 a94a2480d3289e625eea47cd1b285758 ""
-  "iot.tex" 1471818628 24293 f85846761ceb9708aee0c5d34dfb5b35 ""
+  "iot.tex" 1476714959 25837 ca8e7e569b17350cb7a3ff167de126c6 ""
   (generated)
-  "iot.log"
   "iot.pdf"
+  "iot.log"

@@ -187,10 +187,10 @@ In general, a promissory note is a written financial instrument, in which an iss
 
 \subsubsection{Probabilistic Payments}
 
-Probabilistic payments \cite{wheeler1996transactions,rivest1996payword,rivest1997electronic} are lottery-based payments. The lottery is biased in such a way that a single draw has an expected value according to the aspired micropayment.
-\cite{Pass:2015:MDC:2810103.2813713} present such a lottery-based micropayment scheme for ledger-based transaction systems, and discuss implementations in Bitcoin. However an implementation that does not rely on a semi-trusted third party would need a new signature verification primitive in the Bitcoin scripting language. 
+Probabilistic payments \parencite{wheeler1996transactions,rivest1996payword,rivest1997electronic} are lottery-based payments. The lottery is biased in such a way that a single draw has an expected value according to the aspired micropayment. Probabilistic payments are only fair, i.e. the actual value paid approaches the value that should be paid, for a large number of payments on the order of tens of thousands. 
+\cite{Pass:2015:MDC:2810103.2813713} present such a lottery-based micropayment scheme for ledger-based transaction systems, and discuss implementations in Bitcoin. However an implementation that does not rely on a partially-trusted third party would need a new signature verification primitive in the Bitcoin scripting language. The partially-trusted third party acts as an escrow service and sign a transaction in case the payee is able to provide a winning ticket. In contrast to unidirectional payment channels, a single UTXO could be used to pay more than one party.
 
-In principle, probabilistic payments could be combined with payment channels in order to allow for sub-satoshi payments.
+Interestingly, probabilistic payments could be combined with payment channels in order to allow for sub-satoshi payments.
 
 % \subsubsection{Pennybank}
 

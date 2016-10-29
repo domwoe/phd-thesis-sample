@@ -23,16 +23,17 @@
 % \cite{DBLP:journals/corr/QadirSWC16} discuss the approach of resource pooling for wireless networks in the developing world. This could be used if providing connectivity to villages is implemented as an additional service by the DAO.
 
 
-\chapter{Smart property as a joint-stock business entity}
+\chapter{Economic Objects as Joint-stock Business Entities}
+\label{sec:jointstock}
 
 \section{Introduction}
 
 Joint-stock companies were invented to share risk and rewards between shareholders in order to finance large-scale commercial endeavors. One of the first joint-stock companies were the Dutch and the British East India Companies. Large amounts of capital were necessary to finance the construction of ships, hire crews, and establish colonies to initiate trading. In short, joint-stock companies enabled corporations on an unprecedented scale. Shares of stock represent  ownership of the business entity. Bearers of these shares are entitled to participate in specific decisions by means of voting, and are entitled to receive dividends. 
 
-However, joint-stock companies are heavily regulated and require complex and expensive auditing processes in order to protect shareholders from fraud and opaque mismanagement. This leads to high initial and operational costs which have to be weight against the benefits
+However, joint-stock companies are heavily regulated and require complex and expensive auditing processes in order to protect shareholders from fraud and opaque mismanagement. This leads to high initial and operational costs which have to be weight against the benefits.
 
 Cryptocurrencies and automated contract enforcement allow to apply similar concepts to endeavors of much smaller scale. First 
-\section{Motivation}
+\section{Motivating Example}
 
 Starting as an Uber driver in Mexico City or as a solar micro-utility provider in rural India does require relatively little capital in comparison to traditional joint-stock companies. 
 Nevertheless, financing a car or a solar home system can be challenging. In particular in countries with an underdeveloped financial services infrastructure and limited legal enforceability. This high risk for investors translated into high interest rates for local micro entrepreneurs. 
@@ -54,25 +55,31 @@ Alternatively, we can spread the risk from the bottom up, by interpreting every 
 
 \section{General Model}
 
-In the general model we consider a smart property that is able to provide some form of service. The smart object should be able to refuse providing the service. In the case of the solar home system the service is the provision of energy. In the case of a display or screen it may be the presentation of designated content. The smart property will act as an autonomous business entity, such that is able to issue tokens representing shares. The tokens entitle the respective bearer to claim a share of the revenue the smart property is generating by providing the service. Depending on the smart property and the particular tokens may also entitle to participate in decision processes.
+In the general model we consider an economic object that is able to provide some form of service. It is important that this service has to be controllable, and the value of the economic object should be primarily due to the ability to provide this service.
+In the example of a solar home system the service would be the provision of energy. Besides providing energy the solar home system has no use.
+
+The economic object provides a service based on received payments as specified in a contract. Furthermore, the economic object is able to act as an autonomous business entity, such that is is able to issue tokens on a blockchain representing shares. These tokens entitle the respective bearer to claim a share of the revenue the economic object is generating by providing the service. Moreover, token holders may be able to take part in decisions. 
+
+
+
 
 In the following we will present the model by discussing the participating stakeholders, their roles, and the system in which they interact. We will use the terms property, product and device synonymously. 
 
 \subsection{Stakeholders}
 
-\subsubsection{Manufacturer}
+\paragraph{Manufacturer}
 
 The manufacturer is the producer and initial owner of the smart property.
 
-\subsubsection{Operator}
+\paragraph{Operator}
 
 The operator has the desire to own the smart property, but lacks the necessary capital. The operator will be incentivized to maintain the smart property.
 
-\subsubsection{Investors}
+\paragraph{Investors}
 
 Investors provide the capital to deploy the smart property. In return, they receive shares that entitle them collect dividends. Furthermore, they might be able to interfere witch decisions of the operator in a voting process.
 
-\subsubsection{Customers}
+\paragraph{Customers}
 
 Customers are individuals or software agents that pay for the service provided by the smart property.
 
@@ -89,18 +96,18 @@ In contrast to traditional shares, additional shares are being issues based on r
     \label{fig:smartproperty}
   \end{figure}
 
-\section{Implementation}
+\subsection{Implementation}
 
 In the following we will discuss implementations based on Bitcoin and based on Ethereum. We will see that the implementation in Bitcoin has several limitations. This leads to an actual implementation of a prototype using Ethereum.
 
-\subsection{Bitcoin}
+\subsubsection{Bitcoin}
 
-\subsubsection{Smart Property}
+\paragraph{Object}
 
 The device has to be provisioned with an ECDSA private key during the manufacturing process.
 The manufacturer may additionally provide a certificate claiming the provenance of the device and its public key.
 
-\subsubsection{Contract}
+\paragraph{Contract}
 
 The actual contract is represented by a signed JSON document as illustrated in Figure \ref{lst:contract}. The document is created by the manufacturer, and  signed and transferred to the device. The device adds its signature. This concludes the provisioning process. The device is now ready to issue shares.
 
@@ -116,17 +123,17 @@ The actual contract is represented by a signed JSON document as illustrated in F
 \end{figure}
 
 
-\subsubsection{Shares}
+\paragraph{Shares}
 
 Shares in Bitcoin can be represented by colored coins (c.f. \ref{sec:coloredcoins}). It is necessary that additional shares can be issued after the initial issuance. The Open Assets specification allows to issue new coins of the same \emph{color} at any time by using the original issuance key. The Colu specification allows to choose between \emph{locked} and \emph{unlocked} coins. Unlocked coins correspond to coins that allow issuance of additional units.
 
 Initially the shares get partially awarded to the manufacturer and the operator according to the down payment.
 
-\subsubsection{Crowdsale}
+\paragraph{Crowdsale}
 
 The shares, represented as colored coins on the Bitcoin blockchain, can be readily offered on the global market. Potential investors are able to verify that the shares correspond to a particular device and a particular contract by verifying the signatures. Trading of shares in exchange for bitcoins is done via trustless atomic transactions. Trading in exchange for other cryptocurrencies can be done via trustless atomic cross-chain trading \parencite{atomiccrosschaintrading}.
 
-\subsubsection{Payments and Dividends}
+\paragraph{Payments and dividends}
 
 Consuming a service provided the property requires paying a fee specified in the contract. The fee may be time-based based on individual service provision. Different services or different payment plans can be implemented by using different bitcoin addresses. When a consumer pays the address the service is either directly provisioned, or the product accepts commands signed by the payer for the paid time period.
 
@@ -135,24 +142,24 @@ The property may accept payments by relying on SPV proofs only. The inherent lon
 In order to payout dividends, the property has to infer the current shareholders. Therefore, the property has to keep track of the colored coin trades. In principle, the property could create a transaction after each payment that distributes the payment to the shareholders. In practice, however, the viability of these \emph{real-time payouts} would depend on the size of the payment and the number of shareholders. Each shareholder increases the size of the transaction by an additional output. Furthermore, depending on the respective share, certain shareholders may end up with tiny outputs that would be expensive to spend or aggregate later.
 Payment channels to shareholders are no viable alternative, since the payment channels would have to be funded by the property initially, but it lacks the funds to do so. Thus, the property should execute scheduled payouts periodically depending on its expected revenue and the number of shareholders to keep a balance between transaction costs, low value outputs, and accumulation of payments.
 
-\subsubsection{External shareholder dilution}
+\paragraph{External shareholder dilution}
 As specified in the contract, based on the revenue, additional shares are issued and awarded to the operator. This will be executed by the device itself by creating and broadcasting a colored coins issuance transaction.
 
-\subsection{Ethereum}
+\subsubsection{Ethereum}
 
 In Ethereum, we are able to augment the device with a smart contract on the blockchain. Therefore, the physical device does not need to possess keys that control funds or shares. 
 
 Share issuance, payments, and dividend payouts can all be handled in a single smart contract.
 
-\subsubsection{Shares}
+\paragraph{Shares}
 
 Shares are represented as tokens. We base the smart contract on the standard token contract\footnote{https://github.com/ConsenSys/Tokens/blob/master/Token\_Contracts/contracts/StandardToken.sol}. The token contract is essentially a simple accounting system that maps account numbers to values, i.e. the number of \emph{tokens} an account owns. A transfer method then allows an account owner to debit its balance and credit another.
 
-\subsubsection{Crowdsale}
+\paragraph{Crowdsale}
 
 Initial share allocation can be done with an adapted crowdsale contract\footnote{https://www.ethereum.org/crowdsale}. The amount of initial shares is fixed and corresponds to the property price $p_property$. A certain amount of shares need to be bought by the operator as a down payment. Revenue of the crowdsale is sent to the manufacturer. 
 
-\subsubsection{Payments, Dividends and Dilution}
+\paragraph{Payments, dividends and dilution}
 
 Payments have to be made to the contract by calling a pay function with the payment attached. The pay function takes care of crediting the shareholder accounts with dividends, and issues new shares to the operator according to
 
@@ -176,27 +183,37 @@ Since share issuance is handled within the contract handling payments, the overh
 
 Noteworthy, there are two possibilities to pay dividends to shareholders. The obvious approach would be to let the contract actively send dividends to the shareholders accounts. However, sending is comparably expensive, and the cost would have to be borne by the payer. Hence, the contract keeps track of the dividend balances and we add a \emph{withdraw} function. The withdraw function allows shareholders to collect their dividends whenever they wish. Thereby, costs for withdrawing have to be borne by the withdrawing shareholder, and shareholders may decide themselves when collecting dividends is appropriate. 
 
-\subsection{Comparison}
+\subsubsection{Comparison}
 
 The expressiveness and statefulness of the Ethereum scripting language provides much more flexibility for the implementation. All functionality that handles payments, shares, and dividends can be implemented directly in the smart contract. The physical property itself needs  only be aware of a payment and the address of the payer in order to provide the service. In particular, the property does not need to handle cryptographic keys that control funds or shares.
 
 The Bitcoin implementation, in contrast, involves much more trust in the physical property itself.
 Distribution of dividends and dilution of shares is controlled by cryptographic keys on the device. Access to these keys has to be prevented not only from remote attacks, but also from local attacks, since the operator would benefit from access. Thus, the device needs tamper-resistant hardware to store cryptographic keys and provide signatures.
  
-\section{Case: Public Display}
+\section{Prototype: Public Display}
 
-We implemented the model for the use case of a public display
+\subsection{Architecture}
+
+\subsection{Implementation}
+
+\subsection{Evaluation}
+
+
+
 
 \section{Further Applications}
 
-\subsection{Autonomous cars}
+\subsection{Autonomous Cars and Drones}
 
-\subsection{Renewable energy generation}
+\subsection{Renewable Energy Generation}
+
+\subsection{Cell Towers}
 
 
 \section{Discussion}
 
-\subsection{}
 
-\subsection{Legal Issues}
-We presented a concept of \emph{autonomous} property considered as a business entity that has contractual relationships with investors, an operator and potential service consumers. The property itself, in the Bitcoin implementation, or the corresponding smart contract, in the Ethereum implementation, issues tokens that can be interpreted as shares, and accepts and distributes payments. We chose this language in order to emphasize the correspondence to a traditional joint-stock company. These terms have a particular legal significance and can not transferred to this scenario without limitations. We do not consider the legal issues and implications which vary between jurisdication, but consider only the contractual terms as specified in the document which will be executed by the property.
+\paragraph{Legal Issues}
+We presented a concept of \emph{autonomous} property considered as a business entity that has contractual relationships with investors, an operator and potential service consumers. The property itself, in the Bitcoin implementation, or the corresponding smart contract, in the Ethereum implementation, issues tokens that can be interpreted as shares, and accepts and distributes payments. We chose this language in order to emphasize the correspondence to a traditional joint-stock company. These terms have a particular legal significance and can not transferred to this scenario without limitations. We do not consider the legal issues and implications which vary between jurisdictions, but consider only the contractual terms as specified in the document which will be executed by the property.
+
+\section{Related Work}
