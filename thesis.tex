@@ -9,7 +9,6 @@
 %\usepackage{subfig}
 \usepackage{preamble}
 \usepackage{listings}
-\usepackage{algorithm}
 \usepackage{tabularx}
 \usepackage{epigraph}
 
@@ -93,7 +92,7 @@
 \def\dir{chapters/iot}
 \input{\dir/iot.tex}
 
-%----------------------------------------------------------------------------
+%----------------------------------------------------------------------------textwidth
 % From digital cash to cryptoeconomical digital currencies
 \def\dir{chapters/crypto}
 \input{\dir/crypto.tex}
@@ -105,13 +104,16 @@
 
 %----------------------------------------------------------------------------
 % M2M Micropayments
-\def\dir{chapters/micropayments}
-\input{\dir/micropayments.tex}
+%\def\dir{chapters/micropayments}
+%\input{\dir/micropayments.tex}
 
 %----------------------------------------------------------------------------
 % Case: Sensing as a Service
 \def\dir{chapters/s2aas}
 \input{\dir/s2aas.tex}
+
+\def\dir{chapters/s2aas_micro}
+\input{\dir/s2aas_micro.tex}
 
 
 %----------------------------------------------------------------------------
@@ -121,8 +123,8 @@
 
 %----------------------------------------------------------------------------
 % Case: Decentralized Energy and Decentralized Autonomous Organizations
-\def\dir{chapters/display}
-\input{\dir/display.tex}
+%\def\dir{chapters/display}
+%\input{\dir/display.tex}
 
 %----------------------------------------------------------------------------
 % Case: Decentralized Energy and Decentralized Autonomous Organizations
@@ -140,8 +142,7 @@
 
 \backmatter
 
-
-%----------------------------------------------------------------------------
+%---------------------------------------------------------------------
 % Bibliography
 \def\dir{frontbackmatter}
 \input{\dir/bibliography.tex}

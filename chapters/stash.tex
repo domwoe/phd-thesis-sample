@@ -1,0 +1,566 @@
+% \begin{figure}
+% \includegraphics[scale=.7]{./externalized/paymentchannel.pdf}
+% \caption{An unidirectional payment channel between a payer A and a payee B. To open a channel A creates and broadcasts a funding transaction with an output that can be spent only by providing signatures from both parties, i.e. $\sigma(A)$ and $\sigma(B)$ (multisignature). The value of this output is then shared between A and B in off-chain payment transactions. A creates and (partially) signs those payment transactions, and sends them to B via some private or public communication channel. While A has only partially signed payment transactions, B is able sign and broadcast any of those transactions to close the channel. If B is rational he will always broadcast the transaction that allocates the largest share to him. Therefore A can not decrease B's share in a subsequent payment transaction, and the payment channel is thus unidirectional. If B does not broadcast a payment transactions before $T_1$, A is able to recover the funds by broadcasting a refund transaction.}
+% \label{fig:paymentchannels}
+% \end{figure}
+
+% Unidirectional payment channels between two parties involve two on-chain Bitcoin transactions. One funding transaction and one transaction to close the channel. In the unidirectional setting only one party funds the channel and risks locking her funds (temporarily) in case the receiving party is not cooperative. Simple unidirectional payment channels are useful for repeated, metered payments between a single payer and a single payee. Use cases are for example video streaming\footnote{https://streamium.io/} and WiFi access \cite{Siby2013}.
+
+Mobile phones have an unprecedented scale in the diffusion of computing technology. It is the first computing and sensing platform that reaches even the rural and remote areas throughout the developing world. Smartphones are powerful connected mobile general purpose computing devices that can be considered as the largest mobile sensing platform in existence. Essentially the same base technology is now being deployed in all kinds of other devices from cars to lightbulbs, extending the scope of sensing services even further. However thus far, the emerging opportunity of a planetary nervous system \cite{giannotti2012planetary} has not yet come to scale. Mobile crowdsensing, as will be defined in Section \ref{sec:crowdsensing}, has only been used either in small scale scenarios or in application-specific scenarios. A global platform for crowdsensing is missing.
+
+
+
+ A fundamental building block of any crowdsensing platform, either centralized or decentralized, is a global, permissionless payment system that reaches as far as the diffusion of smartphones, and is capable of providing micropayments to remunerate ad-hoc sensing services. We argue that Bitcoin is such a global payment network. Although Bitcoin is based on a heavily replicated shared ledger on top of a gossip peer-to-peer network, and an energy and capital intensive distributed consensus mechanism using proof-of-work, we present technologies that leverage the built-in scripting language to enable peer-to-peer and mediated micropayments. In particular, we present an implementation of mediated unidirectional payment channels based on hash time locked contracts.
+
+
+\section{Mobile Crowdsensing}
+\label{sec:crowdsensing}
+
+Crowdsensing is where individuals with sensing and computing devices collectively share data and extract information to measure and map phenomena of common interest \cite{ganti2011mobile}. Predominately, crowdsensing has been engaged in the form of mobile crowdsensing, utilizing the ubiquity of smartphones, in application-specific scenarios. Examples are transit tracking \cite{Thiagarajan:2010:CTT:1869983.1869993}, road and traffic monitoring \cite{Mohan:2008:NRM:1460412.1460444}, site characterization \cite{Chon:2012:ACP:2370216.2370288}, and on-street parking \cite{Chen:2012:COS:2386958.2386960,6569416}. Besides these small-scale academic field studies, notable examples for successful large-scale, application specific mobile crowdsensing application are Google Maps and Waze which was acquired by Google in 2013.   
+
+\cite{guo2015mobile} provide an extensive recent review of the various mobile crowdsensing paradigms, their applications, as well challenges and opportunities. 
+The main challenges that have been identified repeatedly (see also \cite{he2015privacy}) are privacy and incentives. \cite{Christin2015} provides an analysis of the privacy implications and threats as well as a survey of available privacy-preserving techniques. 
+
+In the application-specific scenario participants are typically incentivized by receiving an application-specific service. In the case of Google Maps a participant gets routing and traffic information in exchange for providing location and speed information. Especially in the case of participatory sensing where explicit user input is required gamification \cite{Deterding:2011:GDE:2181037.2181040} has been used successfully (e.g. Waze) to incentivize participation. However incentivization by service provision leads to contribution only from users who are in need of that particular service and only during specific times. In contrast monetary incentives are a general purpose incentive mechanism. Thus far monetary incentives have mostly been studied in small-scale, localized field studies, as well as in form of game-theoretic incentive mechanism design \cite{7101300}. 
+Related to crowdsensing, there is also sensing as a service model \cite{Sheng:2013cm,ETT:ETT2704}, which emphasizes the ad-hoc access to sensing infrastructure or real-time data without investing in infrastructure itself. The sensing as a service model can be seen as an extension of the crowdsensing model to incorporate commercial sensor networks.
+
+In recent years a multitude of architectures enabling general purpose crowdsensing and sensing as a service applications have been presented \cite{6558754,6525603,giannotti2012planetary,Haderer2015,merlino2016mobile}. However none of them has reached reasonable scale.
+
+What has been mainly neglected is how monetary incentives can be provided efficiently under the conditions of a global mobile crowdsensing platform. 
+Individual rewards are rather small and data requesters as well as data providers might be distributed globally. Furthermore traditional online payment mechanisms provide additional means for de-anonymization of participants.  
+
+
+\subsubsection{Unidirectional Mediated Payment Channels}
+
+Mediated payment channels allow the routing of payments through intermediate payment channels by using a concept called \emph{hashlocks} or rather hash timelocked contracts (HTLC). We can express a HTLC between two parties in common words as follows: I pay you if you can provide the secret within a certain period. Assume Alice (A) wants to send a small payment to Bob (B), but Alice and Bob do not have an open payment channel. However, A has a channel with Charlie (C), and C has a channel with B. In principle A could pay C and tell him to pay B. But A has no way to enforce the payment from B to C if the payment channels are independent. We need a way to condition the individual payments on each other. This can be done by conditioning the payments on a common secret generated by the final recipient B. 
+
+Figure \ref{fig:unimedpc} illustrates the flow of an individual payment over two payment channels. We assume that A and C, as well as C and B have already established payment channels, i.e. there exist shared multisignature outputs with some locktimes $T_0$ and $T_0^{'}$\footnote{The actual locktimes are not important. However, they have to be longer than the HTLC locktimes $T_1$ and $T_2$.}. In order to make it more concrete, we assume that the shared outputs have a value of 1 BTC each, and A wants pay B an amount of 0.1 BTC. Moreover, we assume that the channels are fresh, i.e. no payment transactions have been exchanged. First, the final recipient B creates a payment-specific random secret, computes hash(secret), and communicates hash(secret) to C and A. A creates a payment transaction that consumes the shared multisignature output and creates two outputs: (1) an output assigning 0.9 BTC to her, and (2) a HTLC output with a value of 0.1 BTC\footnote{We neglect necessary fees in order to provide a cleaner explanation.}. Figure \ref{fig:pubScriptHTLC} shows the pubScript of such a HTLC output as used in the payment transactions. A provides her signature for the transaction and sends it to C. C may now sign the transaction as well and broadcast it to the Bitcoin network. However, without the secret, C will not be able to claim the 0.1 BTC. Thus C will store the transaction and create another payment transaction addressing C with a HTLC output requiring the same secret. C signs the transaction and sends it to B. B could sign the transaction and broadcast it to the network. Since he knows the secret, he could claim the 0.1 BTC locked in the HTLC output. But he would have to do it before $T_2$. Otherwise B would be able to claim the output. B would claim the HTLC output by broadcasting a transaction that entails the secret. Thus, the secret would be public and C could use it to claim the HTLC output of the payment transaction from A. To ensure that C is always able to do that before A is able to reclaim the value, $T_1$ has to be sufficiently later than $T_2$. If timelocks are selected appropriately, a payment between A and B mediated by C using HTLCs is atomic, i.e. either both payments succeed or both payments fail. This means also that B can just communicate the secret privately to C and A, and they update their shares accordingly. Hence, A would create a transaction that replaces the HTLC output with an output granting C the 0.1 BTC. After signing and sending the transaction to C, C would do the same concerning the HTLC with B, and the payment is concluded without any on-chain transaction.
+
+Mediated payment channels can be used in a hub and spoke architecture to connect a large number of buyers with a large number of sellers with only one payment channel per buyer/seller. Think of 100 of fitness trackers interested in buying air quality data from 1000 consumer air quality sensors in Bejing in order to suggest a healthy running track. There would have to be 100 000 p2p payment channels, but only 1100 if there were a central mediator (c.f. Figure \ref{fig:nmpaymentchannels} and \ref{fig:hubandspoke}).
+
+
+A particular payment transaction might entail a number of HTLC outputs corresponding to payments to multiple sellers concurrently (c.f. Fig. \ref{fig:htlcflow}.
+
+\begin{figure}
+\centering
+\includegraphics[scale=0.7]{./externalized/unimedpc.pdf}
+\caption{Protocol for the the k-th payment over two payment channels connected by a hash timelocked contract.}
+\label{fig:unimedpc}
+\end{figure}
+
+\begin{figure}
+\begin{lstlisting}[breaklines,mathescape=true]
+OP_IF
+  OP_DUP OP_HASH160 <PubKeyHash B (C)> OP_EQUALVERIFY OP_CHECKSIG
+  HASH160 <Hash160 (secret)> EQUAL
+OP_ELSE
+  OP_DUP OP_HASH160 <PubKeyHash A (B)> OP_EQUALVERIFY OP_CHECKSIG
+  <$T_1$ ($T_2$)> CHECKLOCKTIMEVERIFY DROP
+OP_ENDIF
+\end{lstlisting} 
+\caption{HTLC pubScript of a payment transaction in an unidirectional mediated payment channel setup. The first branch of the conditional can be used by the recipient to claim the output by providing the secret, the second branch can be used by the sender to reclaim their funds after $T_1$ ($T_2$).}
+\label{fig:pubScriptHTLC}
+\end{figure}
+
+
+
+\begin{figure}[ht]
+  \centering
+  \begin{subfigure}[t]{0.5\linewidth}
+    \centering\includegraphics[width=0.95\textwidth]{./externalized/nmpaymentchannels.pdf}
+    \caption{Independent payment channels\label{fig:nmpaymentchannels}}
+  \end{subfigure}%
+  \begin{subfigure}[t]{0.5\linewidth}
+    \centering\includegraphics[width=0.95\textwidth]{./externalized/hubandspoke.pdf}
+    \caption{Hub and spoke architecture\label{fig:hubandspoke}}
+  \end{subfigure}
+  \caption{Comparison between individual payment channels between buyers and sellers, and a hub and spoke architecture based on mediated payment channels. The number of channels can be decreased from N x M to N + M.}
+\end{figure}
+
+
+\begin{figure}
+\centering
+\includegraphics[width=\linewidth]{./externalized/htlcflow.pdf}
+\caption{A series of (off-chain) transactions with two concurrent payments. After the secret is released the corresponding HTLC output can be removed and the balances can be updated. The large byte-wise size of HTLC outputs further disincentive abortion of the protocol by broadcasting a transaction including HTLC outputs.}
+\label{fig:htlcflow}
+\end{figure}
+
+\section{Prototype}
+
+\subsection{Architecture}
+The system consists of three main components. A data requester or data buyer application, a data provider application, and a hub application. In order to fulfill the aforementioned principles the payment of the measurement data is done by means of N-to-M mediated payment channels as presented in Section \ref{sec:mediated} where the hub acts as the mediator over which payments are routed. At the same time the hub provides a query-able data provider registry. Noteworthy, the consolidation of payment routing and registry slightly violates our third design principle. However, both components are logically separated. An illustration of the system's architecture is shown in Figure \ref{fig:architecture}.
+
+
+ \begin{figure}
+ \includegraphics[width=\textwidth]{./externalized/Architecture.pdf}
+ \caption{Overview of system's architecture.}
+ \label{fig:architecture}
+ \end{figure}
+
+\section{Implementation}
+\label{sec:implementation}
+
+The implementation of N-to-M mediated payment channels is based on extending the payment channel implementation of the bitcoinj library \cite{Bitcoinj}. Bitcoinj is a Java library for working with the Bitcoin protocol and was the first Bitcoin library that had implemented support for payment channels. The Java implementation was chosen because it allows to reuse the implementation across all of the system's components. JavaScript provides the same benefits but libraries were not as mature at that point. Furthermore, bitcoinj implements simplified payment verification (SPV). It allows to verify on-chain transactions without needing to store and verify the entire Bitcoin blockchain. SPV nodes store only the block headers (80 byte instead of a few hundred kilo byte for a typical block), and rely on the depth of a transaction in the blockchain. Block headers contain the root of a Merkle tree that is built of all transaction hashes in the block. Hence, in order to validate a particular transaction, a SPV node has to retrieve only a subset of the block data, i.e. the corresponding branch of the Merkle tree.
+Only due to the SPV is it viable to use Bitcoin on resource constrained devices without trusting third party services.
+
+The data requester and the hub are implemented as native Java applications. The data provider is implemented as an Android application. Before presenting the implementation of the individual components we start with the common building block on which all peer-to-peer payments are based. 
+
+\subsection{Mediated payment channels using HTLCs}
+
+We follow the client-server architecture of the payment channel implementation of bitcoinj \cite{BitcoinjPC}. A client is always on the sending side of a payment while a server is on the receiving side (c.f. Figure \ref{fig:architecture}). Since the hub acts as mediator or router for payments between requesters and providers it has to receive payments from requesters and forward those payments to providers. Hence, the hub incorporates both, server and client.
+
+\begin{table}
+  \centering
+    \caption{The five layers of the HTLC payment channel implementation.}
+  \begin{tabular}{|c|l|}
+    \hline
+    \tabhead{Layer} &
+    \tabhead{Description} \\
+    \hline
+    Driver Application & \multicolumn{1}{|p{0.5\columnwidth}|}{Provides the API to access lower layers}\\
+    \hline
+    Channel Connection & \multicolumn{1}{|p{0.5\columnwidth}|}{Provides the interface to the network}\\
+    \hline
+    Payment Channel & \multicolumn{1}{|p{0.5\columnwidth}|}{Handles messages from/to the network and passes instructions/gets results to/from the lower layer}\\
+    \hline
+    Channel State Machine & \multicolumn{1}{|p{0.5\columnwidth}|}{Handles the state of the payment channel}\\\\
+    \hline
+    HTLC State Machines & \multicolumn{1}{|p{0.5\columnwidth}|}{Handles the state of the HTLC}\\\\
+    \hline
+  \end{tabular}
+  \label{tbl:layers}
+\end{table}
+
+In order to implement hashed HTLCs we extended the four layers of bitcoinj's payment channel implementation with a fifth layer that is concerned with keeping track of the HTLC flow. The five layers are described briefly in Table \ref{tbl:layers}. Details about the state machines and sequence diagrams can be found in BLINDED FOR REVIEW.
+Messages and transactions are serialized using Google protocol buffers\footnote{https://developers.google.com/protocol-buffers/} and are exchanged between the components over TCP connections. The payment channel setup and the HTLC payments in the implementation are slightly more complex and involve even more communication than it is shown in Table \ref{tabl:htlcflow} because we use the interactive approach for channel refunds. 
+
+\subsection{Data provider}
+
+The data provider is implemented as an Android application. The application allows users to offer measurement data from various sensors at an adjustable price denominated in satoshis\footnote{A satoshi is the smallest fraction of a bitcoin and corresponds to $10^{-8}$ bitcoins}. Table \ref{tbl:sensors} provides an overview of possible sensors. With the initial boot of the application, a local wallet is generated. The wallet is responsible for generating and storing key pairs and signing transactions. Furthermore a background service is started that manages the payment channel server and data delivery. If a user decides to offer measurement data from a specific sensor, the application registers the sensor at the global sensor registry. The initial registration then triggers the setup of a payment channel between the hub and the Android application. As soon as the payment channel is established the application is ready to serve requests from buyers.
+
+
+\begin{table}
+  \centering
+  \caption{Examples of virtual and physical sensors available in smartphones.}
+  \begin{tabular}{|c|l|l|}
+    \hline
+    \tabhead{Sensor} &
+    \tabhead{Type} &
+    \tabhead{Application} \\
+    \hline
+    Barometric pressure & physical & Weather prediction \\
+    \hline
+    Location & both & People flow  \\
+    \hline
+    Network strength & physical & Coverage maps \\
+    \hline
+    Installed apps & virtual & Inter-app correlations    \\
+    \hline
+    Transportation mode & virtual & City monitoring \\
+    \hline
+    Steps & virtual & Health monitoring  \\
+    \hline
+  \end{tabular}
+  \label{tbl:sensors}
+\end{table}
+
+
+\subsection{Data requester}
+The data requester is implemented as a Java application. The requester application allows to query the sensor registry. In the prototype this is achieved using simple console commands. Table \ref{tbl:commands} shows the available commands.
+
+\begin{table}
+  \centering
+    \caption{Available commands of the data requester console.}
+  \begin{tabular}{|c|l|}
+    \hline
+    \tabhead{Command} &
+    \tabhead{Description} \\
+    \hline
+    STATS NODES & Returns all connected sensor nodes \\
+    \hline
+    STATS SENSORS & Returns available sensor types \\
+    \hline
+    SELECT SENSOR=$<$type$>$ & \multicolumn{1}{|p{0.5\columnwidth}|}{Returns sensors of type $<$type$>$ with pricing information} \\
+    \hline
+    BUY $<$type$>$ FROM $<$node$>$ & \multicolumn{1}{|p{0.5\columnwidth}|}{Buys the current measurement value of sensor $<$type$>$ from node $<$node$>$} \\
+    \hline
+   
+    \hline
+  \end{tabular}
+  \label{tbl:commands}
+\end{table}
+
+
+
+\subsection{Hub}
+The hub acts as the central point of coordination. Data providers register their sensors with the sensor registry that the hub provides, and data requesters are able to query the registry. Furthermore, the hub is responsible for mediating the payments between buyers and sellers. The hub instantiates a payment channel client and a payment channel server
+
+
+\section{Evaluation}
+
+In this section we first present a conceptual evaluation based on the principles presented in Sec. \ref{sec:principles}. Thereafter, we proceed with an empirical evaluation of the performance, and the transaction costs. 
+
+\subsection{Conceptual Evaluation}
+
+\subsubsection{Low barrier for participation}
+A potential participant on the data provider side has to download and install the data provider smartphone application. The data provider does not need to own any bitcoins. Furthermore no manual sign-up or registration is required. This means also the system has global reach and could provide a low-income stream to smartphone users in developing countries.
+
+A data requester does not have to register but the wallet of the data requester application needs to have some amount of bitcoin in order to initiate a payment channel with the hub.
+
+\subsubsection{Incentivize participation with micropayments}
+Individual payments can be as low as 1 satoshi. In April 2016, the exchange rate is around 450\$/BTC. In regard to this exchange rate individual payments can be as low as 4.5 $\mu$\$. Even smaller payments could be implemented with probabilistic payment schemes \cite{Rivest1997,Pass:2015:MDC:2810103.2813713}. Transaction fees for setting up and closing payment channels will be discussed in Sec. \ref{sec:fees}. 
+
+\subsubsection{Limited trust in hub provider}
+The usage of HTLCs to interconnect payment channels of data providers and data requesters allows atomic payments between those parties. This means either the payment happens in both channels or it happens not at all. 
+
+\subsubsection{Anonymity}
+Obviously there is a risk of de-anonymization for data providers depending on the data they are selling. For example selling of location data or wifi SSIDs could be used to identify a data provider. We restrict the evaluation of anonymity to the payment aspect. Bitcoin payments themselves are pseudonymous. Transactions only entail cryptographic public keys or hashes thereof. If users . In addition, due to the usage of mediated payment channels, there is no public link between buyers and sellers. Only transactions between buyers and the hub, and sellers and the hub end up in the blockchain. Transactions entailing the linking secret are kept private. 
+
+In addition, there is a risk of de-anonymization based on the IP addresses. However since all communications are based on TCP, it would be possibly to run the system over Tor\footnote{https://www.torproject.org/}.
+
+
+\subsection{Empirical Evaluation}
+
+\subsection{Performance}
+
+For setting up and closing of payment channels the Bitcoin network itself is dictating the performance. If fees are sufficient a transaction can be assumed to be included in the blockchain in 10 min on average. Depending on the value of the transaction the receiver of the funds might wait until the transaction has six confirmations. This means that there are five additional blocks on top of the block entailing the transaction. 
+In the following we assume that payment channels are already in place and evaluate the time is takes to complete a payment. The experiment was done by instantiating 100 data requesters and one data provider. Each requester buys one measurement value from the data provider. Table \ref{tbl:performance} shows a breakdown of the mean times and the standard deviation according to the payment steps. The results request some explanation. First, the HTLC setup process between hub and provider seems to take almost twice as long as the the HTLC setup between requester and hub. The reason for this is that the hub-provider setup is initiated with generating the secret but then has to wait until requester-hub setup is finished. If the hub would initiate the HTLC setup with the provider immediately the hub would risk paying the provider without being able to pull the respective funds from the requester. Second, the teardown process (i.e. updating the setup transacting by assigning the value of HTLC output to the payee.) takes less than half the time of the setup process. The reason for that is mainly that in the actual implementation the interactive refund approach was used. This means that there is an additional transaction which has to be signed by both parties and has to be transferred from payer to payee and back. Thus, we expect a comparable performance between setup and teardown if the non-interactive approach is used. Furthermore, we see that the steps that involve the provider take more time. This is because signing and signature verification are computation intensive tasks and the data provider is a comparably weak smartphone.
+
+\begin{table}
+\centering
+\caption{Payment duration breakdown}
+\begin{tabular}{|l|r|r|}
+\hline
+{\textbf Payment } & \multicolumn{1}{l|}{{\textbf Mean}} & \multicolumn{1}{l|}{{\textbf St. Dev.}} \\ \hline
+Requester-Hub setup             & 479.3 ms                 & 78.8 ms                      \\ \hline
+Hub-Provider setup            & 1015.1 ms                & 151.4 ms                     \\ \hline
+Hub-Provider teardown         & 199.6 ms                 & 68.3 ms                      \\ \hline
+Buyer-Provider teardown          & 146.6 ms                 & 10.1 ms                      \\ \hline
+\end{tabular}
+
+\label{tbl:performance}
+\end{table} 
+
+
+\subsection{Transaction costs}
+\label{sec:fees}
+Transaction fees in Bitcoin are in principle voluntary. The party that creates a transaction specifies the transaction fees as the difference of the sum of the value of all inputs and the sum of the value of all outputs. However, each miner can decide individually if she will accept the transaction for a candidate block. Since there is a limit on the maximum size of a block, and larger blocks need more time to propagate the network, rational miners will select transactions with higher transaction fees. This is also the reason why transaction fees are based on the size of the transaction instead of its value. The transaction size is mainly defined by the number and size of input and output scripts and signatures. Figure \ref{fig:tx_fees} shows the daily averages of transaction fees in USD/kb for the period of one year.
+
+\begin{figure}[!t]
+\centering
+\includegraphics[width=\textwidth]{./externalized/fees_per_kb}
+\caption{Bitcoin transaction fees in USD/kb. Each point represents a daily average.}
+\label{fig:tx_fees}
+\end{figure}
+
+
+\begin{table}
+  \centering
+  \caption{Approximate sizes and costs for Bitcoin transactions}
+  \begin{tabular}{|c|l|l|}
+    \hline
+    \tabhead{Transaction Type} &
+    \tabhead{Size} &
+    \tabhead{Cost} \\
+    \hline
+    Standard P2PKH & \multicolumn{1}{|p{0.5\columnwidth}|}{} & \\
+    \hline
+    Funding & \multicolumn{1}{|p{0.5\columnwidth}|}{} & \\
+    \hline
+    HTLC setup & \multicolumn{1}{|p{0.5\columnwidth}|}{} & \\
+    \hline
+    Settlement & \multicolumn{1}{|p{0.5\columnwidth}|}{} & \\
+    \hline
+    Forfeiture & \multicolumn{1}{|p{0.5\columnwidth}|}{} & \\
+    \hline
+  \end{tabular}
+  \label{tbl:fees}
+\end{table}
+
+
+\section{Discussion}
+
+\subsection{Unidirectional Payment Channels Revisited}
+
+\subsection{Challenges}
+
+\subsubsection{Locking of funds}
+
+The usage of payment channels involves locking of funds. This is a problem in particular for the payment hub. One of our principles was that the onboarding of new data producers should be frictionless. Hence, we assume that data producers do not have any bitcoins to begin with. When a data producer registers a sensor with the registry the payment hub initiates a payment channel with the data producer. As described in Sec. \ref{sec:mediated} this involves broadcasting a funding transaction to the Bitcoin network. Thereby the hub has to lock capital in the channel and has to provide a fee in order for the transaction to be mined. The operator has to balance between locking a large amount and the transaction costs involved in closing and reopening a channel because of depletion. In general the amount of locked bitcoins is proportional to the number of data producers.
+Since there is no cost for a data producer to register, a malicious actor might attack the hub by registering a large amount of fake sensors. A strategy to disincentive such a behavior would be to request proof of work from the sensor as part of the registration process.
+
+The situation might change radically when payment channel networks become ubiquitous.  
+
+\subsubsection{Malicious Sensors}
+
+Malicious data producers that offer fake data are not only a problem for the hub but an obstacle to the usefulness of the system as a whole. If the quality and correctness of the offered data is too low data requesters will be reluctant to use the system.
+A typical approach to provide an indication about the trustworthiness of a producer is the introduction of a reputation system. Typical reputation system are centrally managed and thus may be subject to censorship. \cite{s16060776} describes a clever reputation system which interprets bitcoin payments from a particular address (or addresses) as reputation, and presents a protocol based on the CoinJoin protocol to transfer ownership. However, the scheme is not perfectly applicable in the present scenario for mainly two reasons: (1) a public reputation score is only visible for a data requester after the data provider closes a channel, and (2) the data requester is not able to see if the reputation originates from a large number of independent data providers or from repeated payments of a small number of requesters. Only repeated payments can indicate satisfactory transactions. In contrast, in \cite{s16060776} there is only one data collection server that verifies all data and pays the data providers accordingly.
+
+\subsubsection{Anonymity}
+
+
+
+
+\section{Current Developments: Routable Bidirectional Payment Networks}
+
+\subsection{Lightning Network}
+
+\subsection{Micropayments with Ethereum}
+
+
+
+\section{Conclusion}
+The conclusion goes here.
+
+
+\section{Background}
+
+\subsection{Smart Objects}
+
+\cite{kortuem2010smart} define smart objects as \emph{autonomous physical/digital objects augmented with sensing, processing, and network capabilities}. 
+
+\subsection{Machine-to-Machine (Micro) Payments}
+
+\subsection{Smart Property}
+
+
+
+
+\section{Economic Objects}
+
+\subsection{Basic Characteristics}
+
+\subsubsection{M2M Micropayments}
+
+\subsubsection{Blockchain-mediated Control}
+
+\subsection{Requirements}
+
+\subsubsection{Object}
+
+\subsubsection{Blockchain}
+
+\subsection{Patterns}
+
+\subsubsection{Low-trust Atomic Trades}
+
+
+Smart property can be sold via the Internet in an atomic process without third party escrow. Transfer of ownership\footnote{We do not necessarily mean legal rights of ownership, but the ability to control the property} and transfer of money happen at once.
+
+\paragraph{Implementation based on Bitcoin}
+
+The simplest way to achieve atomicity in Bitcoin is by executing both parts of the trade in a single transaction. In Fig. \ref{fig:smartproperty} an atomic trade protocol based on \cite{smartproperty2011} is shown. The protocol may either be initiated by the seller (A) or by the buyer (B). We assume A initiates the protocol and sends the price, a Bitcoin address where she would like to receive the payment, and a reference to the UTXO that represents the smart property (ownership output) to B. B creates a new ownership key pair and prepares a transaction that sends the price to A and transfers the ownership to the newly created ownership key. B signs the transaction and sends it to A. To accept the offer A signs the ownership input and broadcasts the transaction to the Bitcoin network. 
+
+After a number of confirmations, B can provide a SPV proof to the smart property. Therefore, B provides a selection of subsequent block headers entailing the header of the block the transaction is in, plus its merkle proof. The smart property is able to reason about the amount of proof-of-work that was spent to generate the blocks. In case of doubt, the smart property can ask for more block headers.
+
+\begin{figure}[!t]
+    \centering
+    \includegraphics[width=\linewidth]{./externalized/smartproperty}
+    \caption{Protocol of atomic trade of a smart property on the Bitcoin blockchain. The smart property does not need to interact with the Bitcoin network itself.}
+    \label{fig:smartproperty}
+  \end{figure}
+
+In this protocol the smart property is not part of the Bitcoin network, but is able to verify SPV proofs provided by a potentially untrusted party. 
+
+\paragraph{Implementation based on Ethereum}
+
+The following contract illustrates a contract representing a tradable smart property in Ethereum. The original issuer of the contract is identified as the owner. In practice this would be the manufacturer. Ethereum does not support collaborative transactions, i.e. transactions with operations authorized by different entities. Therefore, selling has to be implemented in a two-stage process. In the contract below, we do this by implementing a \emph{sell function} which can be only called by the current owner (through the \emph{onlyOwner modifier}). The \emph{sell function} has two parameters: the price, and a buyer address. The \emph{buyer parameter} allows to explicitly state a seller. Otherwise everyone who would pay the price using the \emph{buy function} would be able to buy the smart property.
+
+\newpage
+\begin{lstlisting}[breaklines,basicstyle=\tiny]
+contract SmartProperty {
+    
+    address owner;
+    address buyer;
+    bool onlyBuyerFlag;
+    bool isOnSale;
+    uint price;
+    
+    modifier onlyOwner() {
+        if (msg.sender != owner) throw;
+    }
+    
+    modifier onlyBuyer(bool flag) {
+        if (flag && msg.sender != buyer) throw;
+    }
+    
+    function SmartProperty() {
+        owner = msg.sender;
+    }
+    
+    function sell(uint _price, address _buyer) onlyOwner() {
+        isOnSale = true;
+        if (_buyer != 0) {
+            onlyBuyerFlag = true;
+            buyer = _buyer;
+        } else {
+            onlyBuyerFlag = false;
+        }
+        price = _price;
+    }
+    
+    function stopSale() onlyOwner() {
+        isOnSale = false;
+    }
+        
+    function buy() onlyBuyer(onlyBuyerFlag) {
+        if (isOnSale) {
+            if (msg.value == price) {
+                isOnSale = false;
+                owner = msg.sender;
+                owner.send(msg.value);
+                
+            } else {
+                msg.sender.send(msg.value);
+            }
+        } else {
+            msg.sender.send(msg.value);
+        }
+    }
+}
+\end{lstlisting}
+
+
+\subsubsection{Low-trust renting}
+
+Time-restricted transfer of ownership with adjustable counterparty risk. Smart property can be the basis for a peer-to-peer sharing\footnote{In the sense of Uber and AirBnB.} ecosystem. 
+
+\paragraph{Implementation based on Bitcoin}
+
+The idea is to combine shared ownership and the unidirectional payment channel. Therefore, the parties create a transaction that creates a multi-signature ownership output for A (owner) and B (renter), and a 2-of-2 multi-signature output where B deposits some amount. Furthermore, both parties create a timelocked refund transaction that allocates the ownership output back to A, and the deposit back to B. The timelock should cover the maximal renting period, and the deposit should cover the renting price for that period. B can now pay in small increments with off-chain payment transactions that entail an additional ownership output that assign the car ownership back to A. Because of Bitcoin's current malleability issue it is important that the order of providing signatures is such that only A is able to broadcast the funding transaction. Furthermore, A needs also a (tiny) payment transaction from B before broadcasting the funding transaction. Otherwise B could just use the smart property without paying for the entire maximal renting period, since A would not have a transaction that is immediately valid. Figure \ref{fig:smartproperty_renting} illustrates the protocol in more detail.
+
+\begin{figure}[!t]
+    \centering
+    \includegraphics[width=\linewidth]{./externalized/smartproperty_renting}
+    \caption{Protocol for trust-minimized renting of smart property using a Bitcoin payment channel.}
+    \label{fig:smartproperty_renting}
+  \end{figure}
+
+\paragraph{Implementation based on Ethereum}
+
+
+The following contract implements low-trust renting of smart property on Ethereum. Note that the \emph{Rentable Property} contracts inherits properties and functions from the \emph{SmartProperty} contract. When deploying the contract the owner sets a deposit a renter has to provide and a time based renting price. The main functions are a \emph{rent} and a \emph{returnPropery} function. The \emph{rent} function allows an arbitrary account or contract to rent the smart property by providing a deposit. The deposit is held in the contract, and can only be released by the rules of the contract. Neither the owner, nor the renter have control over the deposit. The contract keeps also track of the block in which the rent function was executed. This \emph{startBlock} serves as the begin of the renting period as measured in time of blocks. The Ethereum network has an average block generation rate of approximately 14s. 
+The software running locally on the smart property has now to be notified that it must obey orders signed by the renter for a maximal period defined by the price and the deposit. 
+The renter can later call the \emph{returnProperty} function which calculates the price for the renting period and distributes the deposit accordingly. If the renter does not return the property in time her access/control rights expire. 
+
+\begin{lstlisting}[breaklines,basicstyle=\tiny]
+contract RentableProperty is SmartProperty {
+    
+    address renter;
+    uint startBlock;
+    uint pricePerBlock;
+    uint deposit;
+    bool isRentable = true;
+    
+    modifier onlyRenter() {
+        if (msg.sender != renter) throw;
+    } 
+    
+    function RentableProperty(uint _pricePerBlock, uint _deposit) {
+        owner = msg.sender;
+        pricePerBlock = _pricePerBlock;
+        deposit = _deposit;
+    }
+    
+    function notRentable() onlyOwner() {
+        isRentable = false;
+    }
+    
+    function rentProperty() {
+        if (isRentable) {
+            if (msg.value >= deposit) {
+                renter = msg.sender;
+                startBlock = block.number;
+                isRentable = false;
+                if (msg.value > deposit) {
+                    msg.sender.send(msg.value - deposit);
+                }
+            } else throw;
+        } else throw;
+    }
+    
+    function returnProperty() onlyRenter {
+        renter = 0;
+        if (deposit > price*(block.number-startBlock)) {
+            owner.send(price*(block.number-startBlock));
+            msg.sender.send(deposit-price*(block.number-startBlock));
+        } else {
+            owner.send(deposit);
+        }
+        isRentable = true;
+    }
+}
+\end{lstlisting}
+
+\subsubsection{Liquid property}
+
+Smart property can be used as collateral for loans. The underlying principle is that property ownership is transferred to the lender if repayment terms are not met. Thereby the loan gets securitized by the smart property. Because of the global permissionless nature of cryptocurrencies, a global market for loans on individual smart properties can emerge which lowers the cost of loans. Moreover, since transactions are public, a borrower is able to prove timely payments of earlier loans. 
+
+\paragraph{Implementation based on Bitcoin}
+
+We will implement the following contract. The owner of a smart property (B) wants a loan of size $L$ and provides the property as security for a creditor (A). If the owner (and debtor) does not repay the loan (plus interest) until time $T$, ownership of the property will be transferred to the creditor.
+
+After A and B agreed on terms, B creates the \emph{loan transaction} spending his ownership output and creating a timelocked 2-of-2 multi-signature ownership output that can be redeemed either collaboratively by A and B, or by A alone after time $T$. Furthermore, B adds an output that credits him with loan $L$, leaving the input, providing the loan, for A to add. 
+\begin{figure}
+\begin{lstlisting}
+OP_IF 
+    2 <pubKeyA><pubKeyB> 2
+    OP_CHECKMULTISIG
+OP_ELSE
+    <T> OP_CHECKLOCKTIMEVERIFY OP_DROP
+OP_END    
+\end{lstlisting}
+\caption{PubScript of timelocked 2-of-2 multi-signature ownership output.}
+\end{figure}
+
+B sends the partial transaction to A, who prepares the \emph{settlement transaction}. The settlement transaction reassigns the ownership back to B, and credits A with the loan plus interest. A completes the loan transaction and partially signs the settlement transaction, and sends both transactions back to B. B can then broadcast the loan transaction to the Bitcoin network. 
+If B can provide an input to the settlement transaction covering $L+\Delta$ before time $T$, B can complete the settlement transaction and regain sole ownership of the property. However, if the settlement transaction does not enter the blockchain before $T$, then A is able to claim sole ownership.
+
+Another Bitcoin-based protocol for smart property as a collateral for loans is described in \cite{smartproperty2011}. However, the protocol has the problem that a creditor has the ability to resell the property immediately without giving the debtor a chance to repay the loan. In the protocol described above this is prevented by use of the multi-signature. 
+
+\paragraph{Implementation based on Ethereum}
+
+A simple implementation of property liquidification defines a loan and a latest payDay. The owner  
+
+\begin{lstlisting}[breaklines,basicstyle=\tiny]
+contract LiquidProperty is SmartProperty {
+    
+    address lender;
+    uint loan;
+    uint payDay;
+    uint paid = 0;
+    
+    bool isLiquid = false;
+    
+    function LiquidProperty(uint _loan, uint _payDay) {
+        owner = msg.sender;
+        loan = _loan;
+        payDay = _payDay;
+    }
+    
+    function giveLoan() {
+        if (msg.value < loan || isLiquid) throw;
+        isLiquid = true;
+        lender = msg.sender;
+        owner.send(msg.value);
+    }
+    
+    function pay() {
+        if (!isLiquid) throw;
+        paid = paid + msg.value;
+        lender.send(msg.value);
+    }
+    
+    function enforce() {
+        if (!isLiquid) throw;
+        if (paid >= loan) {
+            isLiquid = false;
+        } else if (block.number > payDay) {
+            owner = lender;
+            isLiquid = false;
+        }
+    }
+}
+\end{lstlisting}
+
+\subsubsection{Issuing tokens}

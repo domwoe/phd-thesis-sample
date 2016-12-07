@@ -1,0 +1,11 @@
+{
+  "projectPath": "/Users/dowoerne/Development/phd-thesis",
+  "title": "LaTeX-Plus Project",
+  "root": "chapters/s2aas_micro/s2aas_micro.tex",
+  "program": "pdflatex",
+  "latexmkOptions": "-bibtex -pdf -shell-escape",
+  "output": ".latex",
+  "openOutput": "true",
+  "postAction": "link",
+  "postPath": ""
+}

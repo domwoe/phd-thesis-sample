@@ -193,6 +193,7 @@ Bitcoin can be used as a platform to build distributed applications on top. The 
 Although Bitcoin has repeatedly exceeded a market capitalization of \$10 billion it has still to be viewed as an experiment with unknown outcome. Bitcoin faces a multitude of challenges in various fields. Besides the technical challenges, there are also challenges concerning usability, governance, legal status, law enforcement, and even environmental impact. However, it is interesting to note that some challenges concern human-blockchain interaction, and do not apply to machines. In particular, comprehensibility and usability of key management systems are prohibiting Bitcoin adoption of humans, whereas machines do not care.
 
 \subsubsection{Scalability}
+\label{sec:btc_scalability}
 
 Although often characterized as a distributed system, Bitcoin, and every other current blockchain-based system, is fully replicated. Instead of nodes sharing work, every (full) node is validating and storing every transaction. Thus far, there is no known alternative in order to provide the same security properties. This global replication has severe consequences on the performance and scalability of the system.
 
@@ -212,6 +213,7 @@ Ideally, the performance of a distributed system increases with the number of no
 Besides changing Bitcoin itself it is possible to achieve higher transaction rates and almost instant confirmations with systems built on top. We will discuss this approach in more detail in chapter \parencite{sec:m2m}.
  
 \subsubsection{Privacy}
+\label{sec:crypto_chall_privacy}
 
 Bitcoin provides pseudonymity due to the fact that bitcoin addresses are not linked to real identities, but to self-generated public keys. Every user can create any number of public keys and today most wallet software avoids the reuse of bitcoin addresses. This means change is sent to a newly generated address. However, the blockchain provides a complete and public visible history of every transaction.  Multiple studies have shown that individual profiles can be recovered from the transaction graph \parencite{Ron2013,Androulaki2013,Reid2013,Babaioff:2012:BRB:2229012.2229022,fi5020237,Spagnuolo2014}.
 
@@ -336,6 +338,7 @@ data: Input data.
 If all we wanted to do were to send ether from one account to another, then it would essentially suffice to specify \emph{to} and \emph{value}. However, due to the account model, the receiver could broadcast the transaction repeatedly to empty the sender's account. To avoid this \emph{replay attack}, the \emph{nonce} is used. Every transaction from an account can only use a nonce once. Transaction fees to miners are paid in gas. The amount of gas needed is determined by the Ethereum Virtual Machine (EVM), the exchange rate between gas and ether can be defined by the user with the \emph{gasPrice} data field. Miners are free decline the transaction if the exchange rate is set too low\footnote{A review of the gas economics can be found at \url{https://github.com/LeastAuthority/ethereum-analyses/blob/master/GasEcon.md}.}. The \emph{data} field is used to provide input for contract function calls. The \emph{init} field is used to provide the byte code to instantiate a new contract. 
 
 \subsubsection{Blockchain and Consensus}
+\label{sec:eth_blockchain}
 
 Ethereum block headers are much more complex than Bitcoin block headers. The block headers are composed of the following data fields:
 \begin{lstlisting}[breaklines]
@@ -357,11 +360,12 @@ nonce: Used to verify Proof-of-Work.
 \end{lstlisting}
 It is important to note that Ethereum block headers do not have a fixed size and the minimal size is about 500 bytes. Ethereum uses a different Proof-of-Work algorithm than Bitcoin, which aims to be ASIC-resistant and GPU-friendly\footnote{See \url{https://github.com/LeastAuthority/ethereum-analyses/blob/master/PoW.md} for a review of \emph{Ethash}.}. The rationale behind is to enable commodity hardware (GPUs) to stay competitive. Moreover, Ethereum is scheduled to switch to a Proof-of-Stake consensus mechanism in 2017. 
 
-Inspired by the Greedy Heaviest-Observed Sub-Tree (GHOST) protocol \parencite{cryptoeprint:2013:881}, Ethereum rewards ommer blocks to disincentive block withholding (i.e. selfish mining \parencite{Eyal2014}). However, in contrast to GHOST, transactions in ommer blocks have no effect,i.e they are not processed and have to be included in another block. This allows a targeted block generation rate of 15s.  
+Inspired by the Greedy Heaviest-Observed Sub-Tree (GHOST) protocol \parencite{cryptoeprint:2013:881}, Ethereum rewards ommer blocks to disincentive block withholding (i.e. selfish mining \parencite{Eyal2014}). However, in contrast to GHOST, transactions in ommer blocks have no effect, i.e they are not processed and have to be included in another block. This allows a targeted block generation rate of 15s.  
 
 Ethereum commits not only the transactions to the block header, but also the current \emph{world state} and \emph{transaction receipts}. The world state comprises all account balances, the contract code and their storage. Since individual transactions affect only a small subset of the world state, it is useful to use an authenticated data structure that allows to efficiently modify subsets. Thus, instead of simple merkle trees, Ethereum uses modified prefix trees (tries), called merkle-patricia trees.
 
 \subsubsection{Light clients}
+\label{sec:eth_lightclient}
 
 Similar to Bitcoin we define a light client to be a client that only downloads block headers. Because of the extensive use of tries and their root commitment to the block header, Ethereum light clients are much more powerful than Bitcoin light clients. 
 Most importantly, due to the state trie, an Ethereum node can directly prove an account balance to a light client. Furthermore, logs can be used in contracts to make light clients aware of particular events. A full node is then able to prove the exact content of the event.

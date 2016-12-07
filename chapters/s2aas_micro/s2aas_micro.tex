@@ -1,0 +1,402 @@
+\chapter{Going off-chain: Trust-less mediation based on Bitcoin Contracts}
+\section{Context and Motivation}
+
+One of the main drivers to utilize a cryptocurrency for applications like S\textsuperscript{2}aaS is the opportunity to exchange data for cash without additional counterparty risk or long term contractual relationships. In the last chapter, we saw that Bitcoin's blockchain-based consensus and the \ac{UTXO} architecture interfere with low-latency micropayments which are essential for many sensing tasks. In this chapter, we discuss approaches to enable low-latency micropayments based on Bitcoin with the focus on going \emph{off-chain} without losing the security an openess of Bitcoin.
+One method is known as payment channels. These are simple but powerful smart contracts allowing low-latency micropayments between a buyer and a seller. While direct payment channels are useful for particular use cases in which a buyer is only interested in buying repeatedly from a single seller, S\textsuperscript{2}aaS and mobile crowdsensing, however, require in general the simultaneous trades between a buyer and a large number of sellers and vice versa. This would require to establish contracts between each trading pair which may lock up significant capital and cause significant transaction costs. Therefore, we present an enhancement of payment channels in order to scale to a large number of participants. To achieve this, we make a compromise on decentralization and introduce a hub. The hub is responsible for trust-less mediation of payments and data delivery. Although we sacrifice censorship-resistance and resilience, the power of the hub is strictly limited. We refer to this limitation by \emph{trust-less mediation} which is operationalized as follows. Trust-less mediation of payments is achieved by means of \ac{HTLC}s. \ac{HTLC}s are expressed in Bitcoin's scripting language to form a smart contract that provides atomicity of two payments in two distinct payment channels. Trust-less mediation of data delivery is achieved by encryption and digital signatures provided by the cryptographic primitives underlying Bitcoin. Operating a hub may require significant financial resources, and thus needs a viable business model.
+We implement a proof-of-concept prototype targeted at the usage in crowdsensing scenarios. Smartphones are the largest sensing platform with an unprecedented scale and global distribution. The application allows smartphone users to offer built-in sensors as a service in exchange for payment with minimal human involvement. The protocols can be open and implemented into other smartphone applications, or ported to other sensor platforms or connected devices.
+
+The structure of the chapter is as follows. In Sec. \ref{sec:micropayments}, we provide an overview of methods to enable low-latency micropayments with bitcoin. The main focus thereby is on payment channels. In Sec. \ref{sec:htlc}, we present the trust-less mediation of payment channels using \ac{HTLC}s and briefly discuss the trust-less mediation of data delivery and discovery in Sec. \ref{sec:trustlessexchange}. Thereafter, we present the system and its main processes in Sec. \ref{sec:trustlessoverview}. Sec. \ref{sec:trustlessimplementation} provides implementation details. In Sec. \ref{sec:trustlessevaluation} we evaluate the concept mostly based on criteria already introduced in Chapter \ref{sec:s2aas}. In Sec. \ref{sec:trustlessdiscussion} we present a discussion concerning the costs of running a hub, developments towards bidirectional payment networks and a comparison to Ethereum. Furthermore, we briefly recapitulate the key findings and set the results in a broader picture by synthesizing with Chapter Chapter \ref{sec:s2aas}. The chapter ends with a conclusion (Sec. \ref{sec:trustlessconclusion}).
+
+
+\section{Low-latency Micropayments with Bitcoin}
+\label{sec:micropayments}
+
+As long as the scalability issues concerning latency and transaction throughput of decentralized cryptocurrencies are not solved (c.f. Sec. \ref{sec:btc_scalability}), we need efficient methods of payment aggregation to enable low-latency micropayments with Bitcoin. In the following, we will discuss the state of the art. 
+
+
+\subsection{Off-Chain Micropayments with Trusted Third Parties}
+
+Centralized third party services have been emerged that allow zero fee microtransactions between their users. Examples are Coinbase\footnote{https://www.coinbase.com} and ChangeTip\footnote{https://www.changetip.com}. Thereby users deposit coins in addresses controlled by the third party service. The service then handles transactions between users internally, i.e. off-chain. In principle, we could setup our own service, that provides an internal ledger with accounts for requesters and sensors. After a requester credits its account with a regular Bitcoin transaction of sufficient value, it could transact with all registered sensors, and payments could be handled in milliseconds. However, with this approach we lose most of the characteristics that Bitcoin provides in the first place. The system is now entirely dependent on the \ac{TTP}. This might have far reaching consequences. First, we lose censorship-resistance. Hence, the service provider can ban parties from accessing the system. Moreover, the \ac{TTP} is situated in a particular jurisdiction which might require the compliance to \ac{KYC}/\ac{AML} laws. This would imply human involvement and impacts the privacy of participants. Second, the \ac{TTP} is custodian over all user funds, and may provide a attractive aim for hackers. In addition, the existing services are proprietary and may try to engage in rent-seeking behavior. Furthermore, requesters and sensors have to communicate with proprietary \ac{API}s which might be subject to change. In the worst case the \ac{TTP} might go out of service. Implementing the service as an open source platform such that there is competition between \ac{TTP}s would be beneficial, but network effects lead to centralization.
+
+
+\subsection{Payment Channels}
+
+The idea to use Bitcoin contracts to establish payment channels between two parties was introduced by Hearn and Spilman \parencite{Hearn2013,Spilman2013}. Payment channels are based on a timelocked 2-of-2 multi-signature output that is funded by the payer. The transaction creating this multi-signature output is called \emph{funding transaction} and can be represented as $Tx_{funding}(addr_{payee},T_{expiry},C)$ (see Fig. \ref{fig:pubScriptFunding} for the pubScript). $C$ is the amount locked in the multi-signature output and represents the capacity of the channel. The need for a channel lifetime as given by $T_{expiry}$ will be discussed later on.
+As soon as the funding transaction has sufficient confirmations the payee can be sure that the funding value is locked, and he channel is established. In order to pay the payee, the payer creates a transaction that consumes the multi-signature output and splits the value in two outputs, one spendable by the payer, and one spendable by the payee. The payer sends the transaction to the payee via some arbitrary communication channel. The payee is now able to add its signature and broadcast the transaction to the Bitcoin network in order to close the channel. However, the payee can also just keep the transaction, and wait for another payment transaction that increases its share of the value in the multi-signature output. The important point is, that the payee can be sure about the payment as soon as it gets the transaction. Hence, after initial setup, individual payments are low-latency, and are exchanged off-chain. Furthermore an incremental update of the shares can be as low as 1 satoshi, and thus individual payments are true micropayments. 
+
+So far, the payee can close the channel at any time by broadcasting any of the private payment transactions to the Bitcoin network. However, the payer can not, since it has only partially signed and thus invalid transactions. In order to protect the payer against a payee that aborts the protocol leading to locked funds, the output can also be spent by the payer alone using a \emph{refund transaction} after time $T_{expiry}$, the effective lifetime of the channel.
+
+Every payment channel involves two on-chain transactions. The funding transaction, and one payment transaction or the refund transaction for unilateral closing of the channel after the lifetime expires.
+
+Noteworthy, such a payment channel is unidirectional. If the payee would at some point create a payment transaction that decreases its share and increases the payer's share, provide the partial signature, and send it the the payer, then we would encounter a race condition, since both parties would have valid transactions with different allocations. 
+
+A simplified graphical representation protocol is depicted in Figure \ref{fig:paymentchannels}. Payment channels have been implemented in various clients and libraries. Although all exchanged transaction are valid Bitcoin transactions, the communication protocol and the state machines of payer and payee are not necessarily interoperable. Hence, standardization is necessary.
+
+
+\begin{figure}
+\centering
+\includegraphics[scale=.7]{./externalized/payment_channel.pdf}
+\caption{Abstract illustration of an unidirectional payment channel between a payer (A) and a payee (B). The contract is a 2-of-2 multi-sig output on the blockchain, that can either be spent by B after time $T_{expiry}$, or immediately by A with one of the payment transactions which update the share between A and B.}
+\label{fig:paymentchannels}
+\end{figure}
+
+\begin{figure}
+\begin{lstlisting}[breaklines,mathescape=true]
+OP_IF
+   OP_2 <PubKey A> <PubKey B> OP_2 OP_CHECKMULTISIG
+OP_ELSE
+  <$T_{expiry}$> OP_CHECKLOCKTIMEVERIFY OP_DROP
+  OP_DUP OP_HASH160 <PubKeyHash A> OP_EQUALVERIFY OP_CHECKSIG
+OP_ENDIF
+\end{lstlisting} 
+\caption{pubScript of the funding transaction for a payment channel. The first branch of the conditional needs both signatures and is used for the payment transactions. The second branch can be used by the payer after $T_{expiry}$ for refund.}
+\label{fig:pubScriptFunding}
+\end{figure}
+
+ \subsection{Further Bitcoin Micropayment Technologies}
+
+ \subsubsection{Digital Promissory Note}
+
+In general, a promissory note is a written financial instrument, in which an issuer promises the bearer to pay a specific amount of money under specified terms. Thereby, a payee is able to accept payments by different payers without having to trust them individually, but by only having to the trust the issuer that he will be able to redeem the promissory notes eventually. Micropayments in form of promissory notes can be aggregated, and redeemed at the issuer as soon as a substantial amount is reached. An implementation of this concept is the Stroem protocol \parencite{strawpay}. In this protocol, promissory notes are dedicated to a specific purpose, i.e. a specific purchase. Thus, the payer needs to procure the promissory note at time of the transaction. Procurement of promissory notes is a perfect application for unidirectional payment channels. A payer can open a payment channel with an issuer an purchase low-value promissory notes in order to keep the counterparty risk low. Depending on how many parties accept the promissory notes of the particular issuer the effective reach and usefulness of the payment channel may be increased significantly. An illustration of payments based on promissory notes is shown in Fig. \ref{fig:promissorynotes}.
+
+\begin{figure}
+\centering
+\includegraphics[width=.7\linewidth]{./externalized/promissorynotes.pdf}
+\caption{Possible participants, relationships and transaction flows in a micropayment scheme based on promissory notes.}
+\label{fig:promissorynotes}
+\end{figure}
+
+The Stroem protocol is partly proprietary and there is limited counterparty risk.
+
+\subsubsection{Probabilistic Payments}
+
+Probabilistic payments \parencite{wheeler1996transactions,rivest1996payword,rivest1997electronic} are lottery-based payments. The lottery is biased in such a way that a single draw has an expected value according to the aspired micropayment. Probabilistic payments are only fair, i.e. the actual value paid approaches the value that should be paid, for a large number of payments on the order of tens of thousands. 
+\cite{Pass:2015:MDC:2810103.2813713} present such a lottery-based micropayment scheme for ledger-based transaction systems, and discuss implementations in Bitcoin. However an implementation that does not rely on a partially-trusted third party would need a new signature verification primitive in the Bitcoin scripting language. The partially-trusted third party acts as an escrow service and signs a transaction in case the payee is able to provide a winning ticket. In contrast to payment channels, a single \ac{UTXO} could be used to pay more than one party.
+
+Noteworthy, probabilistic payments could be combined with payment channels in order to allow for sub-satoshi payments.
+
+\begin{table}
+\resizebox{\textwidth}{!}{%
+  \begin{tabularx}{\textwidth}{ l  l  X  }
+    \toprule
+    Method & Counterparty Risk & Scaling \\
+    \midrule
+    Off-chain &  high & good \\
+    Payment channel & no & bad \\
+    Promissory Notes & medium & good \\
+    Probabilistic Payments & low & medium\\
+    \bottomrule
+  \end{tabularx}
+}
+\caption{Comparison of Bitcoin micropayment schemes.}
+\label{tbl:micropayments}
+\end{table}
+
+Table \ref{tbl:micropayments} shows a brief comparison of the presented schemes. The off-chain scheme with a \ac{TTP} has the greatest counterparty risk. Technically it is the easiest to implement, and payments could in principle be arbitrarily fast and cheap. If a significant number of requesters and sensors have accounts with a single provider then one Bitcoin transaction can be used to buy data from a large number of sensors. However, a \ac{TTP} needs to be trusted and needs to fulfill these expectations. Payment channels are peer-to-peer and do not involve any intermediary. However, every requester-sensor pair would needs its own payment channel. Thus, transaction costs and locked up capital of a requester scales proportional to the number of sensors it would like to transact with. The scheme based on promissory notes allows for better scaling of payment channels and reduces the counterparty risk of having only one centralized \ac{TTP}. Nevertheless there needs to be an infrastructure of semi-trusted service providers, and thus far, there is none. Probabilistic payments do have a low counterparty risk since the service provider cannot steal money. However, scaling to many sensors is not much better than with payment channels.
+
+Combining payment channels with a central provider, a hub, allows to scale the reach of a single channel almost indefinitely while simultaneously keeping the counterparty risk low. However, we can decrease the counterparty risk even further by using another type of smart contract.
+
+\section{Trust-less Mediation of Unidirectional Payment Channels}
+\label{sec:htlc}
+
+In the early days of telephony individual communication lines were merged at large switchboards where operators connected these individual communication channels to establish temporary end-to-end communication channels between two parties. As briefly indicated at the end of last section, we can do the same for payment channels. Figure \ref{fig:hubandspoke} illustrate the resulting architecture. A payer can minimize its counterparty risk with the hub by making each micropayment individually, and waiting for the paid-for data from the sensor before making the next micropayment. But this would involve a lot of sequential transactions if a large number of sensors need to be queried simultaneously. Thus, the payer has to balance between counterparty risk and efficiency. 
+
+\begin{figure}
+\centering
+\includegraphics[scale=0.7]{./externalized/hubandspoke.pdf}
+\caption{Scaling payment channels by connecting them in a hub and spoke architecture.}
+\label{fig:hubandspoke}
+\end{figure}
+
+But we can make use of a slightly more complicated smart contract that allows to interconnect payment channels temporarily such that an individual micropayment taking that path is atomic, i.e. the payment either travels through both channels or no payment happens at all. We can achieve this behavior by using \ac{HTLC}s which were introduced conceptually as an enabler of the Lightning Network \parencite{poonbitcoin}. We can express a \ac{HTLC} between two parties in common words as follows: I pay you if you can provide a secret within a certain time period. By conditioning two payments in two individual payment channels on the same secret, we are able to atomically connect two payments. 
+
+
+Figure \ref{fig:unimedpc} illustrates the flow of an individual payment over two payment channels. We assume that A and C, as well as C and B have already established payment channels, i.e. there exist shared multisignature outputs with timelocks $T_0$ and $T_0^{'}$\footnote{The actual timelocks are not important. However, they have to be longer than the \ac{HTLC} timelocks $T_1$ and $T_2$.}. In order to make it more concrete, we assume that the shared funding outputs have a value of 1 BTC each, and A wants pay B an amount of 0.1 BTC. Moreover, we assume that the channels are fresh, i.e. no payment transactions have been exchanged. The protocol is as follows: First, the final recipient B creates a payment-specific random secret $S$, computes $H=hash(S)$, and communicates $H$ to C and A. This $H$ will act as the hashlock of both \ac{HTLC} outputs and will provide the atomicity of the process. A creates a payment transaction that consumes the shared multisignature output and creates two outputs: (1) an output assigning 0.9 BTC to her, and (2) a \ac{HTLC} output with a value of 0.1 BTC\footnote{We neglect necessary fees in order to provide a cleaner explanation.}. Figure \ref{fig:pubScriptHTLC} shows the pubScript of such a \ac{HTLC} output as used in the payment transactions. A provides her signature for the transaction and sends it to C. C may now sign the transaction as well and broadcast it to the Bitcoin network. However, without $S$, C will not be able to claim the 0.1 BTC. Thus C stores the transaction and creates another payment transaction addressing C with a \ac{HTLC} output requiring the same secret. C signs the transaction and sends it to B. B could sign the transaction and broadcast it to the network. Since B knows the secret, B could claim the 0.1 BTC locked in the \ac{HTLC} output. But would have to do it before $T_2$. Otherwise B would be able to claim the output. B would claim the \ac{HTLC} output by broadcasting a transaction that entails the $S$. Thus, the $S$ would be public and C could use it to claim the \ac{HTLC} output of the payment transaction from A. To ensure that C is always able to do that before A is able to reclaim the value, $T_1$ has to be sufficiently later than $T_2$. If timelocks are selected appropriately, a payment between A and B mediated by C using \ac{HTLC}s is atomic, i.e. either both payments succeed or both payments fail. This means also that B can just communicate the secret privately to C and A, and they update their shares accordingly. Hence, A would create a transaction that replaces the \ac{HTLC} output with an output granting C the 0.1 BTC. After signing and sending the transaction to C, C would do the same concerning the \ac{HTLC} with B, and the payment is concluded without any on-chain transaction.
+
+If a payer wants to pay many payees simultaneously, each payment would be represented by an individual \ac{HTLC} output in the payment transaction.
+
+\begin{figure}
+\centering
+\includegraphics[scale=0.6]{./externalized/hspaymentflow.pdf}
+\caption{Protocol for an individual mediated payment. In contrast to normal payment channels, the payment transactions have at least one \ac{HTLC} output (denoted as the contract sheet).}
+\label{fig:unimedpc}
+\end{figure}
+
+\begin{figure}
+\begin{lstlisting}[breaklines,mathescape=true]
+OP_IF
+  OP_DUP OP_HASH160 <PubKeyHash B (C)> OP_EQUALVERIFY OP_CHECKSIG
+  OP_HASH160 <Hash160 (secret)> OP_EQUAL
+OP_ELSE
+  OP_DUP OP_HASH160 <PubKeyHash A (B)> OP_EQUALVERIFY OP_CHECKSIG
+  <$T_1$ ($T_2$)> OP_CHECKLOCKTIMEVERIFY OP_DROP
+OP_ENDIF
+\end{lstlisting} 
+\caption{\ac{HTLC} pubScript of a payment transaction in an unidirectional mediated payment channel setup. The first branch of the conditional can be used by the recipient to claim the output by providing the secret, the second branch can be used by the sender to reclaim their funds after $T_1$ ($T_2$).}
+\label{fig:pubScriptHTLC}
+\end{figure}
+
+If all parties cooperate, then there will be no payment transactions with \ac{HTLC} outputs ending up in the blockchain. From the perspective of the Bitcoin network the situation is equivalent to two independent channels.
+
+\section{Trust-less Mediation of Data Exchange and Discovery}
+\label{sec:trustlessexchange}
+
+In the last chapter, we found that data exchange via the Bitcoin network is not viable due to latency, cost, and confidentiality. In the last section, we introduced a payment hub in order to allow efficient trust-less micropayments between a larger number of requesters and sensors. The hub needs to keep connections with requesters and sensors in order to be able to exchange Bitcoin transactions off-chain, i.e. privately and not via the Bitcoin network. These communication channels can also be used to deliver the measurement data.
+
+Although the communication between a sensor and a requester might be mediated by the hub, we do not necessarily need to trust the hub. The sensor can encrypt the data using \ac{ECIES} based on an \ac{ECC} public key of the requester, and sign the data using \ac{ECDSA}. Encryption ensures confidentiality, i.e. the hub does not see what it is transferring. Digital signatures ensure authenticity and integrity, i.e. the hub can not manipulate the data it is transferring. 
+Furthermore, digital signatures can be used to verify the authenticity of entries in the repository.
+
+\section{System Overview}
+\label{sec:trustlessoverview}
+
+In the following we briefly present the participating entities and describe the processes. A graphical illustration of the system is shown in Fig. \ref{fig:architecture}.
+
+ \begin{figure}
+ \includegraphics[width=\textwidth]{./externalized/crowdsensing_architecture.pdf}
+ \caption{Overview of system's architecture.}
+ \label{fig:architecture}
+ \end{figure}
+
+\subsection{Entities}
+
+The system consists of a requester client, a sensor client, a repository and a hub. The repository and the hub may be one entity, but need not be. 
+
+\paragraph{The repository} stores sensor meta data and provides a queryable \ac{API} for requesters.
+
+\paragraph{Requesters} may query the repository and want to procure data from one or more sensors. Requesters have to be able to fund and manage a payment channel, and to provide payments in form of \ac{HTLC} payment transactions.
+
+\paragraph{Sensors} provide timestamped measurement data for requesters. The data is delivered confidentially and authenticated.
+
+\paragraph{The Hub} provides trust-less mediation of micropayments and data exchange. Thereby, the hub has to be scalable and secure in order to manage a potentially large number of payment channels. 
+
+
+\subsection{Processes}
+
+\subsubsection{Register and Channel Setup}
+
+Before a sensing task can be performed, requesters and sensors have to register with the hub in order to setup payment channels. This process is asymmetric, since the introduced payment channels are unidirectional, and are directed from the requester towards the sensor.
+
+The requester essentially registers by establishing a payment channel with the hub. The procedure is listed below.
+
+\begin{algorithm}
+  \floatname{algorithm}{Procedure}
+   \caption{Register with Payment Hub (Requester)}
+    \begin{algorithmic}[1]
+      \State \textbf{Request} $pubKey_{hub}$
+      \State \textbf{Create} funding transaction $Tx_{funding}(pubKey_{hub},T_{expiry},C)$
+      \State \textbf{Broadcast} $Tx_{funding}$
+      \State \textbf{Send} ID($Tx_{funding}$) to hub
+      \State \textbf{Register event} for $Tx_{refund}$ at $T_{expiry}$ 
+      \State \textbf{Wait until} confirmation from hub
+      \State \textbf{Channel established}
+\end{algorithmic}
+\end{algorithm}
+
+The sensor has to request a payment channel from the hub. In the simplest case it provides its public Key and waits until the funding transaction has sufficient confirmations in the blockchain (c.f. Procedure \ref{proc:registersensor}) 
+
+\begin{algorithm}
+  \floatname{algorithm}{Procedure}
+   \caption{Register with Payment Hub (Sensor)}
+    \begin{algorithmic}[1]
+      \State \textbf{Request} channel by providing $pubKey_{S}$
+      \State \textbf{Wait until} ID($Tx_{funding}$)
+      \State \textbf{Wait until} confirmation of $Tx_{funding}$ (Bitcoin Network)
+      \State \textbf{Send} Channel established to hub
+\end{algorithmic}
+\label{proc:registersensor}
+\end{algorithm}
+
+In practice, the hub might require additional security from the sensor. We discuss this is in Sec. \ref{sec:s2aas_micro_eval_malsens}.
+
+\subsubsection{Data Procurement and Payment}
+
+Once payment channels are established, a requester can request data from a sensor. The request entails the requesters public key, and is signed.  
+The sensor performs the sensing task and provides the hashlock $H(S)$ as an authenticated message, and the requester adds an \ac{HTLC} output with the value of the price of the data to the current payment transaction. The requester sends the transaction to the hub, and the hub does the same based on the current payment transaction to the sensor. Then, the sensor encrypts the data with the requester's public key and creates a signed message that contains the encrypted data and the secret $S$. When the message reaches the requester, the requester can verify the authenticity of the message and decrypt the data with its private key. Now the process can begin again. Otherwise the requester removes the \ac{HTLC} output and adds the value to the output belonging to the hub and sends the updated payment transaction to the hub. The hub does likewise. An illustration of the process is shown in Fig. \ref{fig:payanddata}.
+
+\begin{figure}
+ \includegraphics[width=\textwidth]{./externalized/payanddata.pdf}
+ \caption{Process of requesting, paying, and delivering data. Tx($P_i:v_i$) denotes a transaction with output of value $v_i$ redeemable by party $P_i$, and $P_i=HTLC$ denotes a HTLC output. Authentication is not illustrated explicitly.}
+ \label{fig:payanddata}
+ \end{figure}
+
+ \subsubsection{Closing a Channel}
+
+ The requester has to send a request to the hub if it wants to close the channel before the channel capacity is depleted. The hub will then sign the latest payment transaction and broadcast it to the Bitcoin network. If the hub does not cooperate, then the requester can reclaim the entire value in the channel as soon as the channel expires.
+ The sensor, on the other hand, can always close a channel autonomously by broadcasting the latest payment transaction itself. 
+
+ The receiving side of the channel has to make sure that it closes the channel with sufficient margin to the expiry time. Otherwise a race condition with a refund transaction can occur.
+
+\section{Implementation}
+\label{sec:trustlessimplementation}
+
+In order to leverage the largest mobile sensing platform available today, we implemented the sensor client as an Android smartphone application. The Android \ac{API} has a lot of similarities to the Java \ac{API}. Hence, we opted for Bitcoinj\footnote{https://bitcoinj.github.io/}, a Java library for working with the Bitcoin protocol,  as a starting point. Besides being able to run on multiple platforms, Bitcoinj provides the first implementation of a \ac{SPV} client and the first payment channel implementation. In fact, at time of implementation (Q2-Q3 2015) there was no other implementation of payment channels available. Thus, Bitcoinj provides a suitable basis for a cross-platform implementation of \ac{HTLC}-based mediated payment channels.
+
+In order to implement \ac{HTLC}s we extended the four layers of Bitcoinj's payment channels with a fifth layer that is concerned with keeping track of the \ac{HTLC} flow.
+Messages and transactions are serialized using Google protocol buffers\footnote{https://developers.google.com/protocol-buffers/} and are exchanged between the components over \ac{TCP} connections. Embedding those connections into higher level protocols such as \ac{HTTP} or \ac{XMPP} is straightforward.
+The payment channel implementation is based on a client-server architecture. The payer is instantiated as a client, and the payee is instantiated as a server. The hub has to instantiate both, a server for the requesters and a clients for the sensors. In the following, we briefly present the individual entities. 
+
+\subsection{Sensor}
+The sensor is implemented as an Android smartphone application. The application has two main parts. First, a user interface that allows a user to select sensors which are offered as a service (c.f Fig. \ref{fig:crowdsensingapp}). Furthermore the user is able to set prices. The proof of concept implementation does only provide the standard sensors of the Android API. However, more interesting data sources could be added. See Table \ref{tbl:sensors} for some interesting sensors and their applications. Second, a service which is running in the background. The service implements a payment channel server and is responsible for communicating with the hub and the Bitcoin network. Furthermore additional sensing tasks can be instantiated.
+
+\begin{figure}
+ \centering
+ \includegraphics[width=0.3\textwidth]{./externalized/crowdsensingapp.png}
+ \caption{Main screen of the crowdsensing smartphone application. It allows to offer available sensors and a Bitcoin wallet able to keep track of payment channel states.}
+ \label{fig:crowdsensingapp}
+ \end{figure}
+
+\begin{table}
+  \centering
+  \begin{tabularx}{\textwidth}{ l  l  X  }
+    \toprule
+    Sensor & Type & Application \\
+    \midrule
+    Barometric pressure & physical & Weather prediction \\ 
+    Location & both & People flow  \\ 
+    Network strength & physical & Coverage maps \\  
+    Installed apps & virtual & Inter-app correlations    \\  
+    Transportation mode & virtual & City monitoring \\ 
+    Steps & virtual & Health monitoring  \\
+    \bottomrule
+  \end{tabularx}
+  \caption{Examples of virtual and physical sensors available in smartphones.}
+  \label{tbl:sensors}
+\end{table}
+
+\subsection{Requester}
+
+The requester client provides a console to query the repository and procure sensor data in a simple \ac{SQL}-like language. The main commands and a their descriptions are shown in Table \ref{tbl:commands}. 
+
+\begin{table}\footnotesize
+  \centering
+    \begin{tabularx}{\textwidth}{ l X }
+    \toprule
+    Command & Description \\
+    \midrule
+    REGISTER $<$capacity$>$ $<$lifetime$>$ & Registers with Hub by opening payment channel \\
+    CLOSE & Requests to close the channel \\
+    STATUS & Returns the status of the channel \\
+    STATS NODES & Returns all connected sensor nodes \\
+    STATS SENSORS & Returns available sensor types \\
+    SELECT SENSOR=$<$type$>$ & Returns sensors of type $<$type$>$ with pricing information \\
+    BUY $<$type$>$ FROM $<$node$>$ & Requests the current measurement value of sensor $<$type$>$ from node $<$node$>$ \\
+   \bottomrule
+  \end{tabularx}
+  \caption{Main commands of the data requester console.}
+  \label{tbl:commands}
+\end{table} 
+
+\subsection{Hub and Repository}
+The hub and the repository are in principle two separate entities. In particular because the sensor might be connected to different hubs or provide endpoints to setup direct payment channels. However, for the sake of simplicity, the proof concept implementation combines both functions into one Java application based on Bitcoinj. The hub provides endpoints for requesters and sensors to initiate \ac{TCP} connections. These \ac{TCP} connections are used to exchange signed messages which are serialized into Google Protocol Buffers. Payment channel states are identified by the public key of the initiator (requester) or recipient (sensor). Channel states and the most recent payment transactions are written to disk regularly to provide a means of recovery in case the system fails. In a production setting we would use a dedicated database. 
+The hub creates a new public key for every channel using a hierarchical deterministic wallet \parencite{bip32} in order to minimize the loss if a private key gets compromised. Further security measures can be implemented such as using different keys for the payment channel and the \ac{HTLC}s. This would allow to keep the (incoming) payment channel keys in cold storage, i.e. stored on somewhere else without network access.
+ 
+\paragraph{Final Note} At time of implementation the \texttt{CHECKLOCKTIMEVERIFY} op code \parencite{bip65} was not available in Bitcoin Script. Thus, the implementation of payment channels, and \ac{HTLC}s in particular, was more involved, and implied additional security risks, because refund transactions had to be created collaboratively (c.f. malleability discussion in Sec. \ref{sec:paymentnetworks}). We will evaluate the concept based on the implementation of the current capabilities of Bitcoin Script, i.e with \texttt{CHECKLOCKTIMEVERIFY}.
+
+\section{Evaluation}
+\label{sec:trustlessevaluation}
+
+In the following we evaluate the concept of trust-less mediation of payments and data exchange for crowdsensing applications. We base the the evaluation on the criteria used in the last chapter. However, we discuss some criteria like scalability, confidentiality, and privacy more explicitly.  
+
+\subsection{Latency and Double-spending Risk}
+
+We assume that channels are already established. Then, the latency is determined by the latency of communication between the parties and by the speed of the cryptographic operations. Each step shown in Fig. \ref{fig:payanddata} involves signing and signature verification. Depending on the hardware, the whole process is on the order of seconds, and can be accelerated by using specialized cryptographic processors. On-chain Bitcoin contracts prevent double-spending, and signed transactions can be accepted immediately by the receiver. Hence, propagation and conformation times of the Bitcoin network are no bottleneck anymore.
+
+\subsection{Transaction Costs}
+
+Each payment channel requires at least two on-chain transactions. One to open the channel, and one to close the channel. If a channel is closed unilaterally, by broadcasting a payment transaction with \ac{HTLC} outputs, then additional on-chain transactions may be required for settlement. However, this adds additional costs to the parties able to broadcast the payment transactions (i.e. the receiving parties), and cooperation is thus strongly incentivized. 
+The number of transactions that can be facilitated via these two on-chain transactions is only limited by the capacity and lifetime of the channel. Thus, the marginal transaction cost per procured sensor datum paid to the Bitcoin network approaches zero. However, the hub acts as a service provider and has costs as well. These costs have to be covered by fees billed to the requester. We will discuss this in Sec. \ref{sec:hubbiz}.
+
+\subsection{Scalability}
+
+Scalability is essentially only limited by the capital in bitcoins available to the hub. Requesters have to provide the coins to open a channel with the hub themselves, but the hub needs to advance the coins to open channels with each sensor. Thus, each additional sensor requires locking up capital and paying fees to the Bitcoin network. Of course, managing a large number of connections and generating and verifying digital signatures for each payment requires sufficient processing power and bandwidth, but the hub can be a distributed system itself. Hence, in principle, the system can scale indefinitely based on hardware requirements alone.
+
+There is one additional bottleneck. With the current block size limit and block rate the transaction throughput of the Bitcoin network is limited to 3-7 transactions per second. Although payment transactions are off-chain, the funding and settlement transactions are on-chain. Thus, even if there would be no other transaction on the network it would take about 2 days to setup channels with 1 million sensors. In reality, the Bitcoin network is already almost at maximal transaction throughput (see Fig. \ref{fig:paymentchannels}).
+
+\subsection{Confidentiality and Integrity}
+
+Confidentiality of data can be provided by Bitcoin's built-in \ac{ECC} in form of \ac{ECIES}. Data is then encrypted based on the public key of the requester. However, this implies that the sensor needs to know the public key of the requester. Since the public key is also communicated via the hub, the hub could generate a new key pair and provide the corresponding public key to the sensor. In order to minimize the risk, the sensor could check the blockchain for a funding transaction corresponding to the public key, and only accept the public key if there is one.
+
+Integrity is provided by signing messages using \ac{ECDSA}. Thus the entire infrastructure for integrity and confidentiality is directly provided by Bitcoin.
+
+\subsection{Privacy}  
+
+In the case of direct Bitcoin payments as discussed in the last chapter, every transaction is recorded on the blockchain. Although identities on the blockchain are pseudonymous, in most cases at some point a non-pseudonymous entity can be linked. This happens for example at a regulated crypto-fiat exchange or at a merchant. 
+Mediated payment channels provide additional privacy, at least to an outside observer. Only funding and closing transactions are recorded on the blockchain. Thus, only the links to the hub are public, and not the individual transactions between requesters and sensors. However, the hub knows about every transaction, but not about the data content. Of course, there are privacy risks for the sensor owner depending on the actual data offered. Data that is enriched with location information can quickly lead to identification of the smartphone owner in the case of mobile crowdsensing \parencite{de2013unique}. 
+
+\subsection{Malicious Sensors}
+\label{sec:s2aas_micro_eval_malsens}
+
+Crowdsensing and S\textsuperscript{2}aaS schemes are dependent on a large number of sensors. Thus, it is very important to keep the friction of participation low. The here presented scheme does require no more than installing an application and maybe providing some meta data. In particular the sensors do not need any bitcoins to begin with. However, each registered sensor requires the hub to initiate a payment channel with a particular capacity and lifetime. Hence, in the worst case this locks up bitcoin corresponding to the capacity for the entire lifetime of the channel and consumes fees for funding and refund transactions. If we provide a crowdsensing application via the Google Play store, then we can be reasonably sure that only genuine devices try to register. However, we aim for an open permissionless platform, and here a malicious party could try to register sensors until the capital of the hub is depleted. In practice, a permissionless system is hard to achieve. One approach would be to adopt the idea of Bitcoin's proof-of-work and require a sensor to provide a reasonable proof-of-work based on a challenge from the hub.
+
+\subsection{Censorship-resistance and Resilience}
+
+Although the hub provides trust-less mediation of payments and data exchange, the introduction of a centralized facilitator has consequences. The hub is able to exclude particular sensors and requesters, either on its own terms or compelled by regulation or law enforcement. Furthermore, a single hub provides an attack surface for \ac{DoS} attacks which could cripple the entire system. Ideally, the system would be able to provide a fallback to regular on-chain Bitcoin transactions or to direct payment channels. This would imply to have a means for direct communication between requesters and sensors. Protocols such as BitMessage\footnote{https://bitmessage.org/} or Telehash\footnote{http://telehash.org/} could be used. More general overlay networks such as utilized by 21 Inc. are another alternative.
+
+\section{Discussion}
+\label{sec:trustlessdiscussion}
+
+\subsection{Hub Costs and Revenue Mechanics}
+\label{sec:hubbiz}
+
+Requesters and sensors have an obvious value in taking part in the system. The hub allows to make the most of individual payment channels and simplifies communication if necessary. But why would someone provide this service and run a hub? In other words, the hub needs a business model. In order to have a viable business model, the hub needs to cover at least its cost. The costs of the hub can be divided into the following categories. 
+
+\paragraph{Hardware and operations} consists of hardware requirements and its operational expenses. Infrastructure-as-a-Service could be used to provide a scalable infrastructure without capital costs. There are some base loads such as running a Bitcoin node. In addition there is a variable load that mostly depends on the number of transactions. However, a typical server is able to handle thousands of transaction per second.
+
+\paragraph{Bitcoin network fees} have to be provided for on-chain Bitcoin transactions. In the best case, the hub needs to open channels with sensors and close channels from requesters. However, if there are sensors with no demand, then the hub has to close these channels after expiry by broadcasting a refund transaction. These costs are independent of the value transferred through the channels.
+
+\paragraph{Cost of locked capital} is based on the sum of the capacities of all outgoing payment channels and their lifetimes.
+
+The value of the system depends mainly on the participating data providers. Hence, onboarding a sensor should be as frictionless as possible, and fees should be taken from the requesters. The technical implementation of fees is straightforward. The hub just requires a higher amount from the requester than the sensor demands for each payment. At least if the fee surpasses 1 satoshi. Although more sensors are better in principle, each additional sensor adds costs in all of the above categories. Thus, a hub will try to leverage available information, such as current and historical or reputation measures if available, to prefer sensors that provide high quality data that is high in demand. The hub aims to use payment channels as efficiently as possible and has to balance between lock up of capital and paying Bitcoin transaction costs for establishing and settling of channels.
+
+
+\subsection{Comparison with Bidirectional Payment Networks}
+\label{sec:paymentnetworks}
+
+There have been more complex payment channel designs invented which allow reversing the payment direction, and hence creating bidirectional channels \parencite{decker2015Duplex,poonbitcoin}. In addition, Lightning channels \parencite{poonbitcoin} can stay open indefinitely. Bidirectional payment channels in combination with some form of \ac{HTLC}s can be used to build routable payment networks in which payments can be transported via an arbitrary number of trust-less intermediaries. \cite{cryptoeprint:2016:408} provide a comparison of the two designs and discuss the issues towards payment networks. Besides the routing problem itself which is trivial when the topology is reduced to a hub and spoke architecture as in our case, both payment channel designs, and the \ac{HTLC} designs rely on creating chains of partially signed transactions. This makes the protocols vulnerable to transaction malleability \parencite{Andrychowicz2015}. If a child transactions is created collaboratively, i.e.  requires signatures of both parties, before the parent transaction, i.e. the transaction of which the child spends an output, is committed to the blockchain, then a party can unilaterally commit an altered parent to the blockchain which invalidates the child. A malicious party is thus able to lock funds indefinitely of even steal funds. \ac{BIP} 141 \parencite{bip141} will solve this issue but the actual date of deployment is uncertain. Furthermore, there is disagreement in the community about deploying the enhancements via soft fork, and it is thus uncertain if the necessary majority for a deployment can be reached. The here presented payment channel and \ac{HTLC} design on the other hand is not vulnerable to transaction malleability. 
+
+\subsection{Comparison with Ethereum}
+
+Ethereum was still in its pre-release stage at time of implementation. At time of writing this thesis, we can review what it would mean to implement a S\textsuperscript{2}aaS or crowdsensing with Ethereum. Ethereum has a much faster block rate of 14 s in comparison to Bitcoin's 10 min. However 14 s is still a significant latency for a sensing scheme. Hence, an analog to payment channels is needed. Generalizations of Bitcoin payment channel networks are currently under development\footnote{https://github.com/raiden-network/raiden}. In addition, \cite{golemnano2015} present a lottery-based micropayment scheme implemented as an Ethereum contract that is particularly suited for one-to-many payments if payees are expected to receive a large number of payments from different payers.
+In general, Ethereum has some advantages to Bitcoin in terms of micropayments. First, Ethereum's account model does not have the dust issue that cryptocurrencies based on \ac{UTXO}s have. A sensor with an Ethereum account would get all micropayments in the same account instead of multiple \ac{UTXO}s. Second, Ethereum is divisible down to 18 decimal places, and third, Ethereums's exchange rate is significantly lower. On the other hand, although there are features that make Ethereum light client friendly, there is currently no release version of a light client. Furthermore, the fast block rate and significantly bigger block headers need more bandwidth and storage. Finally, Ethereum suffered from various attacks and bugs which have lead to hard forks. Thus, clients would have to be updated regularly, which is always an issue for dedicated connected devices. 
+Hence, as of now there no substantial advantages to use Ethereum, and the stability, diffusion and maturity of Bitcoin provides a firmer basis for such a platform.
+
+
+\subsection{Key Findings}
+
+\paragraph{Bitcoin contracts and off-chain transactions allow low-latency micropayments}
+
+The programmability of Bitcoin transactions allows the creation of smart contracts between parties. These smart contracts have on-chain collateral and allow two parties to exchange and accept Bitcoin transactions directly without relying on the Bitcoin network and the blockchain. Hence, individual payments on the order of $\mu$USD are possible. Each channel, connecting two parties, locks bitcoins and requires two on-chain transactions, one for establishing the channel, and one for settlement. Thus, payment channels alone are not sufficient for crowdsensing scenarios in which a requester is buying data from thousands of individual sensors. 
+
+\paragraph{Scaling the system can be achieved by adding a hub with strictly limited power}
+
+\ac{HTLC}s can be used to atomically connect payments in two channels that meet at one party. This allows to route payments via a hub without having to trust the hub. A malicious hub is only able to lock the coins in a channel for the channel lifetime, but cannot steal any funds. The hub can simplify discovery and communication between requesters and sensors, and provide additional privacy against a blockchain observer. Digital Signatures and encryption ensure integrity and confidentiality. However, the hub may censor individual participants or transactions for legal or economic reasons. Hence, fallback mechanisms are required.
+
+\paragraph{Off-chain scaling only in combination with on-chain scaling}
+
+A S\textsuperscript{2}aaS infrastructure would need to scale to millions or even billions of nodes. The maximal throughput of the current Bitcoin network is 3-7 transactions per second. Even though we could handle almost all transactions off-chain, it would take years to setup the channels, and they would need extremely long expiry times. 
+Lightning channels \parencite{poonbitcoin} can be open indefinitely and could be of advantage longterm. 
+
+\paragraph{Running a hub can be expensive}
+
+S\textsuperscript{2}aaS and crowdsensing schemes are only valuable if a large number of data providers are available which are able to attract requesters. Hence, participation needs to be as frictionless as possible. In the presented system a smartphone user needs only to download and install and application in order to participate. Ad-hoc micropayments are enabled because the hub finances a payment channel to each requesting sensor. Hence, each additional sensor implies locking of funds inside contracts and paying Bitcoin network fees.
+
+\subsection{Towards a Common Architecture}
+
+We saw that the basic elements of a S\textsuperscript{2}aaS scheme are discovery, data exchange, and payments. Discovery allows a requester to find sensors that are able to provide data which are of interest. We implemented discovery in form of a central repository. Digital signatures ensure integrity of the meta data, but availability and censorship-resistance is not guaranteed. In the last paragraph of Section \ref{sec:s2aas_findings}, we briefly discussed that discovery could also be implemented in form of a \ac{DHT} or as a virtual chain on top of Bitcoin as implemented by Blockstack \parencite{ali2016blockstack}. Data exchange can be done via the Bitcoin network, but only for very important data points requiring trusted timestamping and global availability. Peer-to-peer data exchange requires addressability and suitable communication protocols. \ac{SDN} together with \ac{HTTP} or \ac{CoAP} \parencite{shelby2014constrained}, BitMessage \parencite{warren2012bitmessage} or Telehash can be used to allow peer-to-peer communication between parties in different networks and despite \ac{NAT}. Mediated data exchange via central server (hub) is simpler and more efficient. Digital Signatures and encryption ensure that the server is not able to tamper with the data or learn about the content of the data. However, the issues are similar to the central repository. Availability and censorship-resistance can not be guaranteed. A middle ground can be found by using the central server to initiate peer-to-peer to communication (c.f. WebRTC \parencite{bergkvist2012narayanan}). If a requester needs to buy data from a large number of sensors, or the sensors vary over time then mediated payment channels are necessary. However, if direct communication channels between requesters and sensors are available, then direct payment channels could be established for repeated payments. For one time payments for higher value data, on-chain payments are a fallback solution. Figure \ref{fig:conceptual_overview} provides an overview of the different solutions for the main functions. In principle, an integrated architecture could support both peer-to-peer services and competitive mediation. 
+
+\begin{figure}
+ \centering
+ \includegraphics[width=\textwidth]{./externalized/goingoffchain.pdf}
+ \caption{Functions of the system and their technological enablers.}
+ \label{fig:conceptual_overview}
+ \end{figure}
+
+
+\section{Conclusion}
+\label{sec:trustlessconclusion}
+
+The main contribution of this chapter was the introduction of low-latency micropayment schemes for Bitcoin. We concentrated on payment channels which leverage Bitcoin's built-in programmability to implement a simple form of a smart contract. However, these contracts are bilateral and based on an on-chain multi-signature output. Thus, in m-to-n relationships, m*n contracts -- and 2*m*n on-chain transactions -- would be needed. We introduce a hub able to trustlessly interconnect payments in two channels via \ac{HTLC}s. We discuss how discovery and data exchange can be mediated as well, and implement a prototypical crowdsensing system based on this concept. By downloading a smartphone application, a user is able to offer the sensing capabilities of her phone to requesters all over the world in exchange for Bitcoin micropayments. 
+
+
+
+

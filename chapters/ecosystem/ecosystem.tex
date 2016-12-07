@@ -1,10 +1,6 @@
-\chapter{A Look into the Bitcoin Ecosystem}
-
+\chapter{Bitcoin Beyond The Financial Service Industry: A Survey}
+\label{sec:ecoystem}
 \section{Introduction}
-
-
-
-
 
 
 It took quite some time until academia noticed Bitcoin. The first academic disciplines gaining interest were computer science, in particular information security \parencite{Karame:2012:DFP:2382196.2382292,Barber2012} and distributed computing \parencite{Babaioff:2012:BRB:2229012.2229022}, as well as law \parencite{Grinberg2011,Ewing2012}. Wide spread interest came with the extraordinary price rally in autumn 2013. The increasing value and media attention of Bitcoin led to an increase of venture capital fueling the ecosystem, and thus to more experimentation and variety of entrepreneurial activities. Bitcoin had the reputation of \emph{funny Internet money} that is used to buy drugs on the dark web \parencite{Christin:2013:TSR:2488388.2488408}. As we will see in this chapter, the first companies that have been founded were exchanges, payment processors, and ASCI miner manufacturers.
@@ -33,53 +29,53 @@ its evolution over time. Thereafter, we present the case studies in Section \ref
 followed by key findings in Section \ref{sec:eco:findingss} We conclude with a critical discussion of 
 the disruptive potential and avenues for future research.
 
-\section{Innovation, Disruption and Disruptive Innovation}
-\label{sec:eco:primer}
+% \section{Innovation, Disruption and Disruptive Innovation}
+% \label{sec:eco:primer}
 
-In a broader definition, innovation can be described as \emph{the generation, acceptance, 
-and implementation of new ideas, processes, products or services.} \parencite[][2]{10.2307/2391646}. Depending on the context, the term \emph{innovation} incorporates divergent 
-attributes, such as different process stages or underlying constructs \parencite{doi:10.1108/00251740910984578}. Hence, the purpose of an innovation process could be to change or 
-improve products as well as entire business models \parencite{CAIM:CAIM637}. Business 
-models can be described as \emph{the rationale of how an organization creates, delivers 
-and captures value} \parencite{osterwalder2010business}. Describing the logic of a 
-company's business activities \parencite{linder2000so}, the business model comprises 
-four high-level components including value proposition, operational model, financial 
-model and customer relations. \parencite{CAIM:CAIM637}. 
+% In a broader definition, innovation can be described as \emph{the generation, acceptance, 
+% and implementation of new ideas, processes, products or services.} \parencite[][2]{10.2307/2391646}. Depending on the context, the term \emph{innovation} incorporates divergent 
+% attributes, such as different process stages or underlying constructs \parencite{doi:10.1108/00251740910984578}. Hence, the purpose of an innovation process could be to change or 
+% improve products as well as entire business models \parencite{CAIM:CAIM637}. Business 
+% models can be described as \emph{the rationale of how an organization creates, delivers 
+% and captures value} \parencite{osterwalder2010business}. Describing the logic of a 
+% company's business activities \parencite{linder2000so}, the business model comprises 
+% four high-level components including value proposition, operational model, financial 
+% model and customer relations. \parencite{CAIM:CAIM637}. 
 
-Depending on whether a company introduces a new service or changes its current 
-business model, innovations can be characterized by their \emph{degree of newness}, 
-a metric, which \cite{JPIM:JPIMJPIM192_0110.XML} describe as \emph{Innovativeness} and 
-\emph{the degree of discontinuity in marketing and/or technological factors} \parencite[][112]{JPIM:JPIMJPIM192_0110.XML}. In recent years the two notions \emph{radical} and \emph{disruptive}
-have received increased attention from scholars and practitioners alike to describe 
-innovations with a high degree of innovativeness \parencite{Latzer01062009,christensen2015disruptive}. 
+% Depending on whether a company introduces a new service or changes its current 
+% business model, innovations can be characterized by their \emph{degree of newness}, 
+% a metric, which \cite{JPIM:JPIMJPIM192_0110.XML} describe as \emph{Innovativeness} and 
+% \emph{the degree of discontinuity in marketing and/or technological factors} \parencite[][112]{JPIM:JPIMJPIM192_0110.XML}. In recent years the two notions \emph{radical} and \emph{disruptive}
+% have received increased attention from scholars and practitioners alike to describe 
+% innovations with a high degree of innovativeness \parencite{Latzer01062009,christensen2015disruptive}. 
 
-Radical innovations refer to highly discontinuous (technological) changes \parencite{Latzer01062009} and are characterized by totally new features, high uncertainty and the necessity 
-for companies to acquire new capabilities to fully exploit emerging opportunities 
-\parencite{Latzer01062009}. Additionally, these often technology-driven innovations can have 
-the potential to shift existing paradigms and might possibly disrupt industries 
-\parencite{Latzer01062009}. Following Christensen's theory, disruptive innovation can be described 
-as a \emph{new product [or service] encroach[ing] on the low end of the existing market} 
-\parencite[][348]{JPIM:JPIM306} with the potential to move upward to satisfy 
-higher customer expectations \parencite{clayton1997innovator,ISI:000234127700008}. This is possible because 
-incumbents focus on improving their offerings along performance dimensions that 
-are valued specifically by the majority of demanding customers, while entrants 
-focus on different performance dimensions that are (initially) valued only by niche 
-segments, which are usually neglected by incumbents. At the same time, \cite{christensen2015disruptive} define \emph{disruption} as \emph{a process whereby a smaller company with 
-fewer resources is able to successfully challenge established incumbent businesses}. 
-Hence, a disruptive innovation does not inevitably leads to the disruption of a 
-market, nor does a disruption of a market necessarily has to be triggered by a 
-disruptive innovation. 
+% Radical innovations refer to highly discontinuous (technological) changes \parencite{Latzer01062009} and are characterized by totally new features, high uncertainty and the necessity 
+% for companies to acquire new capabilities to fully exploit emerging opportunities 
+% \parencite{Latzer01062009}. Additionally, these often technology-driven innovations can have 
+% the potential to shift existing paradigms and might possibly disrupt industries 
+% \parencite{Latzer01062009}. Following Christensen's theory, disruptive innovation can be described 
+% as a \emph{new product [or service] encroach[ing] on the low end of the existing market} 
+% \parencite[][348]{JPIM:JPIM306} with the potential to move upward to satisfy 
+% higher customer expectations \parencite{clayton1997innovator,ISI:000234127700008}. This is possible because 
+% incumbents focus on improving their offerings along performance dimensions that 
+% are valued specifically by the majority of demanding customers, while entrants 
+% focus on different performance dimensions that are (initially) valued only by niche 
+% segments, which are usually neglected by incumbents. At the same time, \cite{christensen2015disruptive} define \emph{disruption} as \emph{a process whereby a smaller company with 
+% fewer resources is able to successfully challenge established incumbent businesses}. 
+% Hence, a disruptive innovation does not inevitably leads to the disruption of a 
+% market, nor does a disruption of a market necessarily has to be triggered by a 
+% disruptive innovation. 
 
-The literature on disruptive innovation is currently still in an early stage \parencite{JPIM:JPIM177} and it remains controversial, how to define the concept \parencite{ISI:000283729100005}. While some researchers support Christensen's understanding, 
-contributing own thoughts to the theory, others generally \emph{criticize the vagueness 
-of the concept} \parencite[][438]{ISI:000283729100005}. According to its critics Christensen's 
-theorization does not allow for a clear differentiation between underperforming 
-technologies and potentially disruptive technologies with initially inferior performance 
-\parencite{JPIM:JPIM179}. Finally, a main criticism focuses on the lack of measurability of 
-disruptive innovation \parencite{JPIM:JPIM176}. To overcome this gap, \parencite{JPIM:JPIM176}, define the following criteria to identify disruptive innovations. 
-The innovation should (1) possess inferior attributes regarding what mainstream 
-customers would value; (2) attract new customer segments by offering new value 
-propositions; (3) be offered at lower costs; and (4) start from niche markets \parencite{ISI:000283729100005,JPIM:JPIM176}.
+% The literature on disruptive innovation is currently still in an early stage \parencite{JPIM:JPIM177} and it remains controversial, how to define the concept \parencite{ISI:000283729100005}. While some researchers support Christensen's understanding, 
+% contributing own thoughts to the theory, others generally \emph{criticize the vagueness 
+% of the concept} \parencite[][438]{ISI:000283729100005}. According to its critics Christensen's 
+% theorization does not allow for a clear differentiation between underperforming 
+% technologies and potentially disruptive technologies with initially inferior performance 
+% \parencite{JPIM:JPIM179}. Finally, a main criticism focuses on the lack of measurability of 
+% disruptive innovation \parencite{JPIM:JPIM176}. To overcome this gap, \parencite{JPIM:JPIM176}, define the following criteria to identify disruptive innovations. 
+% The innovation should (1) possess inferior attributes regarding what mainstream 
+% customers would value; (2) attract new customer segments by offering new value 
+% propositions; (3) be offered at lower costs; and (4) start from niche markets \parencite{ISI:000283729100005,JPIM:JPIM176}.
 
 \section{Methodology}
 \label{sec:eco:method}
@@ -611,6 +607,10 @@ scholars to take this article as a starting point to investigate more precise me
 \parencite[cf.]{JPIM:JPIM176} and clearer definitions \parencite{JPIM:JPIM177} 
 of disruptive innovation in a Fintech context as well as to draw clear distinctions 
 to related research fields such as radical or open innovation \parencite[cf.]{ISI:000283729100005}. 
+
+\section{Extension: New developments in the IoT sector}
+
+\section{Conclusion}
 
 % In this work, we deliberately restricted our scope on start-up companies building 
 % on Bitcoin technology. However, there are numerous implementations of cryptocurrencies 
