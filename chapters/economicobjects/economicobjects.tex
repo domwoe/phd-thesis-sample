@@ -1,98 +1,237 @@
 \chapter{Towards Economic Devices}
 \label{sec:economicobjects}
 
+\epigraph{What I cannot create, I do not understand.}{--- \textup{Richard P. Feynman}}
+
+
 \section{Context and Motivation}
 
-Cryptocurrencies enable connected devices to receive and control money. Off-chain payment systems based on payment channels may eventually enable trustless and instant micropayments at scale. This provides the basis for reliable and autonomous economic interactions between connected devices and between connected devices and humans. In this chapter, we zoom out a bit and introduce the notion of \emph{economic devices}. These are connected devices with economic capabilities such as buying and selling (digital) goods and services, as well as the issuance of cryptographic tokens, i.e. specific digital bearer assets living on a cryptocurrency blockchain. These tokens can represent e.g. concrete IOUs, claims on revenue or access/control rights. Economic devices may play an important role in developing countries where Internet access and smartphones are becoming ubiquitous, but access to capital, financial institutions, and law enforcement lacks behind. We present the prototypical 
-
-We draw from the concepts of smart property and distributed autonomous organizations 
+% With the advent of decentralized cryptocurrencies, connected devices are able to immediately and autonomously participate in economic interactions. Arguably many of those interactions will be tiny payments between machines to provide efficient resource allocation and utilization without human involvement. S\textsuperscript{2}aS is a scheme that targets efficient utilization of sensor data produced by all kind of connected devices all over the world. Assuming that \emph{a sensor earns money} and is acting as an autonomous business entity paying for electricity and Internet access. How would the sensor be built and maintained? We argue that an approach towards answering this question provides a basis for financing productive assets in general. The idea is 
 
 
-\section{Background}
-
-\subsection{Smart Contracts}
-
-\subsection{Smart Property}
-
-The term smart property is closely related to the original definition of smart contracts. 
-
-The term smart property was introduced in \cite{szabo1997} as a manifestation of smart contracts. Szabo gives the example of a car:
-\begin{quote}
-Consider a hypothetical digital security system for automobiles. The smart contract design strategy suggests that we successively refine security protocols to more fully embed in a property the contractual terms which deal with it. These protocols would give control of the cryptographic keys for operating the property to the person who rightfully owns that property, based on the terms of the contract. In the most straightforward implementation, the car can be rendered inoperable unless the proper challenge-response protocol is completed with its rightful owner, preventing theft.
-\end{quote}
-
-And Indeed, modern car keys use smart card technology and cryptographic primitives to authenticate the driver and provide the functionality described by Szabo. However legal ownership is independent of possession of the cryptographic key. Noteworthy, currently the possession of a physical document authenticates the legal ownership. 
-
-With the inception of Bitcoin and blockchain technology, the term smart property usually refers to property whose ownership is controlled by a blockchain.
-The Bitcoin Wiki notes that smart property may also include non-physical property like shares in a company or access rights to a remote computer \parencite{smartproperty2011}. 
-
-\section{Economic Devices}
-
-Cryptocurrencies are digital bearer assets existing on public blockchains. Decentralization, cryptography and incentive-compatibility provide the basis for permissionless access independent of legal status. This allows software agents to act as autonomous economic agents which are able to control monetary value and enter contractual agreements with other economic agents, either humans or machines. These software agents can either be instantiated on a decentralized application platform with built-in cryptocurrency such as Ethereum or on tamper-proof hardware that is able to store and use cryptographic keys without interference. We define connected devices interfacing cryptocurrency blockchains as economic devices due to their ability to contribute directly to an economy by facilitating economic interactions. These economic interactions can either be rigid and predefined in order to automatically execute transactions as programmed by humans, or the result of economic decisions made by intelligent economic devices. Economic devices could be the building blocks of a decentralized \ac{IOT} by interacting with cloud services on the basis of market economics instead of vertical integration.
 
 
-In the limit of complete autonomy, economic devices would \emph{own themselves}. However, ownership (in contrast to possession) is a legal concept. Thus, economic devices would need to be recognized as legal entities. Property rights theory assigns the owner of an asset the residual control rights over that asset \parencite{10.2307/2937753}. Thus, in principle, ownership is only of concern if contractual relationships are incomplete, i.e. not all actions and payments for all possible contingencies are specified \parencite{GKlein:2015en}. \cite{lessig2009code} has argued that there are more modes of regulation than law. Also the market, architecture, and norms regulate the actions of the individual and their interactions within the society as a whole. Norms are less important when interactions are anonymous and arguably even less so for software agents and economic devices. Architecture, in form of capabilities and constraints by hardware, software and cryptography, and the market, in form of financial incentives or disincentives, i.e. deposits and penalties, are able to provide a basic regulatory framework for economic devices and their interactions with humans. Cryptocurrencies and blockchains are merging the concepts of architecture and the market and enable the rise of a \emph{Lex Cryptographia} which is "characterized by a set of rules administered through self-executing smart contracts and decentralized organizations" \parencite{wright2015decentralized}.
-These forms of regulation are particularly important in nations with weak law enforcement and when considering global, i.e. supranational, economic interactions via the Internet.
-
-\subsection{Basic Capabilities}
-
-In the following, we discuss basic capabilities of economic devices that can be implemented with the dominant cryptocurrency platforms Bitcoin and Ethereum.
-
-Cryptocurrencies allow a machine to reason about the finality of a payment. Thus, an economic device is able to autonomously \emph{sell services or (digital) goods}. It is worth to stress this point. Only because a machine can be sure that a payment can not be reverted by some authority, it can safely sell anything. A machine itself is not able to enter a legal arbitration process which is also expensive due to the involvement of humans. Sensing as a Service as presented in the last two chapters is one example of this capability to autonomously offer a sensing service or sell data as a digital good. However the most fundamental example is mining which provides security to the cryptocurrency infrastructure itself in return of a probabilistic payment. 
-
-Once in control of the cryptocurrency, an economic device is able to \emph{buy services or (digital) goods} from other economic devices or from humans (see e.g. Amazon Mechanical Turk\footnote{https://www.mturk.com/mturk/} or participatory mobile crowdsensing \parencite{burke2006participatory}). In addition to these basic economic capabilities, more complex agreements can be implemented by \emph{issuing tokens representing (transferable) rights} concerning the economic device. These tokens can represent e.g. concrete IOUs, claims on revenue or access/control rights. IOUs are like vouchers or coupons and authorize the bearer to redeem the token for a specified service or good. Claims on revenue allow to implement revenue-sharing schemes between economic devices and humans. We will discuss an application of this in the case study in Section \ref{sec:caseDisplay}.
-Transferable, i.e. tradable, access/control rights allow to own\footnote{Not necessarily in the legal sense.}, as well as to trade, and rent an economic device without having to trust the counterparty. Hence, economic devices entail and extend the notion of smart property.
-
-\begin{table}
-  \centering
-  \begin{tabularx}{\textwidth}{ l  X  }
-    \toprule
-    Capability  & Example \\
-    \midrule
-    Selling & S\textsuperscript{2}aaS, mining \\ 
-    Buying & Data, energy, Internet access \\ 
-    Token issuance & IOUs, claims on revenue, smart property \\  
-    \bottomrule
-  \end{tabularx}
-  \caption{Basic capabilities of economic devices.}
-  \label{tbl:capabilities}
-\end{table}
+% . Off-chain payment systems based on payment channels may eventually enable trustless and instant micropayments at scale. However, c
 
 
-\subsection{Requirements}
 
-In order to implement economic devices a number of requirements have to be met.
-First, a digital bearer asset is needed to enable dis-intermediated and non-repudiable payments between machines. Thus far, cryptocurrencies based on public blockchains are the only practical implementation of this concept. Second, interactions with economic devices should be trustless. This can either be achieved with financial deposits and penalties or with verifiable open source hardware and software. Deposits and penalties may require arbitration to decide if a counterparty did not fulfill its obligations. Programmable cryptocurrencies enable competitive markets for trustless arbitration. Open source hardware and software, and trusted computing platforms allow the counterparty to verify the integrity of an economic device and thus reason about its behavior. Third, counterparties should not be able to modify hardware or software for their benefit, i.e. the effort of modification or tampering should outweigh the benefit. In addition, there are the basic requirements of having access to energy and to the Internet. 
+% This provides the basis for reliable and autonomous economic interactions between connected devices and between connected devices and humans. In this chapter, we zoom out a bit and introduce the notion of \emph{economic devices}. These are connected devices with economic capabilities such as buying and selling (digital) goods and services, as well as the issuance of cryptographic tokens, i.e. specific digital bearer assets living on a cryptocurrency blockchain. These tokens can represent e.g. IOUs, claims on revenue or access/control rights. Economic devices may play an important role in developing countries where Internet access and smartphones are becoming ubiquitous, but access to capital, financial institutions, and law enforcement lacks behind. We draw from the concepts of smart property and distributed autonomous corporations 
+
+
+
+% \section{Smart Contracts and Smart Property}
+
+% \subsection{The need for a new type of contracts}
+
+% According to Marriam-Webster a contract is "a binding agreement between two or more persons or parties". In particular, an agreement that is legally enforceable. Although often the actual document describing the terms of a contract is identified with the contract, the actual agreement is the contract, and the document itself is only evidence. Contracts enable transactions that can not be completed on the spot. A simple example is a loan agreement between a borrower and a lender. The borrower and the lender might agree that the borrower lends \$ 10 000 USD to the lender now, under the obligation that the lender repays \$ 11 000 USD one year later. Contract law thereby offsets the trust the borrower needs to have in the lender, with trust in the authority of the legal system, which will eventually enforce the terms of a contract in case of dispute between the parties. Often a loan is secured with collateral. Collateral is property of the lender of which the borrower is able to take possession if repayments are not made as specified. Legal enforcement and dispute resolution is then provided by the judicial and executive system of a sovereign. However, this is a manual and costly procedure which makes only sense if the disputed value justifies the costs. In many cases the deterrence of legal enforcement is sufficient to incentivize the compliance to legal terms. However regulation by law is not always appropriate. There are at least three general scenarios where this is the case.
+
+% \begin{itemize}
+%   \item Transaction values are low in comparison to dispute resolution and enforcement costs.
+%   \item Legal system of sovereign lacks power to enforce contracts.
+%   \item Contracting parties are immune against enforcement.
+% \end{itemize}
+
+% The first two scenarios are straightforward. First, going to court because of \$ 10 USD is unreasonable. Second, developing countries often do not have a reliable judicial and executive system. The third case concerns artificial autonomous economic agents, i.e. software or machines capable of being parties in economic transactions. 
+
+% \cite{lessig2009code} argues that there are more modes of regulation than law. In particular, there are three additional modes of regulation besides law: (1) the market, (2) norms, and (3) architecture. The market enables and prohibits certain kinds of transactions. 
+% The market is able to regulate economic interactions with supply and demand and the price mechanism. Even more generally, financial incentives or disincentives in form of penalties can be used to regulate interactions and behavior. Norms are a psychological form of regulation. Norms are s evolving informal shared understanding of groups. As such they incentivize certain behaviors of group members, and provide a basis to predict the behavior of a group member. Another form of regulation is architecture. In the world around us, the laws of physics constrain our behavior. Human-made architecture can constrain transactions as well, e.g. by building a wall. However, the most powerful form of regulation by architecture is computer code. Computer code is regulating cyberspace. Although social norms and the market influence what code is written, code eventually defines the transactions. Cryptoeconomic systems, consisting of code, cryptography, and mechanism design, provide novel tools for regulation independent of legal identities, nation states and traditional judicial systems.
+% Cryptocurrencies allow entities instantiated by code, i.e. software agents, to have autonomous control over funds. Before cryptocurrencies digital monetary transactions have always dependent on intermediaries and custodians who are able to revert transactions. This enables a new class of contracts, that do not depend on being legally enforceable, but are either enforced ex-ante by code or compliance is strongly incentivized based on economic incentives and disincentives. These contracts are suitable for autonomous machine-to-machine transactions, for low value transactions, for transactions between anonymous parties, and for transactions with parties living in countries with a weak legal system.
+
+% \subsection{Smart Contracts}
+
+% \cite{} coined the term smart contract and defined it as "a computerized transaction protocol that executes the terms of a contract." A crude and simple example of a smart contract is the vending machine. The customer and the owner of the vending machine agree on the exchange of \$ 1.50 USD and a can of soda. This agreement is then enforced automatically by the vending machine. Bitcoin allows to implement smart contracts of two different kinds. First, contracts enforced by the Bitcoin protocol itself. An Example are payment channels which enforce that the locking of funds, and the temporal validity of the refund transactions. Another example is that of an assurance contract instantiated by a Bitcoin transaction that defines to allocate a certain amount of bitcoins to a receiver, without specifying the inputs. Various parties can then add inputs, and be sure that the transactions becomes only valid if sufficient funds have been collected. 
+% Second, trusted software running on trusted hardware can interact natively with money, and thus take part in economic interactions. In this sense trusted computing can be an automated mediator for contracts and economic interactions between humans. An instantiation of this idea will be discussed in Sec. \ref{sec:caseDisplay}.
+
+% Smart contracts enforced by the protocol itself that do not depend on trust in a single machine are advantageous. The implementation of scripting in Bitcoin limits the types of contracts that can be enforced by the protocol. In contrast, Ethereum allows in principle to instantiate arbitrary programs with storage and secure funds on the network. Thus, arbitrary protocols can be implemented on top of Ethereum that are able to enforce various types of contracts. 
+
+
+
+
+
+
+% The \ac{IOT} is bridging the digital world and the physical world. In contrast to software agents living on a globally decentralized network, such as a blockchain, connected devices have localized physical instantiation, and are thus in principle subject to the legal system of the respective nation state, and the legal system can at leas interfere by confiscating or destroying the connected device.
+
+
+
+% With the design of artificial systems transactions can be regulated. A simple example would be to separate two parts by a wall with just one connecting hole of a specific size, then only transactions involving items of a size smaller or equal to the hole are possible. Computer code is another type of architecture to regulate all kinds of interactions. 
+
+
+
+
+% Also the market, architecture, and norms regulate the actions of the individual and their interactions within the society as a whole. Norms are less important when interactions are anonymous and arguably even less so for software agents and economic devices. Architecture, in form of capabilities and constraints by hardware, software and cryptography, and the market, in form of financial incentives or disincentives, i.e. deposits and penalties, are able to provide a basic regulatory framework for economic devices and their interactions with humans.
+
+ 
+
+
+
+% The general objectives are to satisfy common contractual conditions (such as payment terms, liens, confidentiality, and even enforcement), minimize exceptions both malicious and accidental, and minimize the need for trusted intermediaries. Related economic goals include lowering fraud loss, arbitrations and enforcement costs, and other transaction costs." 
+
+
+
+
+
+
+
+
+% The programmability of Bitcoin transactions provided a first means to implement such self-enforcing contracts \parencite{smartcontr}. Payment channels and \ac{HTLC}s are examples of this (see Chapter \ref{sec:goingoffchain}). Ethereum extended the programmability-capabilities of a cryptocurrency by introducing stateful, persistent programs with their own cryptocurrency balance, and are instantiated on the blockchain. These programs can interact with each other, as well as with humans and machines by means of transactions.Although these programs do not necessarily implement an agreement between two or more parties, as a traditional law-enforceable contract does, they are generally called (smart) contracts (c.f. Sec. \ref{sec:ethereum:tech:tx}). Ethereum smart contracts as used in this Chapter do however fulfill the original definition.
+
+% \subsection{Smart Property}
+
+% The term smart property was introduced in \parencite{szabo1997} as a manifestation of the original definition of smart contracts. 
+% The idea is "to more fully embed in a property the contractual terms which deal with it" \parencite{szabo1997}. Hence, "these protocols would give control of the cryptographic keys for operating the property to the person who rightfully owns that property, based in the terms of the contract" \parencite{szabo1997}. With the inception of Bitcoin and blockchain technology, the term smart property usually refers to property whose ownership is controlled via a blockchain \parencite{smartproperty2011}. This enables the property to be traded and rented in trustless atomic transactions. Connected devices provide the basis for instantiating smart property. The typical example of smart property is a car which can only be operated by a certain cryptographic key. For example the key able to redeem a particular Bitcoin \ac{UTXO}. In this case, the car can be traded by creating an atomic transaction that credits the seller with bitcoins and transfers the \emph{ownership} \ac{UTXO} to the buyer. Since the entire trade is handled in a single transaction, the counterparty risk is greatly reduced. The car then acknowledges the new owner by observing the blockchain itself or by accepting proof-of-work-based proof to be provided by the new owner.
+
+% \subsection{Decentralized (Autonomous) Corporations and Organizations}
+
+% \cite{jensen1976theory} articulates the conception that the corporation is essentially a nexus of contracts, i.e a collection of contracts between different entities such as shareholders, employees, suppliers, and customers. In this sense a \ac{DAC} is understood as a collection of interrelated smart contracts that govern all aspects of a corporation. The defining feature of a \ac{DAC} is the ability to have internal capital that can be used to incentivize contractors \parencite{buterin2014dao}. 
+% First public experiments with \ac{DAC}s and \ac{DAO}s have been made. Most notably \emph{The DAO}, a set of smart contracts deployed on the Ethereum network in order to provide a decentralized venture-capital fund operated by anonymous shareholders. The DAO provided no intelligence in itself, but rather transparent codified rules for decision making in a democratic process.
+
+
+% \subsection{Tokens}
+
+% In the context of blockchains, tokens are a general concept to represent \emph{any fungible tradable good}, but also rights with respect to some entity. Fundamentally, bitcoins are the tokens that can be redeemed to write in a global public and immutable database. In this sense the Bitcoin network is a \ac{DAC} that incentives third parties by issuing tokens to provide computing power (mining). However, tokens are of use particularly if they exist in addition of the native cryptocurrency on a blockchain. Then, tokens can be traded in exchange for cryptocurrency without counterparty-risk and without intermediaries. Tokens are issued at some point. Either by an individual, a company, a machine, or by a \ac{DAC}. An important concept thereby is a \emph{crowdsale} or \ac{ICO}. Tokens are issued and sold to fund the development of a specific protocol or decentralized application. These tokens can then later be redeemed to use the protocol or application. Often these tokens are bought by speculators instead of prospective users with the hope that the service will be successful and the value of the tokens appreciates with a growing user base. 
+
+% \section{Economic Devices}
+
+% \subsection{Phase I: Smart Property}
+
+
+
+% \subsection{Phase II: Autonomous (Micro) Payments}
+
+
+
+% \subsection{Phase III: } 
+% Cryptocurrencies are digital bearer assets existing on public blockchains. Decentralization, cryptography and the anonymous and competitive consensus mechanism provide the basis for permissionless access independent of legal status. This allows software agents to act as autonomous economic agents which are able to control monetary value and enter contractual agreements with other economic agents, either humans or machines. These software agents can either be instantiated on a decentralized application platform with built-in cryptocurrency such as Ethereum or on tamper-proof hardware that is able to store and use cryptographic keys without interference. We define connected devices interfacing cryptocurrency blockchains as economic devices due to their ability to contribute directly to an economy by facilitating economic interactions. These economic interactions can either be rigid and predefined in order to automatically execute transactions as programmed by humans, or the result of economic decisions made by intelligent economic devices. Economic devices could be the building blocks of a decentralized \ac{IOT} by interacting with cloud services on the basis of market economics instead of vertical integration.
+
+% In the limit of complete autonomy, economic devices would \emph{own themselves}. However, ownership (in contrast to possession) is a legal concept. Thus, economic devices would need to be recognized as legal entities. Property rights theory assigns the owner of an asset the residual control rights over that asset \parencite{10.2307/2937753}. Thus, in principle, ownership is only of concern if contractual relationships are incomplete, i.e. not all actions and payments for all possible contingencies are specified \parencite{GKlein:2015en}. \cite{lessig2009code} has argued that there are more modes of regulation than law. Also the market, architecture, and norms regulate the actions of the individual and their interactions within the society as a whole. Norms are less important when interactions are anonymous and arguably even less so for software agents and economic devices. Architecture, in form of capabilities and constraints by hardware, software and cryptography, and the market, in form of financial incentives or disincentives, i.e. deposits and penalties, are able to provide a basic regulatory framework for economic devices and their interactions with humans. Cryptocurrencies and blockchains are merging the concepts of architecture and the market and enable the rise of a \emph{Lex Cryptographia} which is "characterized by a set of rules administered through self-executing smart contracts and decentralized organizations" \parencite{wright2015decentralized}.
+% These forms of regulation are particularly important in nations with weak law enforcement and when considering global, i.e. supranational, economic interactions via the Internet.
+
+% \subsection{Basic Capabilities}
+
+% In the following, basic capabilities of economic devices that can be implemented with the dominant cryptocurrency platforms Bitcoin and Ethereum are discussed.
+
+% \subsubsection{Autonomous trading of digital goods and services}
+
+% Cryptocurrencies allow a machine to reason about the finality of a payment. Thus, an economic device is able to autonomously \emph{sell services or (digital) goods}. It is worth to stress this point. Only because a machine can be sure that a payment can not be reverted by some authority, it can safely sell anything. A machine itself is not able to enter a legal arbitration process which is also expensive due to the involvement of humans. Sensing as a Service as presented in the last two chapters is one example of this capability to autonomously offer a sensing service or sell data as a digital good. However the most fundamental example is mining which provides security to the cryptocurrency infrastructure itself in return of a probabilistic payment. 
+
+% Once in control of the cryptocurrency, an economic device is able to \emph{buy services or (digital) goods} from other economic devices or from humans (see e.g. Amazon Mechanical Turk\footnote{https://www.mturk.com/mturk/} or participatory mobile crowdsensing \parencite{burke2006participatory}).
+
+% \subsubsection{Contractual relationships based on digital bearer assets}
+
+% In addition to these basic economic capabilities, more complex agreements can be implemented by \emph{issuing tokens representing (transferable) rights} concerning the economic device. These tokens can represent e.g. concrete IOUs, claims on revenue or access/control rights. IOUs are like vouchers or coupons and authorize the bearer to redeem the token for a specified service or good. Claims on revenue allow to implement revenue-sharing schemes between economic devices and humans. We will discuss an application of this in the case study in Section \ref{sec:caseDisplay}.
+% Transferable, i.e. tradable, access/control rights allow to own\footnote{Not necessarily in the legal sense.}, as well as to trade, and rent an economic device without having to trust the counterparty. Hence, economic devices entail and extend the notion of smart property.
 
 % \begin{table}
 %   \centering
 %   \begin{tabularx}{\textwidth}{ l  X  }
 %     \toprule
-%     Requirement  & Description \\
+%     Capability  & Example \\
 %     \midrule
-%     Programmable digital bearer asset & \\ 
-%     Energy & S\textsuperscript{2}aaS, mining \\ 
-%     Internet access & Data, energy, Internet access \\ 
-%     Open Source & IOUs, claims on revenue, smart property \\
-%     Tamper-proof hardware & \\
-
+%     Selling & S\textsuperscript{2}aaS, mining \\ 
+%     Buying & Data, energy, Internet access \\ 
+%     Token issuance & IOUs, claims on revenue, smart property \\  
 %     \bottomrule
 %   \end{tabularx}
-%   \caption{Requirements of economic devices.}
-%   \label{tbl:requirements}
+%   \caption{Basic capabilities of economic devices.}
+%   \label{tbl:capabilities}
 % \end{table}
 
-\section{Case Study: Public Display for Developing Countries}
+% \subsection{Examples and Use Cases of Economic Device}
+
+
+% \subsection{Requirements}
+
+% In order to implement economic devices a number of requirements have to be met.
+% First, a digital bearer asset is needed to enable dis-intermediated and non-repudiable payments between machines. Thus far, cryptocurrencies based on public blockchains are the only practical implementation of this concept. Second, interactions with economic devices should be trustless. This can either be achieved with financial deposits and penalties or with verifiable open source hardware and software. Deposits and penalties may require arbitration to decide if a counterparty did not fulfill its obligations. Programmable cryptocurrencies enable competitive markets for trustless arbitration. Open source hardware and software, and trusted computing platforms allow the counterparty to verify the integrity of an economic device and thus reason about its behavior. Third, counterparties should not be able to modify hardware or software for their benefit, i.e. the effort of modification or tampering should outweigh the benefit. In addition, there are the basic requirements of having access to energy and to the Internet. 
+
+% % \begin{table}
+% %   \centering
+% %   \begin{tabularx}{\textwidth}{ l  X  }
+% %     \toprule
+% %     Requirement  & Description \\
+% %     \midrule
+% %     Programmable digital bearer asset & \\ 
+% %     Energy & S\textsuperscript{2}aaS, mining \\ 
+% %     Internet access & Data, energy, Internet access \\ 
+% %     Open Source & IOUs, claims on revenue, smart property \\
+% %     Tamper-proof hardware & \\
+
+% %     \bottomrule
+% %   \end{tabularx}
+% %   \caption{Requirements of economic devices.}
+% %   \label{tbl:requirements}
+% % \end{table}
+
+
+\section{Foundations}
+
+
+\subsection{Smart Contract}
+
+The term \emph{smart contract} has already been introduced vaguely as a contract enforced by code. The thesis provided a few examples of contracts enforced by Bitcoin script. The two most important examples were payment channels and \ac{HTLC}s. These contracts work by posting collateral and programmatically define how the collateral can be spent. In the case of a payment channel, for example, the collateral posted by the payer is frozen for a specified time and can only be redistributed in the meantime collaboratively by the payer and payee. Thereby the blockchain acts a programmable custodian of the collateral. Traditionally, either a trusted third party would have to be employed as a custodian, or a legal contract would have to be created between the parties. Smart contracts in this sense are an example of regulation by code. Performance of the contract is enforced automatically. Whereas performance of a traditional contract has to be audited and needs a jurisdictional system for dispute resolution. This is a manual and expensive process. In particular, for agreements that cross jurisdictional borders, as is usual for transactions on the Internet. Hence, the long tail of transactions has to rely on trust and reputation. 
+Only very few transactional agreements can be encoded completely in Bitcoin contracts. One example are zero knowledge contingency payments and \ac{HTLC}s. In principle, a payment channel itself is only useful if it is used to perform micropayments in exchange for goods or services. However, these exchanges can rarely be made atomic, and thus, either buyer or seller have to advance performance. But because individual payments can be made as tiny as 1 satoshi, the financial loss is vanishingly small for the payer, and the loss of reputation for the payee is arguably larger than its financial gain. 
+Ethereum allows in principle to deploy arbitrary programs with a sovereign ether balance and memory on a blockchain. The programs are evaluated within the \ac{EVM}, and there are practical restrictions on the complexity. These programs are called contracts, and thus, programs on a blockchain are often generally identified with smart contracts. However, although Ethereum programs can encode formal agreements between multiple parties, i.e. contracts, this is no necessary condition.
+The original notion of a smart contract was developed by Nick Szabo. Szabo defined smart contracts as machine-readable transaction protocols which create a contract with pre-defined terms. He writes “Many kinds of contractual clauses (such as collateral, bonding, delineation of property rights, etc.) can be embedded in the hardware and software we deal with, in such a way as to make breach of contract expensive (if desired, sometimes prohibitively so) for the breacher.”.  Although certain kinds of smart contracts could already be implemented using trusted hardware, blockchains and cryptocurrencies are important building blocks to advance what is possible. Szabo’s generic example of a smart contract is the vending machine. 
+“A canonical real-life example, which we might consider to be the primitive ancestor of smart contracts, is the humble vending machine. Within a limited amount of potential loss (the amount in the till should be less than the cost of breaching the mechanism), the machine takes in coins, and via a simple mechanism, which makes a freshman computer science problem in design with finite automata, dispense change and product according to the displayed price. The vending machine is a contract with bearer: anybody with coins can participate in an exchange with the vendor. The lockbox and other security mechanisms protect the stored coins and contents from attackers, sufficiently to allow profitable deployment of vending machines in a wide variety of areas.”. Just as the vending machine is able to autonomously accept cash, machines are now in general able to accept electronic cash using cryptocurrencies.  Furthermore, Ethereum provides an open trusted computing platform which can either provide a programmable trusted third party or provide a trusted partial identity of a machine. This will be discussed later in more detail. Another aspect of smart contracts are smart legal contracts. These focus on the expressibility of legal contracts in code. Although, the goal is also automation and programmatic execution of contract terms, they embrace that most traditional contracts cannot be enforced entirely by code. Hence, they focus on documenting and providing tamper-proof evidence of contract breach for traditional dispute mediation within the judicial system. Cryptographic signatures and tamper-evident append-only logs as provided by blockchains are a valuable tool in this regard.
+
+\subsection{Smart Property}
+\label{sec:econdev:smartproperty}
+
+The term smart property was also introduced by Nick Szabo. He defined smart property as „Software or physical devices with the desired characteristics of ownership embedded into them; for example devices that can be rendered of far less value to agents who lack possession of a [cryptographic] key“. A simple example of smart property is a car. Modern cars already employ cryptographic protocols and use electronic keys to authenticate the owner. Electronic immobilizers enforce that only the bearer of the key is able to start the engine. Smart property can be seen as a particular type of a smart contract. However, in the case of the car integration in a legal system is still desirable, since key theft should not be imply the transfer of ownership to the thief.  On the other hand, sophisticated methods for key revocation and recovery are being developed which might enable a pure technological implementation of the concept of ownership.
+The concept of smart property does also benefit tremendously from cryptocurrencies. One simple example to illustrate this is the concept of an atomic sale. Assume a car is represented on the Bitcoin blockchain as a simple \ac{P2PKH} \ac{UTXO}. In order to open or start the car, the car demands a challenge to be signed with the private key corresponding to the \ac{UTXO}. Spending this \ac{UTXO} and assigning it to another key would allow the bearer of this key to prove the transfer of ownership to the car. Given this setup, it is now possible to construct a single transaction that transfers ownership and bitcoins. Thus, the sale is atomic. Either the trade is successful and the buyer becomes the new owner and the seller receives the coins, or the trade is unsuccessful and no exchange happens at all. Thus, no party has to advance and trust is minimized. In the case of a car sale this might not be so important because buyer and seller would typically meet in person because the value is high. However, the model is conceivable for a deployed sensor. 
+
+\section{Economic Devices}
+
+Today, things are passive participants of an economy. Things can be sold and bought. Things can be rented, and in some cases things can be capitalized, e.g. they can be used as collateral for loans. Connected, or smart, things have embedded communication and information technology. They can be digitally upgraded with additional functionality and services, and they can act as a physical point of sales for goods and services. In the latter sense, they instantiate a smart contract in a similar sense as the vending machine. An example is the Amazon echo, a voice-controlled speaker. It is connected to your Amazon account which has access to your credit card details, and allows you to order items from Amazon with a mere voice command. There is a high degree of automation, but this automation is based on trust. You have given Amazon the ability to debit an arbitrary amount of money from your credit card, because you expect that Amazon will only debit the agreed amount. Furthermore, you expect Amazon to deliver the respective product. If Amazon would debit more money, you would trust that your bank or credit card company is able to refund you, and as a last resort you can go to court. If you'd like to sell an Amazon Echo you have to be permissioned by Amazon. Most of the functionality that the Echo provides is based on cloud services connected to your Amazon identity. Possession of the physical device is only valuable if it is connected to your Amazon identity, and this identity is owned and controlled by Amazon.
+
+Cryptocurrencies and blockchains allow to minimize necessary trust and enable machine-based transactions that would not have been possible before. 
+Machine-based transactions thereby can mean transactions between humans or corporations that are mediated by machines, or autonomous transactions between machines. The discussed S\textsuperscript{2}aaS model is an example. Cryptocurrencies allow a machine to reason about the finality of a payment, and micropayments allow the payer to advance payments with little financial risks. Smart contracts allow machines to enforce contractual relationships, and smart property allows the enforcement of property rights on connected devices without permissions of a company or the requirement of a judicial system. 
+Hence, cryptocurrencies enable software agents to do autonomous economic interactions. Ideally, these software agents are implemented on trustless platforms. Ethereum provides such a trustless platform. However, software agents implemented purely on Ethereum are limited to actions within the platform, and their complexity and performance is limited due to the replicated architecture. Tamper-resistant hardware and trusted computing environments allow the implementation of trustworthy software agents in connected devices. The combination of trustworthy software in connected devices and economic interactions based on cryptocurrencies and smart contracts is the basis for economic devices.
+
+\subsection{Capabilities of Economic Devices}
+
+Capabilities of economic devices can be distinguished between passive and active capabilities. An overview of these capabilities is illustrated in Fig. \ref{fig:econdev} and will be explained in the following.
+
+\begin{figure}
+\centering
+\includegraphics[width=0.7\textwidth]{./externalized/econdev.pdf}
+\caption{Capabilities of economic devices.}
+\label{fig:econdev}
+\end{figure}
+
+\subsubsection{Passive Capabilities}
+
+Passive capabilities are related to the smart property concept.
+Economic devices can be traded atomically. This can be facilitated either by representing the ownership on a public blockchain, or by relying on trustworthy computing on the device itself. The former has been discussed in Sec. \ref{sec:econdev:smartproperty}. The latter relies again on the fact that cryptocurrencies empower machines to reason about the finality of payments. Thus, the device can change its ownership status based on a payment. 
+
+If the ownership of a device can be reassigned based on cryptocurrency transactions, then the device can natively be used as collateral for loans. \cite{smartproperty2011} describes a simple protocol to implement the concept with Bitcoin. If the debtor does not repay the creditor as defined in a smart contract, the device becomes unusable for the debtor. A real example of such a model is that of M-Kopa. M-Kopa offers solar home systems to the rural population of Western Africa. Solar home systems contain a small solar panel, a battery, and a few loads, such as LED lights and an USB charger. M-Kopa offers these solar home system using pay-as-you-go models in order to attract low-income households. In a pay-as-you-go model, only a small down-payment is made in the beginning, and then the customers pays for usage. The typical model employed by M-Kopa is the lease-to-own model which transfers ownership to the customer after sufficient payments. Typical pay-as-you-go models are based on a centralized service, that can be denied without payment. However, a solar home system is self-sufficient and does only need exposure to the sun. Thus, it is cumbersome to prevent usage without payment. Therefore, M-Kopa embeds connectivity in the device which allows to lock the device remotely - rendering it useless for the customer. After the customer has paid for the device, she is able return to the pay-as-you-go model in order to get a loan to buy selected products. Hence, M-Kopa acts a gatekeeper to provide financing. In contrast, economic devices based on cryptocurrencies allow an open market for loans based on programmable collateral.
+
+\subsubsection{Active Capabilities}
+Active capabilities entail the direct exchange of (digital) goods and services for cryptocurrencies. Economic devices can offer goods and services in exchange for cryptocurrency, and they can pay for goods and services. These enables the basic interactions of what IBM calls the \emph{Economy of Things} \parencite{Pureswaran2015}. This capability depends heavily on the possibility to perform micropayments. In particular, this allows to pay for each \ac{API} call directly and enables autonomy and interoperability between web services. 
+
+In addition, economic devices can enter complex contractual relationships. A standard way to implement such relationships are tokens. Tokens are meta coins \ref{sec:eco:altmeta} created on a blockchain. Tokens can be used to grant the bearer defined usage rights. For example a sensor might offer a token that grants access to data for a particular period. Moreover, the sensor could issue a token that grants the bearer a share of its revenue. Tokens can be tradable or ownership transfer can be permissioned. If the tokens are tradable, then the trade against other tokens or cryptocurrency can be atomically, i.e. trustless.
+
+Economic devices can either be deterministically preprogrammed how they act in these active economic interactions. For example it might be preprogrammed that a sensor offers data for a particular price or how the price should adapt based on various parameters. Tokens can also be used to distribute rights to a number of parties, and a voting mechanism can be used to change parameters defining the behavior of the device. However, with the progress in artificial intelligence it is conceivable that devices are becoming completely autonomous economic agents. 
+
+\section{Applications and Significance} 
+
+
+
+
+
+\section{Prototype: Public Display for Developing Countries}
 \label{sec:caseDisplay}
 
-In the following we present a prototypical implementation of an economic device. The prototype aims to represent a large public display that can be installed in public areas. The display provides the service of showing customer defined content in exchange for a time-based fee. The display is in many ways able to act as an autonomous business entity based on predefined rules instantiated in form of an Ethereum smart contract. The smart contract defines the economic capabilities of the economic device over its entire lifetime, even before it physically exists. The economic device issues tokens representing shares, or more precisely claims on revenue. The initial sale of these tokens can provide the capital to bring the economic device in physical existence, and can be used to implement revenue-sharing with a local human entrepreneur to take care of maintenance and revenue-maximizing usage of the economic device. This case study serves to exemplify the value of an economic device even in a rather simple instantiation. Furthermore, the case study provides some initial observations and lessons learned concerning the actual implementation of an economic device.
+% It is argued above that economic devices might be important in developing countries. In particular countries without pervasive financial services in combination with weak law enforcement. These conditions stifle economic development, the procurement of income producing assets and entrepreneurship. A conceptual economic device is presented that allows financial services 
 
-\subsection{Motivation}
+% \subsection{Motivation}
 
-Outside high-income \ac{OECD} countries large parts of the world population is essentially unserved by traditional financial institutions such as banks. Nearly 2.2 bn adults in Africa, Asia, Latin America, and the Middle East are \emph{unbanked}. In sub-saharan Africa this culminates to 80\% of the adult population \parencite{chaia2010counting}. On the other hand, Internet access and smartphone ownership is rising. Connected devices can serve as an anchor for new forms of financial services. A prominent, and early example is M-Kopa which offers pay-as-you-go models to lease \ac{SHS} to rural customers in Africa, where most customers do not have the capital to purchase such a device. Since 2011, M-Kopa has provided 375 000 households access to solar energy in Kenya, Tanzania, and Uganda \parencite{adabou2016}. Each \ac{SHS}, consisting of a solar panel, a battery and some appliances, is equipped with a SIM card which allows M-Kopa to remotely disable the system if payments have stalled. Furthermore, customers are able to remortgage their \ac{SHS} in exchange for consumer finance loans to procure productive assets such as cooking stoves and smartphones. Thus, M-Kopa is essentially a finance company based on a connected product and mobile payments. The model is tightly vertically integrated. Economic devices allow to unbundle this model by creating a transparent and competitive market. Although we were motivated by the prospect of financing rural electrification by instantiating \ac{SHS}s, solar micro utilities and solar micro grids with economic devices, we implemented the public display because it is conceptually similar to a solar micro utility and it can be demonstrated more easily and with more effect.
+% Outside high-income \ac{OECD} countries large parts of the world population is essentially unserved by traditional financial institutions such as banks. Nearly 2.2 bn adults in Africa, Asia, Latin America, and the Middle East are \emph{unbanked}. In sub-saharan Africa this culminates to 80\% of the adult population \parencite{chaia2010counting}. On the other hand, Internet access and smartphone ownership is rising. Connected devices can serve as an anchor for new forms of financial services. A prominent, and early example is M-Kopa which offers pay-as-you-go models to lease \ac{SHS} to rural customers in Africa, where most customers do not have the capital to purchase such a device. Since 2011, M-Kopa has provided 375 000 households access to solar energy in Kenya, Tanzania, and Uganda \parencite{adabou2016}. Each \ac{SHS}, consisting of a solar panel, a battery and some appliances, is equipped with a SIM card which allows M-Kopa to remotely disable the system if payments have stalled. Furthermore, customers are able to remortgage their \ac{SHS} in exchange for consumer finance loans to procure productive assets such as cooking stoves and smartphones. Thus, M-Kopa is essentially a finance company based on a connected product and mobile payments. The model is tightly vertically integrated. Economic devices allow to \emph{unbundle} this model by creating a transparent and competitive market. Although we were motivated by the prospect of financing rural electrification by instantiating \ac{SHS}s, solar micro utilities and solar micro grids with economic devices, we implemented the public display because it is conceptually similar to a solar micro utility and it can be demonstrated more easily and with more effect.
 
 
-\subsection{Approach}
+\subsection{Overview}
+
+The prototype aims to represent a large public display that can be installed in public areas. The display provides the service of showing customer defined content in exchange for a time-based fee. The display is in many ways able to act as an autonomous business entity based on predefined rules instantiated in form of an Ethereum smart contract. The smart contract defines the economic capabilities of the economic device over its entire lifetime, even before it physically exists. The economic device issues tokens representing shares, or more precisely claims on revenue. The initial sale of these tokens can provide the capital to bring the economic device in physical existence, and can be used to implement revenue-sharing with a local human entrepreneur to take care of maintenance and revenue-maximizing usage of the economic device. This case study serves to exemplify the value of an economic device even in a rather simple instantiation. Furthermore, the case study provides some initial observations and lessons learned concerning the actual implementation of an economic device.
 
 We assume a manufacturer and a local entrepreneur with limited capital to begin with. 
 
@@ -103,7 +242,7 @@ Note, that this has similarities to an Initial Public Offering of a private comp
 This allows the local entrepreneur to bridge the financing gap to put a revenue-generating asset into use. Instead of taking out a loan to purchase the asset, or a bilateral financing agreement with the manufacturer, a competitive and transparent market can emerge - a prerequisite for efficient capital allocation.
 The local entrepreneur is incentivized to maximize revenue by increasing her share as a function of generated revenue. In other words, payments trigger token issuance. The newly minted tokens are issued to the entrepreneur, hence, increasing her share, and diluting investors. Over time \emph{ownership} of the display is centralized with the entrepreneur. 
 
-\subsection{System Overview}
+\subsection{System Architecture}
 
 In the following we present the system, the stakeholders and their primary roles. Figure \ref{fig:smartproperty} provides a simplified illustration of the stakeholders and their roles. 
 
@@ -154,11 +293,18 @@ The contract is implemented using Solidity, the JavaScript-like higher-level sma
 
 \paragraph{Shares as Tokens}
 
-Shares are represented as tokens. We base the smart contract on the standard token contract\footnote{https://github.com/ConsenSys/Tokens/blob/master/Token\_Contracts/contracts/StandardToken.sol}. The token contract is essentially a simple accounting system that maps account numbers to values, i.e. the number of \emph{tokens} an account owns. A \emph{transfer function} then allows an account owner to debit its balance and credit another. This provides the basis for investors to trade shares. Since the entrepreneur's share is increased over time, selling shares is comparable to remortgaging.
+Shares are represented as tokens. We base the smart contract on the standard token contract\footnote{https://github.com/ConsenSys/Tokens/blob/master/Token\_Contracts/contracts/StandardToken.sol}. The token contract is essentially a simple accounting system that maps account numbers to values, i.e. the number of \emph{tokens} an account owns. A \emph{transfer function} then allows an account owner to debit its balance and credit another. This provides the basis for investors to trade shares. Since the entrepreneur's share is increasing over time, selling shares is comparable to remortgaging.
 
 \paragraph{Initial Financing based on Token Sale}
 
-Initial share allocation can be done with an adapted crowdsale contract\footnote{https://www.ethereum.org/crowdsale}. The amount of initial shares is fixed and corresponds to the price the manufacturer demands. A certain amount of shares need to be bought by the entrepreneur as a down payment. Revenue of the crowdsale is credited to the manufacturer after a successful crowdsale. The crowdsale has a specific duration. If not enough shares are sold during this period, the contract automatically refunds the investors, and a new contract with different parameters can be deployed.
+Initial share allocation is achieved with an adapted crowdsale contract\footnote{https://www.ethereum.org/crowdsale}. The amount of initial shares is fixed and corresponds to the price the manufacturer demands (see Table \ref{tbl:parameters}. A certain amount of shares need to be bought by the entrepreneur as a down payment. Revenue of the crowdsale is credited to the manufacturer after a successful crowdsale. The crowdsale has a predefined maximal duration and ends with a deadline. If not enough shares are sold during this period, the contract automatically refunds the investors, and a new contract with different parameters can be deployed (see Figure \ref{fig:crowdSalesStates} for a state diagram.
+
+\begin{figure}
+ \centering
+ \includegraphics[width=0.7\textwidth]{./externalized/crowdsalestate.pdf}
+ \caption{State diagram of the crowdsale. Depending on the state various functions of the contract are accessible or inaccessible.}
+ \label{fig:crowdSalesStates}
+ \end{figure}
 
 Instead of having a fixed price per share or a defined goal, an auction-based crowdsale could be implemented.
 
@@ -198,6 +344,28 @@ Noteworthy, there are two possibilities to pay dividends to shareholders. The ob
 \label{alg:payforservice}
 \end{algorithm}
 
+\paragraph{Financial Parameters}
+
+The contract defines several financial parameters. Table \ref{tbl:parameters} provides a listing with a short description of each parameter. In the current implementation all these parameters are fixed in the contract. However, especially the price of the service might need to be adjusted based on competition and demand. These adjustments would have to happen under defined rules since otherwise the entrepreneur could set a low price, rent the display herself, and offer the service . Thus, investors would be circumvented.
+
+ \begin{table}
+  \centering
+  \begin{tabularx}{\textwidth}{ l  X  }
+    \toprule
+    Parameter & Description \\
+    \midrule
+    sharePrice & Price per share in Wei. \\ 
+    initialShares & Total supply of shares in sale. initialShares*sharePrice is paid to the manufacturer.\\
+    initialSharesEntrepreneur & Number of shares the entrepreneur has to buy (down payment). \\
+    issuanceRate & Shares issued to the entrepreneur per revenue \\  
+    pricePerTimeUnit & Price of service \\  
+    \bottomrule
+  \end{tabularx}
+  \caption{Financial parameters of the contract.}
+  \label{tbl:parameters}
+\end{table}
+
+
 \paragraph{Contract - Device Communication}
 
 The application running locally on the device has essentially only one job: watching for payment events executed by the respective contract instantiation. Solidity events provide an interface to the logging facilities of the Ethereum Virtual Machine, and can be used to trigger client application logic with data payload. The payment event triggers a state transition of the device (c.f. Figure \ref{fig:displayStates}).
@@ -214,20 +382,20 @@ Logs are committed to the block header and are thus accessible for light clients
 
 \subsubsection{Interacting with the Device}
 
-In principle, all interactions could be facilitated via the Ethereum network. In particular with the availability of the \ac{P2P} messaging protocol Whisper \parencite{whisper} and the Mist browser\footnote{https://github.com/ethereum/mist}. However, these tools are at a very early stage. Instead, the economic device provides a web server to serve graphical user interfaces in form of (mobile) websites. The websites are essentially static single page web applications. 
+In principle, all interactions could be facilitated via the Ethereum network. In particular with the availability of the \ac{P2P} messaging protocol Whisper \parencite{whisper} and the Mist browser\footnote{https://github.com/ethereum/mist}. However, these tools are at a very early stage. Instead, the economic device provides a web server to serve graphical user interfaces in form of (mobile) static single-page web applications. 
 
 The client does even not necessarily need an Ethereum client which is important as long as fully functioning light clients are not available. We use the Lightwallet library\footnote{https://github.com/ConsenSys/eth-lightwallet} to keep the wallet and private keys locally on the client, and interact with the Ethereum network via an Ethereum client with a public \ac{RPC} interface.
 
-In the following we briefly present the steps a customer needs to take in order to use the display. An illustration of one view of the customer interface is shown in Figure \ref{fig:payview}. More views are shown in APPENDIX!!!.
+In the following we briefly present the steps a customer needs to take in order to rent the display: 
 
 \begin{enumerate}
 \item Open \emph{personal} website of the display.
 \item Open an existing wallet by providing a seed and a password or create a new wallet. Make sure that the wallet has sufficient funds.
 \item Make a payment.
-\item Send links to content directly to the device via a websocket connection. The messages are authenticated, such that the device can verify if the sender is the same account as the one that paid to the contract. You can change the content as long the period you paid for is not expired.
-\end{enumerate}  
+\item Send links to content directly to the device\footnote{This done via a websocket\parencite{rfc6455} connection.}. The messages are authenticated, such that the device can verify if the sender is the same account as the one that paid to the contract. You can change the content as long the period you paid for is not expired.
+\end{enumerate} 
 
-
+An illustration of one view of the customer interface is shown in Figure \ref{fig:payview}.
 
 \begin{figure}
  \centering
@@ -236,12 +404,22 @@ In the following we briefly present the steps a customer needs to take in order 
  \label{fig:payview}
  \end{figure}
 
+ 
+\subsubsection{Implementation with Bitcoin}
+
+The Bitcoin ecosystem is much more mature. The exchange rate to fiat currencies is more stable, there are many more ways to procure bitcoins, and there are already multiple implementations of light clients. Hence, an implementation based on Bitcoin would be desirable. In what follows we briefly the discuss the main points.
+
+Shares could be implemented based on a \emph{colored coins} specification (see Section \ref{sec:coloredcoins}). However, there would be no way to trustlessly issue shares based on revenue. This role would have to be taken over by an application running on the device with access to the necessary cryptographic key. Since the entrepreneur has physical access to the device, it is important that the device is tamper-proof. Otherwise the entrepreneur could gain access to the keys and start issuing shares.
+
+The crowdsale could be implemented as an assurance contract \parencite{smartcontr} (see also the Lighthouse app, a \ac{P2P} crowdfunding app using Bitcoin assurance contracts\footnote{https://github.com/vinumeris/lighthouse}).
+
+ Distribution of dividends could be implemented in multiple ways: (1) In order to pay the customer (i.e the web application the customer is using to use the service) parses the blockchain for current shareholders, pays the shareholders directly and gives the transaction to the device which can verify the correctness itself. However, if individual payments are small and there are many shareholders, the transaction would have to entail a proportionally large fee, and investors end up with many small \ac{UTXO}s. (2) The device could act as a payment hub (c.f. Section \ref{sec:goingoffchain}) between customers and investors. However, this implies that the device would need the necessary capital to pre-fund the payment channels to the investors. (3) Customers pay to an address controlled by the device itself. The device aggregates payments over a specified time period and distributes the dividends according to this schedule. Since investors have to trust the device to securely store the share issuance key anyways, this would be the most practical implementation. 
+
+In the Ethereum implementation all financial parameters were defined and immutably stored in the smart contract. Since a trusted device is already assumed, the financial parameters and other contract terms can be stored on the device. To guarantee immutability the secure hash of the contract terms can be published to the Bitcoin blockchain. 
+
+In conclusion, an implementation based on Bitcoin is in principle possible. In contrast to Ethereum, where all financial matters and contractual terms are handled by smart contracts deployed on the network, in Bitcoin an application running on the device has to execute all business logic. Therefore, tamper-proof hardware with secure storage of cryptographic keys is indispensable.
 
 
-
- \subsubsection{Parameter Selection}
-
-\subsection{Could We Implement the Concept with Bitcoin?}
 
 \section{Further Applications}
 
@@ -251,6 +429,8 @@ In the following we briefly present the steps a customer needs to take in order 
 \section{Lessons Learned and Discussion}
 
 
+
+
 \begin{itemize}
 \item role of tokens
 
@@ -258,42 +438,6 @@ In the following we briefly present the steps a customer needs to take in order 
 
 %\subsection{Requirements}
 
-\subsubsection{Trustworthy hardware and software}
-
-The smart property itself has to be trustworthy. A potential seller has to be sure that the software running the smart property follows the protocol. In particular, after a sale the smart property has to be controlled by the buyers ownership key, whereas the sellers ownership key is disabled. Hard- and software of the smart property must be able to ensure that is has not been tampered with. Ideally, software is open source and independently verifiable. Smart property may prove its integrity to a third party using trusted computing. Thereby the smart property may also prove its current state, i.e mileage and services in the case of a car. A certificate by the manufacturer may be used to ascertain provenance. Alternatively, provenance could be inferred from the signature of the original registrar.
-
-\subsubsection{Kill switch}
-
-Liquidification requires that the smart property can be rendered temporarily unusable. Otherwise the contract between lender and borrower is not remotely enforceable, and the borrower is able to use the property without paying back the loan. Enforcement of the contract would have to happen via the judicature system which is expensive and cumbersome if borrower and lender are in different jurisdictions. 
-
-If the use of a kill switch is possible is dependent of the actual smart property. Cars, for example, are already equipped with immobilizers which are reasonably hard to bypass. Popular solar home systems, as deployed in Africa and South-East Asia, can also be remotely deactivated. Smart property where the value of the object itself or its components is high independent of a function or service that can be switched off, however, is not suitable for this scheme. 
-
-\subsubsection{Native on-chain currency}
-Selling, renting, and liquidification all involve currency. Only a fungible native token of value allows these processes without additional counterparty risk. 
-
-\subsubsection{Light-client proofs}
-
-In many cases smart property will not be able to interact with the blockchain network directly, but has to rely on proofs provided by untrusted parties. For example, a buyer has to be able to prove to the car that it now belongs to him. The underlying blockchain and the protocols should account for such a scenario, since e.g. a car should be able to be started even if there is no Internet connectivity.
-
-
-
-%\subsection{Why has smart property to live on a blockchain?}
-
-Let us stay with the example of a car. Alice owns the car and the ownership is augmented by the possession of a cryptographic key. Assume Alice wants to transfer the ownership to Bob. Of course, she can not send him the keys, since the key is nothing more than a digital file, and copying a digital file has zero marginal cost. In other words, we face the classic double spending problem. However, we can think of a more complex protocol. Instead of sending a key to Bob, Bob is creating a new private-public ownership key pair. Bob sends the public part to Bob, and Alice uses her current ownership key to initiate an ownership transfer to Bob's key. The car itself acts as a deterministic trusted party. We will later discuss avenues to give Bob more certainty about the trustworthiness of the smart property.
-So far, we only used public key cryptography, and there was no need for a blockchain. However, typically someone does not just transfer ownership to someone else. Alice wants something in return. In most cases this something is money. If Alice and Bob meet in person they are able to do the ownership transfer protocol and the cash payment concurrently. However, if the trade happens via the Internet, one party has always be the first and may be defrauded by the counterparty. Traditional payments can be undone. Thus, inhibiting risk for the seller. Simple bitcoin payments mitigate this risk, but expose the buyer to the risk of not getting the car. Traditionally, third party escrow has been used to solve this dilemma.
-However, if ownership of the car is represented on a blockchain, Alice and Bob can perform an atomic trade. Ownership and money is exchanged in one single process. If one part fails, the other part will fail as well. If one part succeeds, the other part will succeed as well. A similar logic can be applied to all of the capabilities smart property provides.
-
-\subsubsection{Contract Immutability}
-
-\subsubsection{Permissioned Blockchains}
-
-A permissioned blockchain is a blockchain, in which transaction processing is performed
-by a predefined list of subjects with known identities \cite{BitFuryPermissioned2015}. In context, a consortium of device manufacturers could operate a permissioned blockchain collaboratively. Permissioned blockchains do not need a native token of value, and typically do not have one since fair distribution of tokens, such that trust and value can emerge, is non-trivial. However, there are ways to bring external value in and out of permissioned blockchains in order to facilitate economic interactions. 
-\paragraph{IOU Issuance}
-One approach is to allow specific parties to issue IOUs on the blockchain. These parties could be the device manufacturers themselves but more probably banks and financial service providers. In this case a buyer interested in a smart property would send money off-chain to a third party which then issues tokens on the blockchain. In addition, the seller has to accept those tokens. 
-
-\paragraph{Cross-chain/ledger protocols}
-A better approach that requires less trust is the application of a cross-chain/ledger protocol. We discussed sidechains already, which allow the immobilization of a token in one chain and subsequent unlocking in another chain. In addition, there is the Interledger protocol \cite{hope2016interledger} and the atomic cross-chain trading protocol \cite{atomiccrosschaintrading}
 
 
 

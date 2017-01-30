@@ -1,3 +1,448 @@
+% It took quite some time until academia noticed Bitcoin. The first academic disciplines gaining interest were computer science, in particular information security \parencite{Karame:2012:DFP:2382196.2382292,Barber2012} and distributed computing \parencite{Babaioff:2012:BRB:2229012.2229022}, as well as law \parencite{Grinberg2011,Ewing2012}. Wide spread interest came with the extraordinary price rally in autumn 2013. The increasing value and media attention of Bitcoin led to an increase of venture capital fueling the ecosystem, and thus to more experimentation and variety of entrepreneurial activities. Bitcoin had the reputation of \emph{funny Internet money} that is used to buy drugs on the dark web \parencite{Christin:2013:TSR:2488388.2488408}. As we will see in this chapter, the first companies that have been founded were exchanges, payment processors, and ASCI miner manufacturers.
+% Naturally, entrepreneurs focus initially on the low-hanging fruits and this means Bitcoin's value proposition of peer-to-peer electronic cash was taken literally to apply it for disintermediation in the financial service industry, e.g. payments, peer-to-peer lending, global remittances, and Over-The-Counter securities trading. 
+
+% Arguably, this technology has the potential for disintermediation and disruption, which is not limited to the financial service industry. \cite{Giaglis2014} have highlighted: an interesting area 
+% for IS scholars could be \emph{to assist the transition from the first era of applications 
+% [...] (i.e. Bitcoin as currency) to more disruptive uses of the Bitcoin protocol 
+% as an enabler of decentralized trusted peer-to-peer transaction ledger systems 
+% and applications.} (p. 3)
+
+% In this chapter, we categorize the venture-backed Bitcoin start-up 
+% ecosystem along two dimensions, i.e. the potential for disruption and the particular 
+% sector, and present the evolution of the ecosystem since its inception. (2) Based 
+% on the categories, we investigate six companies in case studies with the aim to 
+% extract the core innovations and the features of Bitcoin that fuel those innovations, 
+% and critically discuss their potential for disruption. Two of these companies, Filament and 21 Inc., can be seen as representatives of the micro economy of things, and will be investigates on a more technical level in Chapter \ref{sec:economy}
+
+% The structure of the chapter is as follows. In Section \ref{sec:eco:primer} we give a slightly technical 
+% introduction to Bitcoin as an implementation of a novel information technology. 
+% The focus thereby is on explaining the features that are utilized by the representative 
+% cases. In Section \ref{sec:eco:method} we present the methodology by which we collected data, how 
+% we selected the cases, and how we analyzed them. Section \ref{sec:sec:eco} is dedicated to the 
+% introduction and categorization of the Bitcoin start-up ecosystem, and we discuss 
+% its evolution over time. Thereafter, we present the case studies in Section \ref{sec:eco:cases}, 
+% followed by key findings in Section \ref{sec:eco:findingss} We conclude with a critical discussion of 
+% the disruptive potential and avenues for future research.
+
+% \section{Innovation, Disruption and Disruptive Innovation}
+% \label{sec:eco:primer}
+
+% In a broader definition, innovation can be described as \emph{the generation, acceptance, 
+% and implementation of new ideas, processes, products or services.} \parencite[][2]{10.2307/2391646}. Depending on the context, the term \emph{innovation} incorporates divergent 
+% attributes, such as different process stages or underlying constructs \parencite{doi:10.1108/00251740910984578}. Hence, the purpose of an innovation process could be to change or 
+% improve products as well as entire business models \parencite{CAIM:CAIM637}. Business 
+% models can be described as \emph{the rationale of how an organization creates, delivers 
+% and captures value} \parencite{osterwalder2010business}. Describing the logic of a 
+% company's business activities \parencite{linder2000so}, the business model comprises 
+% four high-level components including value proposition, operational model, financial 
+% model and customer relations. \parencite{CAIM:CAIM637}. 
+
+% Depending on whether a company introduces a new service or changes its current 
+% business model, innovations can be characterized by their \emph{degree of newness}, 
+% a metric, which \cite{JPIM:JPIMJPIM192_0110.XML} describe as \emph{Innovativeness} and 
+% \emph{the degree of discontinuity in marketing and/or technological factors} \parencite[][112]{JPIM:JPIMJPIM192_0110.XML}. In recent years the two notions \emph{radical} and \emph{disruptive}
+% have received increased attention from scholars and practitioners alike to describe 
+% innovations with a high degree of innovativeness \parencite{Latzer01062009,christensen2015disruptive}. 
+
+% Radical innovations refer to highly discontinuous (technological) changes \parencite{Latzer01062009} and are characterized by totally new features, high uncertainty and the necessity 
+% for companies to acquire new capabilities to fully exploit emerging opportunities 
+% \parencite{Latzer01062009}. Additionally, these often technology-driven innovations can have 
+% the potential to shift existing paradigms and might possibly disrupt industries 
+% \parencite{Latzer01062009}. Following Christensen's theory, disruptive innovation can be described 
+% as a \emph{new product [or service] encroach[ing] on the low end of the existing market} 
+% \parencite[][348]{JPIM:JPIM306} with the potential to move upward to satisfy 
+% higher customer expectations \parencite{clayton1997innovator,ISI:000234127700008}. This is possible because 
+% incumbents focus on improving their offerings along performance dimensions that 
+% are valued specifically by the majority of demanding customers, while entrants 
+% focus on different performance dimensions that are (initially) valued only by niche 
+% segments, which are usually neglected by incumbents. At the same time, \cite{christensen2015disruptive} define \emph{disruption} as \emph{a process whereby a smaller company with 
+% fewer resources is able to successfully challenge established incumbent businesses}. 
+% Hence, a disruptive innovation does not inevitably leads to the disruption of a 
+% market, nor does a disruption of a market necessarily has to be triggered by a 
+% disruptive innovation. 
+
+% The literature on disruptive innovation is currently still in an early stage \parencite{JPIM:JPIM177} and it remains controversial, how to define the concept \parencite{ISI:000283729100005}. While some researchers support Christensen's understanding, 
+% contributing own thoughts to the theory, others generally \emph{criticize the vagueness 
+% of the concept} \parencite[][438]{ISI:000283729100005}. According to its critics Christensen's 
+% theorization does not allow for a clear differentiation between underperforming 
+% technologies and potentially disruptive technologies with initially inferior performance 
+% \parencite{JPIM:JPIM179}. Finally, a main criticism focuses on the lack of measurability of 
+% disruptive innovation \parencite{JPIM:JPIM176}. To overcome this gap, \parencite{JPIM:JPIM176}, define the following criteria to identify disruptive innovations. 
+% The innovation should (1) possess inferior attributes regarding what mainstream 
+% customers would value; (2) attract new customer segments by offering new value 
+% propositions; (3) be offered at lower costs; and (4) start from niche markets \parencite{ISI:000283729100005,JPIM:JPIM176}.
+\section{Discussion}
+\label{sec:eco:discussion}
+
+In the title of this work we stated the question on whether the Bitcoin ecosystem 
+may disrupt sectors beyond the financial service industry. We would argue that 
+the companies we investigated in this paper are leveraging Bitcoin as global programmable 
+money and as an immutable public database to foster radical innovations in their 
+respective sectors. Central authorities are eliminated and new markets are created. 
+But as shown in Section \ref{sec:eco:primer} radical innovations are not necessarily disruptive 
+innovations and disruptive innovations may or may not disrupt a market eventually. 
+Thus \emph{identifying disruptive innovation is a complex process} \parencite{Kaltenecker2015234}. The current literature still lacks a thorough theoretical foundation, 
+on how to define disruptive innovations \parencite{ISI:000283729100005}. Additionally it remains 
+unclear to what degree disruptive innovations can be predicted ex ante \parencite{JPIM:JPIM179}. This article aims to offer an overview on the fast developing 
+blockchain ecosystem highlighting mainly the potential inherent to these technologies. 
+Most sectors that we considered are underdeveloped. The commoditization of registration 
+of digital work and intellectual property in general could be counted as a new-market 
+disruptive innovation. Current registration of IP is expensive and cumbersome, 
+but is backed directly by jurisdiction. Therefore, in terms of legal certainty, 
+the traditional process is clearly superior. Decentralized marketplaces exhibit 
+also the characteristics of a disruptive innovation. Today, OpenBazaar has an inferior 
+user experience in comparison to Amazon or eBay. Moreover, it obviously does not 
+have the same strong user base. However, the OpenBazaar platform is free to use 
+and there are no restrictions on what can be sold. These characteristics will most 
+probably attract users in niche segments and could grow from there on. In cases 
+like Filament and Onename the notion of disruptive innovation does only apply to 
+a lesser extend. Interestingly, most of the core innovations that the companies 
+provide are in form of open source protocols. Thus, the disruptive potential is 
+not entirely dependent on the future of the particular companies. From the point 
+of the start-ups, open source protocols and decentralization can help entering 
+a market that is dominated by a central institution. However, it becomes much harder 
+to capture value and thus to find a sustainable business model.
+
+As shown in Figure \ref{fig:eco:evolution}, most of the ecosystem beyond financial services is younger 
+than two years. The companies are in a very early stage and the focus is clearly 
+on creating value and on advocating the use of their protocols. Some of the companies 
+are experimenting with ways to capture value. But it is too early to investigate 
+the business model in detail. Noteworthy, all of the six start-ups under consideration 
+build platforms. In fact, these platforms are rather different. For example Filament 
+builds a decentralized platform for the Internet of Things, Onename builds a decentralized 
+identity layer and so on and so forth. Hence, it will be worthwhile to study the 
+emergent value networks as soon as the platforms get populated.
+
+Despite these first insights, more research will be required to gain a better understanding 
+of the theory of disruptive innovation in general, as well as in the context of 
+blockchain technologies in particular \parencite[cf.]{ISI:000222662900002}. We encourage other 
+scholars to take this article as a starting point to investigate more precise measurements 
+\parencite[cf.]{JPIM:JPIM176} and clearer definitions \parencite{JPIM:JPIM177} 
+of disruptive innovation in a Fintech context as well as to draw clear distinctions 
+to related research fields such as radical or open innovation \parencite[cf.]{ISI:000283729100005}. 
+
+
+\section{Methodology}
+\label{sec:eco:method}
+
+\textbf{Mapping the Bitcoin ecosystem:} 
+
+\textbf{Selecting and analyzing the representative companies:}Based on this classification 
+and our focus beyond financial services, we identified six application-specific 
+subsectors for investigation by representative case studies. The particular companies 
+were selected based on funding and attention by the community. The case studies 
+are grounded in a rich set of secondary data sources. Besides company websites, 
+white papers and press releases, there are detailed founder interviews on Zapchain\footnote{https://www.zapchain.com/} and Epicenter Bitcoin\footnote{https://epicenterbitcoin.com/}. 
+
+Although our research approach was inherently exploratory we had two guiding questions 
+in mind: (1) What is the core innovation of the company, and (2) on which Bitcoin 
+features is this innovation based.
+
+\section{Case Studies}
+\label{sec:eco:cases}
+
+
+In the following, we investigate the challengers beyond financial services in more 
+detail. Therefore, we present six comprehensive case studies (marked as bold in Table 
+\ref{tbl:ecosystem}).
+
+\subsection{Filament (Internet of Things)}
+\label{sec:ecofilament}
+
+Filament\footnote{https://filament.com/} provides wireless sensor networks for the (industrial) IoT, e.g. 
+for smart cities or smart agriculture use case. Most IoT platform providers follow 
+a centralized approach by connecting all devices to their respective cloud-infrastructure. 
+This has the major disadvantage that devices depend on a central infrastructure 
+in order to operate. Moreover, it can be argued that this approach cannot keep 
+up technically and economically with the increasing number connected devices.
+
+Filament is one of the first companies that develop a fully decentralized IoT infrastructure, 
+which encompasses three blockchain-related aspects: (1) Each device is registered 
+on the blockchain providing a verifiable and immutable identity. This enables discovering 
+of and authenticating with other devices/services without the need of a dedicated 
+backend infrastructure. Therefore, devices are technically autonomous and are able 
+to operate independently of Filament. (2) Each device is governed by a \emph{smart} 
+contract, which manages agreements of device control/ownership, data access and 
+financial agreements concerning the device. Ownership can be transferred permanently 
+or temporarily by a simple transaction on the blockchain. Filament implements the 
+financial agreements as a Product-as-a-Service, which means that the owner gets 
+paid directly for the ongoing use of the device. (3) Furthermore, each device is 
+able to transfer value in form of bitcoins to other devices in order to get access 
+to data or request some service.
+
+As described, devices can be operated and governed by using only the blockchain 
+as a backend and therefore without any technical dependence on the platform creator 
+(Filament) or other third parties. This might bare great benefits for customers 
+needing to deploy large Industrial IoT applications with a lifetime of 5-10 years. 
+Because they want to minimize the risk of a lock-in with a specific company. Moreover, 
+according to Filament, customers prefer paying continuously on a real-time basis 
+instead of an upfront investment, which can be solved efficiently by Bitcoin micropayments. 
+Ownership is decoupled from usage and both are independent of the manufacturer 
+or a platform provider.
+
+Filament itself is a venture capital-backed company formerly known as Pinocc.io. 
+They claim to have their first deployments with Fortune 500 companies in 2016. 
+They will get paid for the ongoing use of their devices (by owning the smart contract). 
+Moreover, they work on a licensing model, i.e. Customers can attach a module version 
+to their own devices, which will give them all the described benefits of Filament 
+in return to a small fraction of the payments for the ongoing use of the devices. 
+However, since all protocols will be open and there is no dependence to Filament 
+by design, other companies could use that and build their own hardware without 
+Filament.
+
+\subsection{Ascribe (Intellectual Property)}
+\label{sec:ecoascribe}
+
+Ascribe\footnote{https://www.ascribe.io/} aims to provide provenance of intellectual property. Digital work, 
+like art, photos, and music, can be registered publicly on the bitcoin blockchain 
+together with its accompanying terms and conditions. The technological basis is 
+the spool protocol\footnote{https://github.com/ascribe/spool}, an overlay protocol that uses 
+Bitcoin transactions to represent unforgeable ownership transfers and licensing 
+agreements for digital work. Thus, authenticity of ownership and usage rights can 
+always be proven. Ascribe focuses on digital art in particular. Although art is 
+in principle copyrighted by the time of creation, it is currently cumbersome and 
+expensive to officially register work and prove ownership (see e.g. http://copyright.gov/docs/fees.html). 
+Therefore, hardly any digital art gets registered. Ascribe aims to change the status 
+quo by providing a virtually free and automatable registration process. Moreover, 
+the unique representation of digital work based on cryptography and the blockchain 
+is the basis for the creation of a secondary market for digital work. For example 
+the spool protocol enables creating limited editions of digital work. So far, this 
+has not been possible without relying on some central institution.
+
+The spool protocol is open source and can be used by anybody. In principle, the 
+only costs are bitcoin transaction fees. However, Ascribe wraps the protocol in 
+convenient web services and provides tools adapted to particular customer groups, 
+e.g. individual creators, museums and marketplaces. Ascribe's revenue model is 
+then based on a share of the rentals and sales of registered digital work that 
+are facilitated by their APIs.
+
+The core innovation is the application of the bitcoin blockchain to provide commoditized 
+provenance of intellectual property. Provenance is demonstrated by relying on the 
+immutability of the bitcoin blockchain, instead of an authority. 
+
+\subsection{OpenBazaar (E-Commerce Marketplace)}
+\label{sec:ecobazaar}
+
+OpenBazaar\footnote{https://www.openbazaar.org/} is an open source project consisting of a protocol and a reference 
+implementation that enables a decentralized peer-to-peer e-commerce marketplace. 
+In comparison to traditional e-commerce market places like eBay and Amazon, there 
+is no central server or authority that is running the market place. Thus, there 
+is no middleman who is able to charge fees or to restrict offered products and 
+services. Everyone with Internet access is able to set up a shop by running a network 
+client. Payments are facilitated using Bitcoin transactions. Therefore, no payment 
+provider or banking account is needed. This lowers payment transaction fees and 
+increases the global reach. Besides sellers and buyers there are notaries and arbiters 
+for dispute resolution participating in the marketplace. Those latter participants 
+are involved by using bitcoin multi-signature transactions. Thus, OpenBazaar unbundles 
+the functions of traditional marketplaces. Trades on the OpenBazaar network are 
+based on Ricardian Contracts \parencite{1319505}, i.e. an electronic document that defines 
+the terms of a trade such that it is readable by computers and humans, and is cryptographically 
+signed. Apart from selling physical and digital products, OpenBazaar can also be 
+used to trade speculative contracts, which can be readily represented by Ricardian 
+Contracts. 
+
+The main value proposition of OpenBazaar to sellers as well as to buyers is the 
+elimination of fees and restrictions. Since marketplaces are subject to network 
+effects most users will most probably not switch immediately from traditional marketplaces 
+to OpenBazaar. However, OpenBazaar could set foot in under-served niche markets. 
+Examples could be digital goods, developing countries with limited access to traditional 
+payment services, and prohibited goods. 
+
+OpenBazaar itself is not a company, but its main developers founded the venture 
+capital-backed company OB1. Their current focus is on developing the OpenBazaar 
+protocol and its reference implementation. As outlined above, OB1 is not able to 
+profit directly from transactions on the marketplace in the way traditional revenue 
+mechanics on centralized marketplaces work. 
+
+\subsection{21 (Digital Micro Commerce Marketplace)}
+\label{sec:eco21}
+
+At first sight, the categorization of 21 Inc.\footnote{https://www.21.co} as a challenger seems odd, 
+since 21 is an infrastructure and platform provider for the bitcoin ecosystem. 
+Indeed, it is often categorized as a mining company. However, we argue that 21 
+is better classified as a marketplace for digital micro services, which has the 
+potential to challenge traditional Internet business models.
+
+With a funding of \$121M, 21 supersedes every other start up in the bitcoin ecosystem. 
+They have developed an embeddable ASIC\footnote{ Application-specific integrated 
+circuit. A hardware chip customized for a particular task in contrast to a general 
+CPU. In this case task is Bitcoin mining, which involves the extensive execution 
+of SHA265 operations.} mining chip that they are using in their own mining operations, 
+but which is also embeddable into arbitrary connected devices. In November 2015 
+they released their first product, the 21 Bitcoin computer. Essentially the 21 
+Bitcoin computer is a full-stack development platform to build bitcoin-payable 
+digital services, which can be published and discovered on 21's digital marketplace. 
+Individual service consumptions, like an API call, can be billed at as little as 
+1 satoshi\footnote{Satoshi is the smallest denominator of a bitcoin. 100,000,000 
+satoshi correspond to 1 bitcoin. Thus, 1 satoshi is currently worth approximately 
+USD 0.000003.}. The embedded mining chip, which is currently coupled to a mining 
+pool operated by 21, supplies the device with 
+a continuous stream of satoshis.
+
+21 aims to embed their chips into any connected device (e.g. smart phones) to establish 
+bitcoin as a system resource like CPU, bandwidth or disk space, but for the purpose 
+of buying and selling digital goods and services \parencite{Balaji2015}. It is crucial 
+to understand that it does not make sense to sell the small amounts of mined bitcoins 
+for Fiat currency on an exchange. Instead, the idea is to supply every device with 
+a continuous stream of bitcoin from the point of commissioning on so that it can 
+directly operate on the marketplace. 
+
+Having such an infrastructure of bitcoin-enabled devices in place at scale, could 
+offer compelling new opportunities and even disrupt traditional business models 
+of the Internet. For example, it has been difficult for news sites to directly 
+monetize their content on the Internet. It is still tedious for users who want 
+to read just one article to signup, enter their credit card information and buy 
+a subscription. Thus, most news sites still depend on indirect revenue by advertisements, 
+which becomes more problematic with the increasing spread of ad-blockers. These 
+problems could be eliminated with the diffusion of a bitcoin-enabled infrastructure 
+for frictionless micropayments. Similarly, a bitcoin-enabled IoT device, e.g. for 
+automatic irrigation of farms, could pay a weather service API in return for accurate 
+weather prediction data without the need for signup. Moreover, the device could 
+search automatically for the cheapest (and best in terms of reputation) weather 
+service API on the marketplace.
+
+The 21 platform is a mixture of a centralized and a decentralized model. As of 
+today, the mining power is bound to 21, and returns get allocated to a wallet owned 
+by 21. However, it is announced that this will change in the future. The marketplace 
+for digital services on the other hand is in principle decentralized and trades 
+can be conducted peer-to-peer. Currently, 21 generates revenue by private mining 
+operations and by sales of the bitcoin computer. In the future, however, all kinds 
+of interesting revenue models are imaginable: selling and licensing of mining chips, 
+revenue sharing of embedded mining operations or tiny transaction fees for off-chain 
+transactions to name just a few. 
+
+In conclusion, 21 could change how resources in the Internet are paid for, and 
+thereby also contribute to making new resources available, which have not been 
+available yet because of missing incentives
+
+\subsection{Factom (Records Management)}
+\label{sec:ecofactom}
+
+Factom\footnote{http://factom.org/} is an open source software project that provides businesses with 
+the ability to prove data integrity and to create verifiable and immutable audit 
+trails. 
+
+While data integrity could be achieved by directly adding a hash of the data to 
+a bitcoin transaction and thereby time-stamp the data on the bitcoin blockchain, 
+this method does not scale. On one hand, this is because of inherent scalability 
+issues of bitcoin, and on the other hand because of transaction fees. Therefore, 
+Factom consists of a peer-to-peer network that is independent of the bitcoin network. 
+Customers of Factom generate hashes of their data and send them for recordkeeping 
+to the Factom network. There, all hashes are compressed to a single hash by building 
+a Merkle tree and taking the root of the tree. This single hash 
+value is then stored in the bitcoin blockchain. This provably time-stamps all individual 
+records without having to write all records individually into the bitcoin blockchain. 
+The network maintains its own crypto-currency, \emph{factoids}, which is used to incentivize 
+participants of the peer-to-peer network to provide their resources. A factoid 
+can be transformed into entry credits, which can be used to submit new records. 
+The price of a factoid depends on the market value, but the price of an entry credit 
+is fixed to 1/10\textsuperscript{th} of a cent. 
+
+In summary, Factom provides a decentralized platform for data provenance with a 
+permanent, time-stamped record of an unforgeable reference to the data anchored 
+in the blockchain. This offers an efficient and cheap alternative for businesses, 
+institutions and governments to have a proof of existence, proof of process or 
+proof of audit for their data. Their first publicly announced project is using 
+Factom for an official land title registry in partnership with the government of 
+Honduras \parencite{Chavez2015}. In fact, Factom is an interesting option for 
+governments in developing countries. They often face mismanagement and corruption, 
+but cannot afford or enforce infrastructure and processes to guarantee compliance 
+of their administration. Moreover, the Factom solution offers also an opportunity 
+for small businesses/start-ups to have more auditing and to prove compliance with 
+regulations without hiring expensive professional companies for that.
+
+\subsection{Onename (Identity)}
+\label{sec:ecoonename}
+
+Onename\footnote{https://onename.com/} allows registering identities on the Bitcoin blockchain. This blockchain 
+identity can be connected to various online identities like Facebook, Twitter, 
+PGP keys and a Bitcoin address. Thus, it provides a probabilistic identity which 
+reliability grows with the number of verified connected accounts. Onename is based 
+on an open source overlay protocol called Blockchain ID. Everyone is able to register 
+his identity without having to rely on Onename services. Blockchain identities 
+are independent of the company Onename, are referenced on the Bitcoin blockchain 
+and are therefore owned by the holder of the respective private key.
+
+Blockchain IDs will allow signing up on third party websites comparable to Facebook 
+Login or Google Sign-In. There is no need for passwords since authentication is 
+done using digital signatures. Blockchain ID is also used as an identity provider 
+for OpenBazaar. 
+
+Moreover, it is possible to add additional namespaces. In this sense Blockchain 
+IDs could represent not only humans, but also machines. Thus, Blockchain IDs might 
+be the basis of a decentralized DNS system or an IoT registry. 
+
+Essentially, the technology allows individuals to own their online identities, 
+rather than being dependent central institutions. Holding, i.e. registering and 
+prolonging, a Blockchain ID requires fees that directly support the Bitcoin ecosystem. 
+One part of the fee is a typical Bitcoin transaction fee that will be collected 
+by a miner. The other part of the fee is particular to the protocol and leads to 
+\emph{burning} of bitcoins. Since the number of bitcoins is constrained, the elimination 
+of bitcoins theoretically increases the value of existing bitcoins. While it might 
+seem that our current identities are free, we actually pay with our personal data. 
+Every time we use Facebook to login into a third party website, we give away more 
+information about us. Identity is also subject to network effects. Institutions 
+will only start to accept Blockchain IDs if there are enough people using them 
+and demand acceptance. 
+
+Onename basically follows the same strategy as OB1. The initial focus is on developing 
+open source protocols and advocating their adoption, instead of having a revenue 
+model in place.
+
+\section{Key Findings}
+\label{sec:eco:findings}
+
+Table 2 presents the key findings concerning our main research questions. We state 
+the core innovation of the company in the respective sector and list the features 
+of Bitcoin that underlay those innovations. The innovations in the digital asset 
+sector and in the notary sector are enabled mainly because of the usage of the 
+Bitcoin blockchain as an immutable public database. In contrast, the decentralized 
+marketplaces profit from the value transfer features Bitcoin provides, in particular 
+multi-signature escrow and micropayments. Both features are ultimately based on 
+the scriptability of Bitcoin transactions, i.e. the nature of Bitcoin as programmable 
+money. Another important aspect that encompasses all sectors is the inclusivity 
+and permissionless nature of Bitcoin. This aspect has two implications. First, 
+it allows companies to build protocols on top of Bitcoin and the blockchain without 
+having to ask anyone for permission. All of the presented companies are based on 
+this. Second, everyone with Internet-connectivity is able to participate in the 
+system. In particular, people from developing countries without proper access to 
+financial services can be active on the marketplaces. 
+
+Rather surprising is the appearance of mining. The business model of traditional 
+mining operations is to generate revenue by selling newly minted bitcoins. In contrast, 
+21 aims to leverage mining as a tool to supply users directly with bitcoins circumventing 
+the cumbersome process of acquiring those on an exchange. Thus fuelling the emerging 
+ecosystem of bitcoin-payable digital micro services. 
+
+\resizebox{\textwidth}{!}{
+\tiny
+\begin{tabular}{|>{\raggedright}p{12pt}|>{\raggedright}p{44pt}|>{\raggedright}p{37pt}|>{\raggedright}p{80pt}|>{\raggedright}p{38pt}|>{\raggedright}p{47pt}|>{\raggedright}p{20pt}|>{\raggedright}p{30pt}|>{\raggedright}p{23pt}|}
+\hline
+S\textbf{ector} & S\textbf{ubsector} & C\textbf{ompany/ Project} & C\textbf{ore 
+innovation} & \multicolumn{5}{p{159pt}|}{B\textbf{itcoin features}}\tabularnewline
+\hline
+ &  &  &  & I\textbf{mmutable public database} & I\textbf{nclusive (global and 
+permissionless)} & M\textbf{ining} & M\textbf{icropayments} & M\textbf{ultisig}\tabularnewline
+\hline
+Digital Assets & Internet of Things & Filament & Decentralized IoT infrastructure 
+based on autonomous devices & x & x &  & x & \tabularnewline
+\hline
+ & Intellectual Property & Ascribe & Commoditization of registering IP; trade and 
+license digital work & x & x &  &  & \tabularnewline
+\hline
+Marketplace & E-Commerce Marketplace & OpenBazaar & Decentralized market place 
+for physical and digital goods without restrictions and fees &  & x &  &  & x\tabularnewline
+\hline
+ & Digital Micro Services Marketplace & 21 & Ecosystem for bitcoin-payable digital 
+(micro) services &  & x & x & x & \tabularnewline
+\hline
+Notary & Records Management & Factom & Commoditizing data integrity and auditability 
+ & x & x &  &  & \tabularnewline
+\hline
+ & Identity & Onename & Individually-owned identities & x & x &  &  & \tabularnewline
+\hline
+\end{tabular}}
+
 % \begin{figure}
 % \includegraphics[scale=.7]{./externalized/paymentchannel.pdf}
 % \caption{An unidirectional payment channel between a payer A and a payee B. To open a channel A creates and broadcasts a funding transaction with an output that can be spent only by providing signatures from both parties, i.e. $\sigma(A)$ and $\sigma(B)$ (multisignature). The value of this output is then shared between A and B in off-chain payment transactions. A creates and (partially) signs those payment transactions, and sends them to B via some private or public communication channel. While A has only partially signed payment transactions, B is able sign and broadcast any of those transactions to close the channel. If B is rational he will always broadcast the transaction that allocates the largest share to him. Therefore A can not decrease B's share in a subsequent payment transaction, and the payment channel is thus unidirectional. If B does not broadcast a payment transactions before $T_1$, A is able to recover the funds by broadcasting a refund transaction.}
@@ -564,3 +1009,44 @@ contract LiquidProperty is SmartProperty {
 \end{lstlisting}
 
 \subsubsection{Issuing tokens}
+
+
+
+
+
+\subsubsection{Trustworthy hardware and software}
+
+The smart property itself has to be trustworthy. A potential seller has to be sure that the software running the smart property follows the protocol. In particular, after a sale the smart property has to be controlled by the buyers ownership key, whereas the sellers ownership key is disabled. Hard- and software of the smart property must be able to ensure that is has not been tampered with. Ideally, software is open source and independently verifiable. Smart property may prove its integrity to a third party using trusted computing. Thereby the smart property may also prove its current state, i.e mileage and services in the case of a car. A certificate by the manufacturer may be used to ascertain provenance. Alternatively, provenance could be inferred from the signature of the original registrar.
+
+\subsubsection{Kill switch}
+
+Liquidification requires that the smart property can be rendered temporarily unusable. Otherwise the contract between lender and borrower is not remotely enforceable, and the borrower is able to use the property without paying back the loan. Enforcement of the contract would have to happen via the judicature system which is expensive and cumbersome if borrower and lender are in different jurisdictions. 
+
+If the use of a kill switch is possible is dependent of the actual smart property. Cars, for example, are already equipped with immobilizers which are reasonably hard to bypass. Popular solar home systems, as deployed in Africa and South-East Asia, can also be remotely deactivated. Smart property where the value of the object itself or its components is high independent of a function or service that can be switched off, however, is not suitable for this scheme. 
+
+\subsubsection{Native on-chain currency}
+Selling, renting, and liquidification all involve currency. Only a fungible native token of value allows these processes without additional counterparty risk. 
+
+\subsubsection{Light-client proofs}
+
+In many cases smart property will not be able to interact with the blockchain network directly, but has to rely on proofs provided by untrusted parties. For example, a buyer has to be able to prove to the car that it now belongs to him. The underlying blockchain and the protocols should account for such a scenario, since e.g. a car should be able to be started even if there is no Internet connectivity.
+
+
+
+%\subsection{Why has smart property to live on a blockchain?}
+
+Let us stay with the example of a car. Alice owns the car and the ownership is augmented by the possession of a cryptographic key. Assume Alice wants to transfer the ownership to Bob. Of course, she can not send him the keys, since the key is nothing more than a digital file, and copying a digital file has zero marginal cost. In other words, we face the classic double spending problem. However, we can think of a more complex protocol. Instead of sending a key to Bob, Bob is creating a new private-public ownership key pair. Bob sends the public part to Bob, and Alice uses her current ownership key to initiate an ownership transfer to Bob's key. The car itself acts as a deterministic trusted party. We will later discuss avenues to give Bob more certainty about the trustworthiness of the smart property.
+So far, we only used public key cryptography, and there was no need for a blockchain. However, typically someone does not just transfer ownership to someone else. Alice wants something in return. In most cases this something is money. If Alice and Bob meet in person they are able to do the ownership transfer protocol and the cash payment concurrently. However, if the trade happens via the Internet, one party has always be the first and may be defrauded by the counterparty. Traditional payments can be undone. Thus, inhibiting risk for the seller. Simple bitcoin payments mitigate this risk, but expose the buyer to the risk of not getting the car. Traditionally, third party escrow has been used to solve this dilemma.
+However, if ownership of the car is represented on a blockchain, Alice and Bob can perform an atomic trade. Ownership and money is exchanged in one single process. If one part fails, the other part will fail as well. If one part succeeds, the other part will succeed as well. A similar logic can be applied to all of the capabilities smart property provides.
+
+\subsubsection{Contract Immutability}
+
+\subsubsection{Permissioned Blockchains}
+
+A permissioned blockchain is a blockchain, in which transaction processing is performed
+by a predefined list of subjects with known identities \cite{BitFuryPermissioned2015}. In context, a consortium of device manufacturers could operate a permissioned blockchain collaboratively. Permissioned blockchains do not need a native token of value, and typically do not have one since fair distribution of tokens, such that trust and value can emerge, is non-trivial. However, there are ways to bring external value in and out of permissioned blockchains in order to facilitate economic interactions. 
+\paragraph{IOU Issuance}
+One approach is to allow specific parties to issue IOUs on the blockchain. These parties could be the device manufacturers themselves but more probably banks and financial service providers. In this case a buyer interested in a smart property would send money off-chain to a third party which then issues tokens on the blockchain. In addition, the seller has to accept those tokens. 
+
+\paragraph{Cross-chain/ledger protocols}
+A better approach that requires less trust is the application of a cross-chain/ledger protocol. We discussed sidechains already, which allow the immobilization of a token in one chain and subsequent unlocking in another chain. In addition, there is the Interledger protocol \cite{hope2016interledger} and the atomic cross-chain trading protocol \cite{atomiccrosschaintrading}

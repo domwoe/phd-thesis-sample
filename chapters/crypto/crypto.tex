@@ -1,29 +1,45 @@
-\chapter{Decentralized Cryptocurrencies and Blockchain Technology}
+\chapter{Bitcoin and Beyond: Technological Perspective}
 \label{sec:crypto}
 
-\epigraph{The Times 03/Jan/2009 Chancellor on brink of second bailout for banks.}{--- \textup{Coinbase of Bitcoin genesis block}}
+% \epigraph{Trust, but verify.}{--- \textup{Ronald Reagan}}
+\epigraph{Politicians have often laboured under the delusion that money is something created and manipulable by themselves, when in fact it is the spontaneous institution of a free society and will continue to evolve in ways outside their grasp.}{-- \textup{Nick Elliot}}
 
-\section{Introduction}
-In this chapter we introduce Bitcoin, the first implementation of a peer-to-peer electronic cash system, also called cryptocurrency due to the pervasive use of cryptographic primitives. The introduction is rather technical with a focus on the transaction and scripting system of which we make extensive use in later chapters. Bitcoin provides the first instantiation of a blockchain in order to solve the double spending problem in a peer-to-peer network. Due to its particular design Bitcoin can be more than \emph{just} a peer-to-peer electronic system. In this regard we present Bitcoin characteristics and further discuss Bitcoin as the basis for applications beyond currency. This leads us to Ethereum, a cryptocurrency and platform for decentralized applications, which shares many traits with Bitcoin. Here, we focus on the differences to Bitcoin and provide a concise comparison between the two systems. We will use Ethereum in chapters \ref{sec:smartproperty} and \ref{sec:jointstock}. We also present a comprehensive account of the challenges these technologies face.
+The concept of money and currency has evolved over thousands of years. When presenting the origin and use of money, most economists reiterate the thesis formulated by Adam Smith that money originates from the needs of a barter economy and the division of labor \parencite{CITATION}. Because demand and supply of two goods rarely coincide in a barter exchange, a commodity that can act as a unit of account and medium of exchange is required. However ethnographic studies provide no evidence that pure barter economies have ever existed. David Graeber formulates an alternative thesis where debt and credit based on informal gift economies provide the cultural breeding ground for the emergence of money \parencite{graeber2014debt}. 
+In a gift economy debt and credit is informally stored in the brains of the economic actors. This allows for division of labor, but restricts the size of the economy because trust and reciprocity are fundamental. Currency allows to formalize and quantify debt obligations precisely and enables economies to transcend trust boundaries. The archetype of currency is the coin forged from a scarce metal and \emph{coined} by a sovereign to guarantee authenticity. Today, most monies are fiat money. Money without intrinsic value, established as legal tender by governmental decree. Physical currency, in form of coins and notes, is only a tiny fraction of the total monetary supply in an economy. Most money is created by commercial banks in form of deposits, and other financial contracts. Hence, most money is custodial and exists only virtually on disparate electronic ledgers of financial institutions. Therefore, the need for trust is reintroduced on a higher level.
 
-\section{Bitcoin: The first decentralized Cryptocurrency}
+Cryptocurrencies introduce a new type of money. Although digital, cryptocurrencies share many characteristics of physical currencies (e.g. being a bearer instrument). In addition, cryptocurrencies have unique and novel characteristics (e.g. programmability), and provide the basis for permissionless innovation on a much faster timescale. As the term suggests, cryptocurrencies are based on a combination of various cryptographic primitives. However equally important, for the design and recent success of cryptocurrencies, are economic principles and mechanism design. Bitcoin, the first cryptocurrency with widespread adoption, is based on a peer-to-peer network with incentive-compatible rules for participation and disproportionate rewards for early adopters. The nodes of the peer-to-peer network maintain a cryptographically and thermodynamically secured replicated transactional database, called blockchain, that provides a tamper-proof and verifiable memory of all transactions, and thus, the ownership status of bitcoins. Hence, the blockchain provides a precise digitized analog of society's shared accounting system encountered in the gift economy. Moreover, the trustless and permissionless nature of cryptocurrencies enables machines to autonomously participate in economic interactions.
+
+In this chapter we introduce Bitcoin, the first implementation of a peer-to-peer electronic cash system. The introduction is rather technical with a focus on the transaction and scripting system of which we make extensive use in later chapters. The scripting system is deeply integrated in the transaction structure of Bitcoin and allows for programmable transactions. These programs, that determine the validity of a transaction and are executed and verified by all network participants, are the basis for smart contracts -- contracts enforced by computer code. However, Bitcoin's scripting language and programming model is fairly restricted. This limits the types of smart contracts that can be instantiated directly in Bitcoin script. 
+The open source nature of Bitcoin has lead to a Cambrian explosion of cryptocurrency and blockchain projects. The cryptocurrency with the second largest market capitalization besides Bitcoin is Ethereum. Ethereum is specifically designed to provide a platform for decentralized applications and smart contracts. We present Ethereum with a focus on its differences to Bitcoin, and provide a concise comparison between both systems. The last section before the conclusion briefly introduces permissioned blockchains because of their importance in the economic consideration in the next chapter.
+
+
+\section{Bitcoin: Programmable Cash}
 
  In November 2008 an e-mail with the subject: "Bitcoin P2P e-cash paper"\footnote{\url{http://satoshi.nakamotoinstitute.org/emails/cryptography/1/}} was sent to The Cryptography Mailing List. The first e-mail from sender Satoshi Nakamoto. The e-mail presents the abstract and a link to a white paper with the title "Bitcoin: A Peer-to-Peer Electronic Cash System". A few month later, On January 3rd 2009, the first instances of the Bitcoin client software began running the Bitcoin network, and Bitcoin has been running ever since. 
 
- As already apparent from the title of the paper, Bitcoin provides a peer-to-peer (P2P) digital cash system without reliance on a trusted third party. Since digital assets can be duplicated without cost, previous digital cash system had to rely on trusted third parties to authorize transactions centrally. This issue is known as the double spending problem. Assume Alice has a file that represents \$100, and wants to send this file to Bob. Bob can be sure that the file is not counterfeited if Alice attaches a digital signature to the file, but how can he be sure that Alice did not send the file also to Charlie? Traditionally this issue was solved by a central trusted entity keeping track of balances in a ledger and authorizing transactions. However, this third party has therefore the ability to censor transactions, and to create money at will. Furthermore, such electronic money systems that rely on central authorization can not be considered electronic cash systems, since cash is a bearer asset. Thus far no centrally-controlled digital money system has been successful on a global scale.
+ As already apparent from the title of the paper, Bitcoin provides a \ac{P2P} digital cash system without reliance on a trusted third party. Since digital assets can be duplicated without cost, previous digital cash system had to rely on trusted third parties to authorize transactions centrally. This issue is known as the double spending problem. Assume Alice has a file that represents \$100, and wants to send this file to Bob. Bob can be sure that the file is not counterfeited if Alice attaches a digital signature to the file, but how can he be sure that Alice did not send the file also to Charlie? Traditionally, this issue was solved by a central trusted entity keeping track of balances in a ledger and authorizing transactions. However, this third party has therefore the ability to censor transactions, and to create money at will. Furthermore, this entity represents a single point of failure, susceptible to rent-seeking behavior, coercion, and cybercriminal attacks. In addition, electronic money systems that rely on central authorization can not be considered electronic cash systems, because cash is a bearer asset. Thus far, no centrally-controlled digital money system has been successful on a global scale.
 
- In Bitcoin, by contrast, double spending is prevented by having each participant taking part in a P2P network, and having each participant holding a copy of the entire ledger. Consensus over the ledger state is powered by a novel consensus protocol which involves the expenditure of a real-world physical resource. This process, called mining, is also the basis to create new coins, and arguably provides a lower bound for the value of bitcoins.
+ In Bitcoin, by contrast, transactions are accepted and ordered by the entire network with the help of a novel consensus mechanism, called Nakamoto consensus, which involves the expenditure of an exogenous real-world resource -- energy. This process, called mining, is also responsible for creating new coins, and provides the necessary economic incentives for an individual \emph{miner} to include only transactions that other network participants deem valid. Hence, a canonical ordering of transactions is achieved, and double spending is prevented. In the following sections the technological underpinnings of Bitcoin are presented in more detail. 
 
- The design of Bitcoin provides more than just a P2P digital cash system. It is also an implementation of programmable money, a practically immutable publication system, and has created a new design space for distributed systems. We will discuss all of those important points in more detail after we introduced the technological underpinnings of Bitcoin in more detail.
 
 %Great overview: \cite{Tschorsch:2015:464}
 \subsection{The Technology}
 \label{sec:btc_tech}
 
-\subsubsection{Peer to Peer network}
+From a technological perspective, Bitcoin can be divided into three layers (see Fig. \ref{fig:btclayers}). Bitcoin is a peer-to-peer network consisting of computers running a client software and interacting with each other via specified messages. The most important data structure that is exchanged between the nodes is the Bitcoin transaction. The Bitcoin transaction provides the instructions to induce a state change, i.e. a change of ownership of bitcoins. Finally, a suitable consensus mechanism is required to prevent double spending. 
+
+\begin{figure}
+\centering
+\includegraphics[width=0.5\textwidth]{./externalized/Bitcointech.pdf}
+\caption{Technological layers of Bitcoin.}
+\label{fig:btclayers}
+\end{figure}
+
+
+\subsubsection{Peer-to-Peer network}
 \label{sec:p2p}
 
-The foundation of Bitcoin is a peer-to-peer network of voluntary nodes. Each node validates, relays, and stores all (valid) transactions. Thus in Bitcoin everyone validates everything, or at least everyone is able to validate everything. In the beginning every Bitcoin \emph{user} ran a Bitcoin node, since it was the only way to keep track of and to send bitcoins. Today most users do not directly participate in the peer-to-peer network, since running a full node is becoming ever more resource intensive. At time of writing the Bitcoin network consists of approximately 5600 nodes. Nodes are distributed globally, but the majority is in Europe and the coastal areas of the US. 
+The foundation of Bitcoin is a peer-to-peer network of voluntary nodes. Each node validates, relays, and stores all (valid) transactions. Thus in Bitcoin everyone validates everything, or at least everyone is able to validate everything. In the beginning every Bitcoin \emph{user} ran a Bitcoin node, since it was the only way to keep track of and to send bitcoins. Today most users do not directly participate in the peer-to-peer network, because running a full node is becoming ever more resource intensive. At time of writing the Bitcoin network consists of approximately 5600 nodes. Nodes are distributed globally, but the majority is in Europe and the coastal areas of the US. 
 
 \begin{figure}
 \centering
@@ -36,8 +52,9 @@ The foundation of Bitcoin is a peer-to-peer network of voluntary nodes. Each nod
 \subsubsection{Transactions and Scripting}
 \label{sec:tx}
 
-To be precise, the naming of \emph{Bitcoin} is misleading. In Bitcoin there are no actual coins being exchanged between parties. As mentioned earlier, Bitcoin is based on a global ledger replicated across a network of nodes. In contrast to an ordinary ledger consisting of accounts and balances, individual entries in the Bitcoin ledger are transactions. A simplified representation of a transaction is shown in Figure \ref{fig:bitcointx}. The individual data fields will be explained over the course of this section.
- A transaction contains essentially a list of inputs and outputs. Inputs reference (unspent) outputs of previous transactions, and provide a means of authentication to prove ownership over these unspent transaction outputs (UTXOs). Outputs are tuples entailing values, the amount denominated in satoshi, and the condition the receiver has to meet to spend those outputs. Consequently, each individual UTXO has a value and an owner, and this is what can be identified with a \emph{coin}. Each transaction spends one or more UTXO and creates one ore more UTXO. UTXOs have always to be spent entirely. The UTXO model allows to process transactions in parallel and has privacy benefits in comparison to the more intuitive account model\parencite{buterin2016utxo}.
+To be precise, the naming of \emph{Bitcoin} is misleading. In Bitcoin there are no actual coins being exchanged between parties. As mentioned earlier, Bitcoin is based on a global ledger replicated across a network of nodes. Every node can calculate the current state of the ledger by applying all transactions sequentially beginning from an initial state. A simplified representation of a transaction is shown in Figure \ref{fig:bitcointx}. 
+A transaction contains essentially a list of inputs and outputs. Inputs reference (unspent) outputs of previous transactions, and provide a means of authentication to prove ownership over these \ac{UTXO}s. Outputs are tuples entailing values, the amount denominated in satoshi\footnote{1 bitcoin = $10^8$ satoshi}, and the condition the receiver has to meet to spend the respective output. Consequently, each individual \ac{UTXO} has a value and an owner, and this is what can be identified with a \emph{coin}. Each transaction spends one or more \ac{UTXO} and creates one ore more \ac{UTXO}. \ac{UTXO}s have always to be spent entirely. In Figure \ref{fig:utxo} the spending and creating of transaction outputs is illustrated.
+In comparison to the more intuitive account model, the \ac{UTXO} model allows to process transactions in parallel and has privacy benefits \parencite{buterin2016utxo}. Hence, the Bitcoin ledger is not comprised of accounts and balances, but of \ac{UTXO}s. 
 
 \begin{figure}
 \centering
@@ -46,12 +63,19 @@ To be precise, the naming of \emph{Bitcoin} is misleading. In Bitcoin there are 
 \label{fig:bitcointx}
 \end{figure}
 
-A transaction is valid if the combined value of the inputs is greater than or equal to the combined value of the outputs, and if the conditions of the referenced previous UTXOs are met.
+\begin{figure}
+\centering
+\includegraphics[width=\textwidth]{./externalized/utxo.pdf}
+\caption{Transaction flow and change of the \ac{UTXO} set.}
+\label{fig:utxo}
+\end{figure}
+
+A transaction is valid if the combined value of the inputs is greater than or equal to the combined value of the outputs, and if the conditions of the referenced previous \ac{UTXO}s are met.
 In the following we will take a closer look at these conditions and how transactions are authenticated. The corresponding data fields are called \emph{pubScript} and \emph{sigScript} and can contain data and op codes, i.e. programming primitives, of a constrained, stateless Forth-like stack-based scripting language called Bitcoin Script. 
 When validating a transaction a node concatenates the pubScript of a referenced output with the sigScript of a referencing input, and execute the script. A transaction can only be valid if all scripts evaluate to \emph{true}. 
 
-The most important op codes are related to cryptographic primitives such as digital signature verification and secure hash functions. Bitcoin currently employs an elliptic curve digital signature algorithm (ECDSA) for authentication. In the prevailing case a derivation of an ECDSA public key is identified with a Bitcoin address, and the corresponding private key is used to create a signature to authenticate the spending of an UTXO corresponding to this Bitcoin address. 
-The pubScript in this basic scenario is called pay-to-pubkey-hash (P2PKH).
+The most important op codes are related to cryptographic primitives such as digital signature verification and secure hash functions. Bitcoin currently employs \ac{ECDSA} for authentication. In the prevailing case a derivation of an \ac{ECDSA} public key is identified with a Bitcoin address, and the corresponding private key is used to create a signature to authenticate the spending of an \ac{UTXO} corresponding to this Bitcoin address. 
+The pubScript in this basic scenario is called \ac{P2PKH}.
 
 \begin{lstlisting}
 OP_DUP OP_HASH160 <PubKeyHash> OP_EQUALVERIFY OP_CHECKSIG
@@ -89,9 +113,9 @@ Bitcoin, i.e. the reference implementation Bitcoin core, currently distinguishes
 
 If a pubScript can not be categorized in one of these types, it is termed \emph{non-standard}. For some time Bitcoin core nodes would not relay transactions containing non-standard pubScripts because there had been found vulnerabilities in some op codes. However, if a non-standard transaction ended up in the blockchain because a miner  (see Sec. \ref{sec:mining}) had a different policy, Bitcoin core nodes still accepted it. Today, Bitcoin core relays transactions with arbitrary non-standard pubScripts.
 
-P2PK is similar to P2PKH and not used very often since a shorter key hash is replaced by a longer public key. Multi-signature outputs demand m-of-n signatures to spend an output. However, today multi-signature is usually implemented as P2SH. P2SH is the most versatile pubScript type and thus worth discussing in more detail.
+\ac{P2PK} is similar to \ac{P2PKH} and not used very often since a shorter key hash is replaced by a longer public key. Multi-signature outputs demand m-of-n signatures to spend an output. However, today multi-signature is usually implemented as \ac{P2SH}. \ac{P2SH} is the most versatile pubScript type and thus worth discussing in more detail.
 
-The P2SH pubScript takes the following form:
+The \ac{P2SH} pubScript takes the following form:
 
 \begin{lstlisting}
 OP_HASH160 <Hash160(redeemScript)> OP_EQUAL
@@ -99,14 +123,14 @@ OP_HASH160 <Hash160(redeemScript)> OP_EQUAL
 
 Thereby, the pubScript reveals very little information about what is needed to spend the output. The spending party then has to provide a \emph{redeemScript} that hashes to the required 20 byte value. Thus, the pubScript is very small and concise, but the redeemScript in the sigScript can be up to 520 bytes (see \parencite{bip16} for more information). 
 
-An example implementing P2PK as P2SH is as follows:
+An example implementing \ac{P2PK} as \ac{P2SH} is as follows:
 
 \begin{lstlisting}[breaklines]
 pubScript: OP_HASH160 <Hash160{<PubKey> OP_CHECKSIG}> OP_EQUAL
 scriptSig: <Sig> {<PubKey> OP_CHECKSIG}
 \end{lstlisting}
 
-Null data pubScripts allow zero value outputs with 80 bytes of arbitrary data. To be standard, each transaction can only have one null data output, and needs to have at least one additional output type. Null data outputs are used for Proof-of-Publication, and as the basis for overlay protocols, as discussed later on. Null data outputs are provably unspendable. This means nodes do not need to consider them in their UTXO set, which is typically held in memory to quickly validate incoming transactions. 
+Null data pubScripts allow zero value outputs with 80 bytes of arbitrary data. To be standard, each transaction can only have one null data output, and needs to have at least one additional output type. Null data outputs are used for Proof-of-Publication, and as the basis for overlay protocols, as discussed later on. Null data outputs are provably unspendable. This means nodes do not need to consider them in their \ac{UTXO} set, which is typically held in memory to quickly validate incoming transactions. 
 
 The null data pubScript is as follows:
 \begin{lstlisting}
@@ -123,9 +147,9 @@ OP_RETURN <data>
     \label{fig:blockchain}
   \end{figure*}
 
-In the Bitcoin system, transactions are batched into a structure, called a block. A block contains a number of  transactions as payload, and a header. The header consists essentially of the root of the merkle tree that is computed from the transaction hashes, the hash of the previous block, and a number called nonce which we will discuss in the next section. Let us assume for the moment that there is only one node in the Bitcoin network. Since each block refers to its predecessor the emergent data structure is a chain of blocks, a blockchain. Note that linking blocks by means of hash pointers leads to an tamper-evident append-only data structure. If a transaction is changed in block $i$ of a blockchain containing $n$ blocks, the chain of hashes breaks, and every hash from block $i$ to block $n$ has to be re-computed.
+In the Bitcoin system, transactions are batched into a structure, called a block. A block contains a number of  transactions as payload, and a header. The header consists essentially of the root of the merkle tree (c.f. Sec. \ref{sec:spv}) that is computed from the transaction hashes, the hash of the previous block, and a number called nonce which we will discuss in the next section. Let us assume for the moment that there is only one node in the Bitcoin network. Since each block refers to its predecessor the emergent data structure is a chain of blocks, a blockchain. Note that linking blocks by means of hash pointers leads to an tamper-evident append-only data structure. If a transaction is changed in block $i$ of a blockchain containing $n$ blocks, the chain of hashes breaks, and every hash from block $i$ to block $n$ has to be re-computed.
 
-Therefore, a blockchain is a tamper-evident append-only transaction log that defines the current state by giving its complete history. In Bitcoin, the state that is computed by replaying all transactions is the set of UTXOs, i.e. who owns which coins.
+Therefore, a blockchain is a tamper-evident append-only transaction log that defines the current state by giving its complete history. In Bitcoin, the state that is computed by replaying all transactions is the set of \ac{UTXO}s, i.e. who owns which coins.
 
 \subsubsection{Mining and Nakamoto Consensus}
 \label{sec:mining}
@@ -142,49 +166,54 @@ If nodes adhere to the Bitcoin mining protocol, the system is resilient to doubl
 
 Why would a miner follow the Nakamoto protocol at all considering the resource intensive proof-of-work requirement? This question is closely related to another very intriguing question: How are bitcoins created?
 
-The answer to both of these questions is that the Bitcoin protocol allows a miner to include one special transaction into each block, a coinbase transaction. These transactions have do not reference any previous transaction outputs, but allow the creation of new coins. The maximum accumulated value of the coinbase outputs of a particular block is fixed in the protocol and gets reduced by 50\% every 210,000 blocks. On protocol level UTXO values are integers denominated in satoshis. $10^8$ satoshis correspond to 1 bitcoin. Therefore, after 33 \emph{halvenings} the block reward becomes effectively zero because it will fall below the limit of one satoshi. In addition, the difference between the value of transaction inputs and outputs are identified as transaction fees, and can be claimed by the miner. However, in 2016, transaction fees play only a minor role which account for less than 2\% of a block reward.
+The answer to both of these questions is that the Bitcoin protocol allows a miner to include one special transaction into each block, a coinbase transaction. These transactions have do not reference any previous transaction outputs, but allow the creation of new coins. The maximum accumulated value of the coinbase outputs of a particular block is fixed in the protocol and gets reduced by 50\% every 210,000 blocks. On protocol level \ac{UTXO} values are integers denominated in satoshis. $10^8$ satoshis correspond to 1 bitcoin. Therefore, after 33 \emph{halvenings} the block reward becomes effectively zero because it will fall below the limit of one satoshi. In addition, the difference between the value of transaction inputs and outputs are identified as transaction fees, and can be claimed by the miner. However, in 2016, transaction fees play only a minor role which account for less than 2\% of a block reward.
 
 In the original white paper proof-of-work was introduced as one-CPU-one-vote. However, as the value of bitcoin appreciated, miners exploited the inherent parallelizability of the proof-of-work algorithm and implemented the algorithm with increasing sophistication. First, on graphical processing units (GPUs), followed by field-programmable gate arrays (FPGAs), and eventually on application-specific integrated circuits (ASICs) \parencite{taylor2013bitcoin}. Thereby, the energy efficiency has increased by several orders of magnitude. The implication of this evolution is that mining has become subject to economies of scale, and is only profitable with the most-recent specialized hardware, and only with access to cheap electricity. Furthermore, mining is organized in pools. Thereby, individual miners provide their hashing power to a pool operator in exchange for a share of the mining reward. This allows miners to decrease the variance of their expected rewards. Most pools implement centralized transaction selection. This has an inherent risk for censorship if a single pool gets to large or if there is collusion between pool operators. A possible approach to prevent centralized transaction selection are non-outsourceable scratch-off puzzles \parencite{Miller:2015:NSP:2810103.2813621}.  
 
 \subsubsection{Merkle Trees and Simplified Payment Verification}
 \label{sec:spv}
 
-In July 2016, the entire Bitcoin blockchain has a size of more than 75 Gigabyte. With a mean block size of 0.8 Megabyte\footnote{Calculated between May 21 and June 22 2016.}, and a block generation rate of 1 per 10 min, the blockchain grows about 115 Megabytes each day. This is a problem even for powerful IoT device categories such as smartphones. Even more limiting is the bandwidth requirement of full nodes, since transaction and block data might be communicated multiple times and to multiple peers. 
+In July 2016, the entire Bitcoin blockchain has a size of more than 75 Gigabyte. With a mean block size of 0.8 Megabyte\footnote{Calculated between May 21 and June 22 2016.}, and a block generation rate of 1 per 10 min, the blockchain grows about 115 Megabytes each day. This is a problem even for powerful \ac{IOT} device categories such as smartphones. Even more limiting is the bandwidth requirement of full nodes, since transaction and block data might be communicated multiple times and to multiple peers. 
 
 Bitcoin uses a data structure called a merkle tree \parencite{merkle1980protocols} to commit transactions to the block header. This allows to efficiently prove the existence of a transaction in a block by communicating only the respective merkle branch, i.e $\mathcal{O}(\log{}n)$ instead of all $n$ transactions of a block. See Figure \ref{fig:merkletree} for an illustration of a merkle tree. 
 
 \begin{figure}[!t]
     \centering
-    \includegraphics[width=\linewidth]{./externalized/merkletree}
+    \includegraphics[width=0.7\linewidth]{./externalized/merkletree}
     \caption{Merkle tree as used in the Bitcoin blockchain. The leaf nodes are cryptographic hashes of transactions. Each parent level consists of pair-wise hashing of the child nodes until the root hash is calculated. In oder to prove the existence of transaction \emph{Tx} only the marked nodes are needed.}
     \label{fig:merkletree}
   \end{figure} 
 
-  This data structure allows the usage of light clients relying on simplified payment verification (SPV). Light clients only store block headers (80 bytes) and do not validate transactions. Light clients typically only want to keep track of transactions involving specific addresses and ask full nodes to provide those transactions together with a merkle proof. The security model of the light client is based on the assumption that only valid transactions are included in the chain of most accumulated proof-of-work.  
- 
+  This data structure allows the usage of light clients relying on \ac{SPV}. Light clients only store block headers (80 bytes) and do not validate transactions. Light clients typically only want to keep track of transactions involving specific addresses and ask full nodes to provide those transactions together with a merkle proof. The security model of the light client is based on the assumption that only valid transactions are included in the chain of most accumulated proof-of-work. 
 
-\subsection{Novel Contributions}
-\label{sec:btc_cont}
 
-The blockchain powered by the proof-of-work-based Nakamoto consensus and economic incentives, and the transaction structure and scripting system lead to a number of novel contributions or characteristics. 
+\subsection{Interfacing Bitcoin}
 
-\subsubsection{Digital Bearer Instrument}
+The interface to interact with Bitcoin, i.e to spend bitcoins or create addresses to receive bitcoins, is provided by software known as \emph{wallets}. Since Bitcoin is based on public key cryptography and transactions have to be authenticated by \ac{ECDSA}, storing bitcoins is equivalent to storing and managing cryptographic keys. Wallets have functions to create key pairs, to derive Bitcoin addresses from public keys, and to build and sign transactions based on the available \ac{UTXO}s. 
 
-\emph{A bearer instrument is a document that entitles the holder of the document rights of ownership or title to the underlying property} \parencite{bearer}, i.e. there is no central record of ownership. Because of the double spending issue there had not been a way to create digital bearer instruments. Ownership of an unique digital asset had always been augmented by a trusted third party. Bitcoin is the first digital bearer instrument. Possession of the private keys (or redeemScripts) ensures ownership and permissionless control over the corresponding coins.
+There exist different models with varying degrees of trust in third parties depending on who provides the blockchain and who controls the cryptographic keys. 
+% \subsection{Novel Contributions}
+% \label{sec:btc_cont}
 
-Noteworthy, it is straight forward to implement registered instruments in Bitcoin, e.g. using multi-signature outputs that require the signature of a trusted third party. However it is impossible to implement a true digital bearer instruments based on a system administered by centralized third party.
+% The blockchain powered by the proof-of-work-based Nakamoto consensus and economic incentives, and the transaction structure and scripting system lead to a number of novel contributions or characteristics. 
 
-\subsubsection{Programmable Money}
+% \subsubsection{Digital Bearer Instrument}
 
-The notion of programmable money has two aspects from the perspective of Bitcoin. First, the existence of Bitcoin Script allows to couple the spending of coins to various conditions. The most versatile method is the usage of multi-signature outputs in combination with oracles. Oracles are services that sign transactions based on some conditions, and can be used to condition payments on off-chain events. Second, due to the nature of bitcoins being digital bearer instruments, machines with access to secure key storage are able to make payments autonomously.  
+% \emph{A bearer instrument is a document that entitles the holder of the document rights of ownership or title to the underlying property} \parencite{bearer}, i.e. there is no central record of ownership. Because of the double spending issue there had not been a way to create digital bearer instruments. Ownership of an unique digital asset had always been augmented by a trusted third party. Bitcoin is the first digital bearer instrument. Possession of the private keys (or redeemScripts) ensures ownership and permissionless control over the corresponding coins.
 
-\subsubsection{Immutable, Censorship-resistant Publication System}
+% Noteworthy, it is straight forward to implement registered instruments in Bitcoin, e.g. using multi-signature outputs that require the signature of a trusted third party. However it is impossible to implement a true digital bearer instruments based on a system administered by centralized third party.
 
-Bitcoin's solution to the double spending problem is the simulation of a logically centralized timestamping server with a decentralized P2P network that is maintaining a replicated tamper-evident transaction log with a consensus rule based on the largest accumulated amount of proof-of-work. Transactions that have been added to the blockchain become increasingly expensive to revert. Hence, data that is added to a transaction, e.g. by using a null data output as discussed in Sec. \ref{sec:tx}, which ends up in the blockchain becomes publicly notarized, and with every additional block, censorship becomes more expensive. Hence, Bitcoin provides a practically immutable open access global publication system.
+% \subsubsection{Programmable Money}
 
-\subsubsection{A New Design Space for Distributed Systems}
+% The notion of programmable money has two aspects from the perspective of Bitcoin. First, the existence of Bitcoin Script allows to couple the spending of coins to various conditions. The most versatile method is the usage of multi-signature outputs in combination with oracles. Oracles are services that sign transactions based on some conditions, and can be used to condition payments on off-chain events. Second, due to the nature of bitcoins being digital bearer instruments, machines with access to secure key storage are able to make payments autonomously.  
 
-Bitcoin can be used as a platform to build distributed applications on top. The foundations for this are Bitcoin as programmable money and Bitcoin as an immutable publication system. In addition Bitcoin has been the basis for an emerging field typically termed Blockchain Technology or Distributed Ledger Technology. This incorporates alternative cryptocurrencies, but also P2P networks designed specifically for other (decentralized) applications. One of the main inspiration thereby is the introduction of economic incentives on protocol level. Furthermore, the transition from client-server architectures to peer-to-peer networks with rules \emph{enforced} by cryptography and economic incentives paves the way to shared platform ownership.
+% \subsubsection{Immutable, Censorship-resistant Publication System}
+
+% Bitcoin's solution to the double spending problem is the simulation of a logically centralized timestamping server with a decentralized P2P network that is maintaining a replicated tamper-evident transaction log with a consensus rule based on the largest accumulated amount of proof-of-work. Transactions that have been added to the blockchain become increasingly expensive to revert. Hence, data that is added to a transaction, e.g. by using a null data output as discussed in Sec. \ref{sec:tx}, which ends up in the blockchain becomes publicly notarized, and with every additional block, censorship becomes more expensive. Hence, Bitcoin provides a practically immutable open access global publication system.
+
+% \subsubsection{A New Design Space for Distributed Systems}
+
+% Bitcoin can be used as a platform to build distributed applications on top. The foundations for this are Bitcoin as programmable money and Bitcoin as an immutable publication system. In addition Bitcoin has been the basis for an emerging field typically termed Blockchain Technology or Distributed Ledger Technology. This incorporates alternative cryptocurrencies, but also P2P networks designed specifically for other (decentralized) applications. One of the main inspiration thereby is the introduction of economic incentives on protocol level. Furthermore, the transition from client-server architectures to peer-to-peer networks with rules \emph{enforced} by cryptography and economic incentives paves the way to shared platform ownership.
 
 
 \subsection{Challenges and Developments}
@@ -204,22 +233,22 @@ Bitcoin has two main parameters which directly influence throughput, i.e. the nu
 \paragraph{Latency} The time until a transaction is \emph{confirmed}, i.e. the time until the transaction is included into a valid block, is roughly 10 min in expectation, but may be longer if the network load is high and a transaction provides not enough fees. For transactions of higher value it is advisable to wait for more than one confirmation, i.e. to wait until the block is sufficiently deep in the blockchain, and reorganization attacks become unfeasible. The standard number of confirmations, as stated in the original white paper, is six which translates to one hour. 
 \paragraph{Bootstrap time} A node that joins the network has to download and process the entire transaction history. This bootstrap time scales linearly with time and is already on the order of days.
 
-At first sight it seems that Bitcoin is by no means able to provide a global payment network. However, there are multiple developments and approaches to scalability. One is to decrease the data that has to be stored per transaction. Segregated witness \parencite{bip141} and new, compressible signature schemes are examples. Another is to increase the block size limit. However this change would involve a hard fork, meaning that non-updated clients would discard the new blocks resulting into two chains, and effectively two currencies. Moreover, increasing the block size or decreasing the latency has two important side effects. First, it increases the load of nodes due to more traffic, increased demand for validation, and storage. Second, due to relatively longer propagation times the rate of orphaned blocks, i.e. blocks that do not end up in the main chain, would increase which would lead to decreasing miner profitability and thus to an increased centralization of mining. Approaches to mitigate this problem is to include or at least compensate orphaned blocks \parencite{kiayias2016trees,Lewenberg2015,Sompolinsky2015} or to allow a block to reference multiple parents, leading to a directed acyclic graph (DAG) instead of a chain.
+At first sight it seems that Bitcoin is by no means able to provide a global payment network. However, there are multiple developments and approaches to scalability. One is to decrease the data that has to be stored per transaction. Segregated witness \parencite{bip141} and new, compressible signature schemes are examples. Another is to increase the block size limit. However this change would involve a hard fork, meaning that non-updated clients would discard the new blocks resulting into two chains, and effectively two currencies. Moreover, increasing the block size or decreasing the latency has two important side effects. First, it increases the load of nodes due to more traffic, increased demand for validation, and storage. Second, due to relatively longer propagation times the rate of orphaned blocks, i.e. blocks that do not end up in the main chain, would increase which would lead to decreasing miner profitability and thus to an increased centralization of mining. Approaches to mitigate this problem is to include or at least compensate orphaned blocks \parencite{kiayias2016trees,Lewenberg2015,Sompolinsky2015} or to allow a block to reference multiple parents, leading to a \ac{DAG} instead of a chain.
 
 Another suggestion is to use proof-of-work only for leader selection \parencite{194906} or group assignment \parencite{DBLP:journals/corr/Kokoris-KogiasJ16} in order to establish temporary identities to use a traditional and faster signature-based byzantine fault tolerant consensus protocol for block ordering. 
 
-Ideally, the performance of a distributed system increases with the number of nodes. The traditional method from distributed databases is known as sharding. Thereby, the network is partitioned into smaller committees, each of which processes a disjoint subset of transactions, the shards. However, currently there is no sharding protocol that provides the same security properties as Bitcoin.
+Ideally, the performance of a distributed system increases with the number of nodes. The traditional method from distributed databases is known as sharding (e.g. Google's Spanner \parencite{Corbett2012Spanner}). Thereby, the network is partitioned into smaller committees, each of which processes a disjoint subset of transactions, the shards. Sharding in byzantine environments, however, is an open problem \parencite{croman2016scaling}, and has gained interest in the research community \parencite{Luu2016Sharding,Gencer2016Aspen}.
  
-Besides changing Bitcoin itself it is possible to achieve higher transaction rates and almost instant confirmations with systems built on top. We will discuss this approach in more detail in chapter \parencite{sec:m2m}.
+Besides changing Bitcoin itself it is possible to achieve higher transaction rates and almost instant confirmations with systems built on top. We will discuss this approach in more detail in chapter \parencite{sec:goingoffchain}.
  
 \subsubsection{Privacy}
 \label{sec:crypto_chall_privacy}
 
-Bitcoin provides pseudonymity due to the fact that bitcoin addresses are not linked to real identities, but to self-generated public keys. Every user can create any number of public keys and today most wallet software avoids the reuse of bitcoin addresses. This means change is sent to a newly generated address. However, the blockchain provides a complete and public visible history of every transaction.  Multiple studies have shown that individual profiles can be recovered from the transaction graph \parencite{Ron2013,Androulaki2013,Reid2013,Babaioff:2012:BRB:2229012.2229022,fi5020237,Spagnuolo2014}.
+Bitcoin provides pseudonymity due to the fact that bitcoin addresses are not linked to real identities, but to self-generated public keys. Every user can create any number of public keys and today most wallet software avoids the reuse of bitcoin addresses. This means change is sent to a newly generated address. However, the blockchain provides a complete and public visible history of every transaction. Multiple studies have shown that individual profiles can be recovered from the transaction graph \parencite{Ron2013,Androulaki2013,Reid2013,Babaioff:2012:BRB:2229012.2229022,fi5020237,Spagnuolo2014}.
 
 If this profile can be linked to a real identity at the edges, i.e. at the exchanges or a merchant, privacy is completely lost. There have already been companies founded that specialize on analyzing the transaction graph\footnote{The most well known are Skry (https://skry.tech) and Chainalysis (https://www.chainalysis.com).}.
 
-Privacy is also important for fungibility. In Bitcoin every coin has a public history, because every UTXO is the edge of a graph. If coins can be connected to illicit usage or theft, regulated parties may not be able to accept them. This means the value of particular coins might be less than others which breaks fungibility and could lead to a deterioration of trust in Bitcoin as a whole.
+Privacy is also important for fungibility. In Bitcoin every coin has a public history, because every \ac{UTXO} is the edge of a graph. If coins can be connected to illicit usage or theft, regulated parties may not be able to accept them. This means the value of particular coins might be less than others which breaks fungibility and could lead to a deterioration of trust in Bitcoin as a whole.
 
 Furthermore, there is a privacy risk on the network level by observing from which node a particular transaction originates \parencite{Koshy2014,Biryukov:2014:DCB:2660267.2660379}.
 
@@ -253,7 +282,7 @@ There is a discord in the community concerning the question if hard forks are a 
 
 \subsubsection{Environmental Footprint}
 
-Mining bitcoins is energy-intensive on purpose. The mining process ensures scarcity and integrity. \cite{6912770} estimated the combined electricity consumption of Bitcoin miners to be comparable to the energy consumption of Ireland. Since the time of this estimation, in early 2014, until now, in Q3 2016, the hashing rate has increased by a factor of more than one hundred. Although mining hardware has become more efficient, it is highly probable that the energy consumption has increased further.
+Mining bitcoins is energy-intensive on purpose. The mining process ensures scarcity and integrity. \cite{6912770} estimated the combined electricity consumption of Bitcoin miners to be comparable to the energy consumption of Ireland. Since the time of this estimation, in early 2014, until now, in Q4 2016, the hashing rate has increased by a factor of more than one hundred. Although mining hardware has become more efficient, it is highly probable that the energy consumption has increased further.
 
 Other consensus protocols for decentralized cryptocurrencies have been proposed that omit the continuous expenditure of energy. The most discussed approach is proof-of-stake \parencite{pos2011}. The intuition behind proof-of-stake is that each participant has voting power according to her stake in the system, i.e. the number of coins she owns, instead of voting power according to computing power in the proof-of-work scheme. Simple protocols based on this idea have been shown to be flawed \parencite{poelstra2014}. More complex protocols including security deposits and the ability to punish dishonest participants have been developed recently \parencite{kiayias2016,bentov2016snowwhite}. However, thus far, there no implementations of these advanced protocols available. 
 
@@ -261,32 +290,47 @@ Other consensus protocols for decentralized cryptocurrencies have been proposed 
 
 % Silk Road \parencite{ADD:ADD3709,popper2015digital}, Money Laundering \parencite{bryans2014bitcoin,6805780}, Ransom ware, Botnets \parencite{Ali2015}
 
+\begin{table}\footnotesize
+  \centering
+  \begin{tabularx}{\textwidth}{ p{1.5cm} p{4.5cm} X }
+    \toprule
+    \textbf{Challenge} & \textbf{Description} & \textbf{Approaches} \\
+    \midrule
+    Scalability & Max. throughput limited to less than 7 tx/s & Off-Chain payments, \ac{DAG}s, sharding \\
+    Privacy & Public history allows analysis and potential identification  & Mixing, homomorphic encryption, zero-knowledge proofs  \\
+    Usability & Handling of cryptographic keys, comprehensibility, volatility & Covenants, education, integrated applications  \\
+    Governance & Decision making in decentralized systems & Advisory board, public commenting, consensus on evaluation criteria  \\
+    Environmental Footprint & Proof-of-work is energy intensive & Proof-of-stake, proof-of-space \\
+    \bottomrule
+  \end{tabularx}
+  \caption{Summary of Bitcoin challenges and respective approaches.}
+  \label{tbl:crypto:challenges}
+\end{table}
 
-\section{Building Applications beyond Currency}
+
+\subsection{Building Applications beyond Currency}
 \label{sec:apps_beyond_currency}
 
-In this section we will discuss how Bitcoin and the underlying technological paradigm, the blockchain, can be used as a platform for applications beyond digital currency. 
+In this section we will discuss how Bitcoin and the underlying technological paradigm, the blockchain, can be used as a platform for applications beyond electronic cash. 
+As Marc Andreessen put in an op-ed article in the New York Times: "Bitcoin gives us, for the first time, a way for one Internet user to transfer a unique piece of digital property to another Internet user, such that the transfer is guaranteed to be safe and secure, everyone knows that the transfer has taken place, and nobody can challenge the legitimacy of the transfer. The consequences of this breakthrough are hard to overstate" \cite{andreessen2014}.
 
+Indeed, already in late 2010, the Bitcoin community targeted a another type of digital property: domain names
+\footnote{https://bitcointalk.org/index.php?topic=1790.0}. But how to implement a domain name system on Bitcoin?
 
-
-As Marc Andreessen put in an op-ed article in the New York Times: \emph{Bitcoin gives us, for the first time, a way for one Internet user to transfer a unique piece of digital property to another Internet user, such that the transfer is guaranteed to be safe and secure, everyone knows that the transfer has taken place, and nobody can challenge the legitimacy of the transfer. The consequences of this breakthrough are hard to overstate} \cite{andreessen2014}.
-
-Indeed, already in late 2010, the Bitcoin community targeted a another type of digital property: domain names (https://bitcointalk.org/index.php?topic=1790.0). But how to implement a domain name system on Bitcoin?
-
-\subsection{Alternative Coins}
+\subsubsection{Altcoins}
 One approach is to bootstrap a new, application-specific system. In April 2011, the first block of \emph{Namecoin} was mined. Namecoin is a fork of Bitcoin with a transaction structure adapted to need of a domain lookup system. Then there is the question, how to secure the system? In a proof-of-work-based system there has to be enough decentralized hashing power to make 51\% attacks unfeasible. Due to the enormous hashing power of the Bitcoin network, there are essentially two possibilities for another proof-of-work-based system: (1) The use of an Bitcoin-incompatible proof-of-work schema and boostrapping an entire new network, or (2) merged-mining which allows Bitcoin miners to re-use their proof-of-work to secure the alternative coin concurrently. 
 Namecoin was the first merge-mined coin, and the network is still running. \cite{kalodner2015empirical} provide an interesting empirical investigation of Namecoin. 
 
-\subsection{Colored Coins}
+\subsubsection{Colored Coins}
 \label{sec:coloredcoins}
 
 The idea of colored coins is to taint a bitcoin, i.e. a particular transaction output, in order to attach an external value or meaning to it, independent of its bitcoin value \parencite{coloredcoins} The technique has been used to issue and track/trade securities such as company shares and stocks, as well gift cards on the Bitcoin blockchain. There have been different non-interoperable protocols developed and are used in practice. Typically colored coin transactions utilize a null-data output for protocol instructions. Thus, colored coins are transparent for regular Bitcoin clients.
 
-The problem with securities as colored coins is that those are not digital bearer assets, since they are aways augmented by an issuing counterparty\footnote{See \parencite{swanson2015} for a detailed discussion.}. This is a very important point which is often neglected when various assets are \emph{tokenized and put on a blockchain}. This discussion will come up at a later point again when we discuss smart property.
+The problem with securities as colored coins is that those are not digital bearer assets, since they are aways augmented by an issuing counterparty\footnote{See \parencite{swanson2015} for a detailed discussion.}. This is a very important point which is often neglected when various assets are \emph{tokenized and put on a blockchain}.
 
-\subsection{Virtual Chains and Meta Coins}
+\subsubsection{Virtual Chains and Meta Coins}
 
-Virtual chains can be interpreted as embedded consensus system that operate on a layer on top of Bitcoin. Bitcoin is used only for proof-of-publication of virtual chain instructions. The term virtual chain was introduced and formalized as part of Blockstack, the technology stack on which OneName has been built (see \ref{sec:ecoonename}), after switching from the Namecoin blockchain \parencite{ali2016blockstack}. 
+Virtual chains can be interpreted as embedded consensus system that operate on a layer on top of Bitcoin. Bitcoin is used only for proof-of-publication of virtual chain instructions. The term virtual chain was introduced and formalized as part of Blockstack, the technology stack on which OneName is built (c.f. \ref{sec:ecoonename}), after switching from the Namecoin blockchain \parencite{ali2016blockstack}. 
 
 A similar approach is used by meta coins such as Mastercoin (now Omni) and Counterparty to build a general purpose asset and smart contract platform on top of Bitcoin, and thus leverage the security properties of the Bitcoin blockchain. 
 
@@ -294,7 +338,7 @@ However, these embedded consensus systems can not provide the same level of ligh
 
 \subsection{Sidechains}
 Sidechains are separate networks like alternative coins, however the value of those coins is \emph{pegged} to the value of bitcoins \parencite{backenabling}. The idea is, that bitcoins can be frozen on the Bitcoin blockchain, and be unlocked on the sidechain. At a later stage the sidechain coin can be frozen on the sidechain and again unlocked on the mainchain. Thus, the sidechain does not need to bootstrap value.
-In order to allow a trustless \emph{two-way peg}, Bitcoin and the sidechain must be able to perform simplified payment verification of transactions in the other chain. Bitcoin's scripting language does not yet allow SPV verification. A federated sidechain has been introduced by Blockstream\footnote{https://blockstream.com/2015/10/12/introducing-liquid/} in order to provide fast transfers between Bitcoin exchanges. Furthermore, SPV verification of Bitcoin transactions in form of an Ethereum contract has been implemented\footnote{http://btcrelay.org/}.
+In order to allow a trustless \emph{two-way peg}, Bitcoin and the sidechain must be able to perform simplified payment verification of transactions in the other chain. Bitcoin's scripting language does not yet allow SPV verification. A federated sidechain has been introduced by Blockstream\footnote{https://blockstream.com/2015/10/12/introducing-liquid/} in order to provide fast transfers between Bitcoin exchanges. Furthermore, \ac{SPV} of Bitcoin transactions in form of an Ethereum contract has been implemented\footnote{http://btcrelay.org/}.
 
 \subsection{Non-currency Blockchains}
 
@@ -303,27 +347,27 @@ Alternative blockchains that do not issue their own currency in order to incenti
 
 %\section{OPTIONAL: The Cambrian Explosion of Cryptocurrencies}
 
-\section{Ethereum: Towards a World Computer}
+\section{Ethereum: Platform for Smart Contracts and Decentralized Applications}
 \label{sec:ethereum}
 
 In \ref{sec:apps_beyond_currency} we have seen that, given Bitcoin, there are essentially two approaches to build a new blockchain-based decentralized application: Building on an abstracted layer on top (virtual chains, meta coins, colored coins), or building a new network aside (altcoins, sidechains) of Bitcoin. Since Bitcoin nodes are blind to overlay consensus rules, light client protocols with comparable security to simplified payment verification are not possible, and overlay nodes have to keep track of all transactions. Altcoins in contrast face the issue that they have to bootstrap an entire new network.
 
-Ethereum aims to solve this dilemma by providing a blockchain-based platform for building decentralized applications. As the white paper states: \emph{Ethereum does this by building what is essentially the ultimate abstract foundational layer: a blockchain with a built-in Turing-complete programming language, allowing anyone to write smart contracts and decentralized applications where they can create their own arbitrary rules for ownership, transaction formats and state transition functions} \parencite{ethereumWhite}.
+Ethereum aims to solve this dilemma by providing a blockchain-based platform for building decentralized applications. As the white paper states: "Ethereum does this by building what is essentially the ultimate abstract foundational layer: a blockchain with a built-in Turing-complete programming language, allowing anyone to write smart contracts and decentralized applications where they can create their own arbitrary rules for ownership, transaction formats and state transition functions" \parencite{ethereumWhite}.
 
-The idea of Ethereum was described by Vitalik Buterin in 2013. The crowdsale which started in July 2014 collected more than \$18 million worth of bitcoin. One year later, in July 2015, the initial release of the Ethereum network went online. 
+The idea of Ethereum was described by Vitalik Buterin in 2013. The crowdsale (c.f. Sec. \ref{sec:eco:crowdsale}) which started in July 2014 collected more than \$18 million worth of bitcoin. One year later, in July 2015, the initial release of the Ethereum network went online. 
 
-In July 2016, Ether, the native cryptocurrency of Ethereum, is valued at more than \$10, and has a market capitalization of more than \$1 billion. According to Ethernodes\footnote{\url{https://ethernodes.org}}, there are almost 10,000 Ethereum nodes globally. Furthermore, private Ethereum network are being implemented by various big corporation to test blockchain-based applications. This makes Ethereum the second most important blockchain platform next to Bitcoin.
+In July 2016, ether, the native cryptocurrency of Ethereum, is valued at more than \$10, and has a market capitalization of more than \$1 billion. According to Ethernodes\footnote{\url{https://ethernodes.org}}, there are almost 10,000 Ethereum nodes globally. Furthermore, private Ethereum network are being implemented by various big corporation to test blockchain-based applications. This makes Ethereum the second most important cryptocurrency beside Bitcoin.
 
 In this section we will introduce Ethereum in particular by focusing on its main differences to Bitcoin. 
 
 \subsection{The Technology}
 \label{sec:ethereum:tech}
 
-The review of Ethereum's technology is mainly based on the white paper \parencite{ethereumWhite} and yellow paper \parencite{wood2014ethereum}. 
+The review of Ethereum's technology is based on the white paper \parencite{ethereumWhite} and yellow paper \parencite{wood2014ethereum}. 
 
 \subsubsection{Accounts, Contracts and Transactions}
 \label{sec:ethereum:tech:tx}
-As discussed in Sec. \ref{sec:tx}, Bitcoin is based on the UTXO model. Transactions spend one or more UTXO and create one or more UTXOs. The implicit global (consensus) state , emerging from the blockchain, is the set of UTXOs. In contrast, Ethereum uses the more intuitive model of accounts, which keep track of an ether balance. There are two types of accounts: externally owned accounts (e.g. user accounts), and internal accounts, called contracts. Externally owned accounts are authenticated by public key cryptography, and can be used to instruct the network by means of transactions. Contracts are arbitrary programs formed by a Turing-complete instruction set, persistent storage, and an ether balance. These instances of computer programs executed on a Blockchain network are often called \emph{smart} contracts, since they can be used to simulate third party contract dispute mediation. However, they are just computer programs and do not necessarily implement contractual terms between parties.
+As discussed in Sec. \ref{sec:tx}, Bitcoin is based on the \ac{UTXO} model. Transactions spend one or more \ac{UTXO} and create one or more \ac{UTXO}s. The implicit global (consensus) state , emerging from the blockchain, is the set of \ac{UTXO}s. In contrast, Ethereum uses the more intuitive model of accounts, which keep track of an ether balance. There are two types of accounts: externally owned accounts (e.g. user accounts), and internal accounts, called contracts. Externally owned accounts are authenticated by public key cryptography, and can be used to instruct the network by means of transactions. Contracts are arbitrary programs formed by a Turing-complete instruction set, persistent storage, and an ether balance. 
 
 A transaction is a cryptographically signed data structure comprising the following data fields:
 \begin{lstlisting}[breaklines]
@@ -335,34 +379,26 @@ value: Value to be transferred to receiver in wei.
 init: Code to instantiate a new contract (optional).
 data: Input data. 
 \end{lstlisting}
-If all we wanted to do were to send ether from one account to another, then it would essentially suffice to specify \emph{to} and \emph{value}. However, due to the account model, the receiver could broadcast the transaction repeatedly to empty the sender's account. To avoid this \emph{replay attack}, the \emph{nonce} is used. Every transaction from an account can only use a nonce once. Transaction fees to miners are paid in gas. The amount of gas needed is determined by the Ethereum Virtual Machine (EVM), the exchange rate between gas and ether can be defined by the user with the \emph{gasPrice} data field. Miners are free decline the transaction if the exchange rate is set too low\footnote{A review of the gas economics can be found at \url{https://github.com/LeastAuthority/ethereum-analyses/blob/master/GasEcon.md}.}. The \emph{data} field is used to provide input for contract function calls. The \emph{init} field is used to provide the byte code to instantiate a new contract. 
+If all we wanted to do were to send ether from one account to another, then it would essentially suffice to specify \emph{to} and \emph{value}. However, due to the account model, the receiver could broadcast the transaction repeatedly to empty the sender's account. To avoid this \emph{replay attack}, the \emph{nonce} is used. Every transaction from an account can only use a nonce once. Transaction fees to miners are paid in gas. The amount of gas needed is determined by the \ac{EVM}, the exchange rate between gas and ether can be defined by the user with the \emph{gasPrice} data field. Miners are free to decline the transaction if the exchange rate is set too low\footnote{A review of the gas economics can be found at \url{https://github.com/LeastAuthority/ethereum-analyses/blob/master/GasEcon.md}.}. The \emph{data} field is used to provide input for contract function calls. The \emph{init} field is used to provide the byte code to instantiate a new contract.
 
 \subsubsection{Blockchain and Consensus}
 \label{sec:eth_blockchain}
 
-Ethereum block headers are much more complex than Bitcoin block headers. The block headers are composed of the following data fields:
-\begin{lstlisting}[breaklines]
-parentHash: Hash of the parent block.
-ommersHash: Hash of potential ommer blocks.
-beneficiary: Address for mining rewards and fees.
-stateRoot: Hash of state trie root.
-transactionsRoot: Hash of the transaction trie root.
-receiptsRoot: Hash of the receipts trie root.
-logsBloom: Bloom filter composed of indexable information.
-difficulty: (Mining) difficulty level.
-number: Number of ancestor blocks.
-gasLimit: Max gas a block can use.
-gasUsed: Total gas used by transactions in the block.
-timestamp: Unix timestamp
-extraData: Arbitrary data.
-mixHash: Used to verify Proof-of-Work.
-nonce: Used to verify Proof-of-Work.
-\end{lstlisting}
-It is important to note that Ethereum block headers do not have a fixed size and the minimal size is about 500 bytes. Ethereum uses a different Proof-of-Work algorithm than Bitcoin, which aims to be ASIC-resistant and GPU-friendly\footnote{See \url{https://github.com/LeastAuthority/ethereum-analyses/blob/master/PoW.md} for a review of \emph{Ethash}.}. The rationale behind is to enable commodity hardware (GPUs) to stay competitive. Moreover, Ethereum is scheduled to switch to a Proof-of-Stake consensus mechanism in 2017. 
+Similar to Bitcoin, Ethereum blocks entail a number of transactions. However, in contrast to Bitcoin, block headers commit to the current global state by including the hash of the state trie root. Each leaf node of the state trie corresponds to the current state of an account (see Fig. \ref{fig:ethbc}). This allows to efficiently prove the balance of an account, or the state of contract variables. However, it requires nodes to recalculate the trie with every transaction. Ethereum uses modified prefix trees (tries), called merkle-patricia trees, instead of simple merkle trees, in order to be able to efficiently recalculate the state trie based on the effects of individual transactions which only affect a tiny subset of all accounts.
 
-Inspired by the Greedy Heaviest-Observed Sub-Tree (GHOST) protocol \parencite{cryptoeprint:2013:881}, Ethereum rewards ommer blocks to disincentive block withholding (i.e. selfish mining \parencite{Eyal2014}). However, in contrast to GHOST, transactions in ommer blocks have no effect, i.e they are not processed and have to be included in another block. This allows a targeted block generation rate of 15s.  
+A typical Ethereum block header has a size of approximately 500 bytes, more than 6 times the size of a Bitcoin block header.
 
-Ethereum commits not only the transactions to the block header, but also the current \emph{world state} and \emph{transaction receipts}. The world state comprises all account balances, the contract code and their storage. Since individual transactions affect only a small subset of the world state, it is useful to use an authenticated data structure that allows to efficiently modify subsets. Thus, instead of simple merkle trees, Ethereum uses modified prefix trees (tries), called merkle-patricia trees.
+
+\begin{figure}[!t]
+    \centering
+    \includegraphics[width=\linewidth]{./externalized/ethbc.png}
+    \caption{Simplified structure of the Ethereum blockchain \parencite{EthDevTut}.}
+    \label{fig:ethbc}
+  \end{figure} 
+
+ Ethereum uses a different proof-of-work algorithm than Bitcoin, which aims to be ASIC-resistant and GPU-friendly\footnote{See \url{https://github.com/LeastAuthority/ethereum-analyses/blob/master/PoW.md} for a review of \emph{Ethash}.}. The rationale behind is to enable commodity hardware (GPUs) to stay competitive. Moreover, Ethereum is scheduled to switch to a Proof-of-Stake consensus mechanism in 2017. 
+
+Inspired by \ac{GHOST} protocol \parencite{cryptoeprint:2013:881}, Ethereum partially rewards ommer blocks to disincentive block withholding (i.e. selfish mining \parencite{Eyal2014}). However, in contrast to \ac{GHOST}, transactions in ommer blocks have no effect, i.e they are not processed and have to be included in another block. This allows a targeted block generation rate of 15s.  
 
 \subsubsection{Light clients}
 \label{sec:eth_lightclient}
@@ -370,15 +406,59 @@ Ethereum commits not only the transactions to the block header, but also the cur
 Similar to Bitcoin we define a light client to be a client that only downloads block headers. Because of the extensive use of tries and their root commitment to the block header, Ethereum light clients are much more powerful than Bitcoin light clients. 
 Most importantly, due to the state trie, an Ethereum node can directly prove an account balance to a light client. Furthermore, logs can be used in contracts to make light clients aware of particular events. A full node is then able to prove the exact content of the event.
 
-At time of writing, the first light client implementation\footnote{https://github.com/zsfelfoldi/go-ethereum/wiki/Light-Ethereum-Subprotocol-\%28LES\%29} just entered public testing.
+At time of writing, the first light client implementation\footnote{\url{https://github.com/zsfelfoldi/go-ethereum/wiki/Light-Ethereum-Subprotocol-\%28LES\%29}} just entered public testing.
 
 \subsubsection{The Ethereum Virtual Machine}
 
-Ethereum allows to deploy stateful Turing-complete contracts. However, Turing-completeness implies that a contract may be an infinite loop which would render the entire network unusable. Thus, the Ethereum Virtual Machine employs the concept of gas. Every execution of an instruction in th EVM costs a specified amount of gas. If the execution of a transaction runs of out gas the effect of the transaction is rolled back, but the gas is still consumed. Hence, the infinite loop problem is avoided by applying economics.
+Ethereum allows to deploy stateful Turing-complete contracts. These programs are executed by the \ac{EVM}. Essentially, the entire Ethereum network emulates a single instance of a trusted virtual machine. 
+However, Turing-completeness implies that a contract may be an infinite loop which would render the entire network unusable. Thus, the \ac{EVM} employs the concept of gas. Every execution of an instruction in the \ac{EVM} costs a specified amount of gas. If the execution of a transaction runs of out gas the effect of the transaction is rolled back, but the gas is still consumed. Hence, the infinite loop problem is avoided by applying economics, and code execution is atomic.
 
-Developers usually do not work with the stack-based low-level scripting language, but with higher-level abstractions. Currently there exist three of those programming languages, which are all inspired by a particular traditional programming language. The most popular is Solidity which is inspired by JavaScript. We will use Solidity to write smart property contracts in Section \ref{sec:dao}. In addition, there is Serpent (Python) and LLL (Lisp).
+Developers usually do not work with the stack-based low-level scripting language, but with higher-level abstractions. Currently there exist three of those programming languages, which are all inspired by a particular traditional programming language. The most popular is Solidity which is inspired by JavaScript. We will use Solidity to write smart property contracts in Section \ref{sec:economicobjects}. In addition, there is Serpent (Python) and LLL (Lisp).
 
-\subsection{Novel Contributions}
+%\subsection{Novel Contributions}
+
+\subsection{Smart Contracts and Decentralized Applications}
+
+Ethereum contracts are programs that are evaluated by the \ac{EVM}, and are thus executed by a trusted computing instance. Hence, these programs can be used to emulate functionalities that are traditionally provided by \ac{TTP}s. The term \emph{contract} for these programs originates from the concept of \emph{smart contracts} introduced in \parencite{szabo1997}. In this sense, smart contracts are self-enforcing contracts implemented as computer code. A simple example of a smart contract implementing a fungible currency with a fixed supply is given below\footnote{The code is inspired by \url{https://www.ethereum.org/token} accessed 2016-12-19}:
+
+\begin{minted}{javascript}
+ 
+contract MyCurrency {
+  
+    uint256 public totalSupply;
+    uint256 public fx;
+
+    /* Provides a ledger mapping addresses to balances*/
+    mapping (address => uint256) public balanceOf;
+  
+    /* Initializes MyCurrency with total supply and price in wei */
+    function MyCurrency(uint256 _totalSupply, uint256 _fx) {
+        totalSupply = _totalSupply; 
+        fx = _fx;
+    }
+    
+    /* Allows to buy MyCurrency with ether*/
+    function buyMyCurrency() payable {
+        if (totalSupply < msg.value/fx) {
+            throw;
+        }
+        else {
+            balanceOf[msg.sender] += msg.value/fx;     
+        }       
+    }
+
+    /* Send coins */
+    function transfer(address _to, uint256 _value) {
+        if (balanceOf[msg.sender] < _value) throw;           
+        if (balanceOf[_to] + _value < balanceOf[_to]) throw;
+        balanceOf[msg.sender] -= _value;   
+        balanceOf[_to] += _value;                            
+    }
+}
+\end{minted}
+
+The contract is expressed in Solidity and provides a ledger keeping track of balances. When instantiated the total supply and the exchange rate between \emph{MyCurrency} and ether (or wei) are set. \emph{MyCurrency} can then be bought from the contract using the \emph{buyMyCurrency} function. Afterwards the buyer can send \emph{MyCurrency} to arbitrary addresses \emph{transfer} function. All functions are invoked by sending a transaction to the network, and the contract code can transaction data. For example \texttt{msg.sender} provides the Ethereum address from which the transaction originates, and \texttt{msg.value} provides the value in wei of the transaction. Thus, all Ethereum contracts can leverage the built-in public key infrastructure for permissions and authentication, and act as custodians of funds. The simple example could be easily extended with a more interesting monetary policy or an auctioning function. However, many smart contracts need to act on external data, and are thus dependent on the trustworthiness of the data provider. An example could be a data-driven smart contract for application in a pharmaceuticals supply chain. Many pharmaceuticals need to stay within certain temperature limits. A trusted temperature sensor could provide temperature measurement data to the contract which only pays the supplier if the temperature was within the limits. 
+
 
 \subsection{Challenges and Developments}
 
@@ -391,38 +471,32 @@ The verifier's dilemma is presented in \parencite{Luu:2015:DIC:2810103.2813659}.
 
 \subsubsection{Contract Security}
 
-High-level contract programming languages like Solidity give the impression that contract development is easy. However, contract development has unique challenges. Since contracts mostly have a financial element, as well as multi-party interactions, there is a need for \emph{game-theoretic debugging}, in order to ensure incentive compatibility. \cite{delmolino2015programmer} and \cite{delmolino2015step} discuss several possible issues that came up during the first contract development lab class at Cornell University. A more recent example is \emph{The DAO} contract\footnote{https://github.com/slockit/DAO} which collected approximately \$150 million worth of ether. \cite{mark2016} pointed out several game-theoretic attack vectors. Later, an attacker combined two non-game-theoretic, EVM-related bugs in order to attempt to claim more than \$50 million worth of ether \parencite{daian2016dao}. \cite{cryptoeprint:2016:633} describe three security bugs in contracts (one of them, mishandling of exceptions, was part of the \emph{The DAO attack} and present evidence for numerous appearance in deployed contracts.
-
-\section{Permissioned Blockchains}
-
-Starting in 2014, a common theme in the financial service industry has been \emph{to embrace the blockchain}, however, without the currency aspect. This lead to the notion of permissioned blockchains, and several start ups, large corporations, and industry consortia have formed around this approach. The main point of permissioned blockchains is that transaction validators (in the sense of miners) are permissioned and known entities, instead of anonymous ad-hoc miners. Non-validating nodes can have adjustable access rights. Individual users, i.e transaction originators, are also permissioned. This can be done either directly identify individuals or by privacy-preserving permissioning \parencite{hardjono2016chain,Hardjono:2016:CCC:2899007.2899012}.
-
-Permissioned blockchains can be implemented in single companies, but more importantly across company and industry boundaries. Since validators are fixed and known entities there is no need for a mining process, and no need for incentivization through minting new coins. Thus, permissioned blockchains usually do not have a native token or cryptocurrency. Instead of Proof-of-Work-based consensus, permissioned blockchains are typically based on variants of traditional byzantine fault-tolerant consensus protocols based on leader election such as PBFT \parencite{castro1999practical} or Paxos \parencite{lamport2001paxos}. A prominent representative, Hyperledger \parencite{cachin2016architecture}, aims for a modular architecture that enables the replacement of a particular consensus protocol.
-
-\cite{swanson2015consensus} argues that only permissioned blockchains are suitable to track \emph{off-chain assets}, i.e. assets which are not entirely governed by the blockchain but involve a counterparty. The main reason is that legally-binding transfers of off-chain assets should not be subject to possible blockchain reorganizations caused by anonymous non-accountable miners. However, while this risk exists in principle, practice the causation of long-range reorganization attacks is very expensive, and has not been observed yet.
+High-level contract programming languages like Solidity give the impression that contract development is easy. However, contract development has unique challenges. Since contracts mostly have a financial element, as well as multi-party interactions, there is a need for \emph{game-theoretic debugging}, in order to ensure incentive compatibility. \cite{delmolino2015programmer} and \cite{delmolino2015step} discuss several possible issues that came up during the first contract development lab class at Cornell University. A more recent example is \emph{The DAO} contract\footnote{\url{https://github.com/slockit/DAO}} which collected approximately \$150 million worth of ether. \cite{mark2016} pointed out several game-theoretic attack vectors. Later, an attacker combined two non-game-theoretic, \ac{EVM}-related bugs in order to attempt to claim more than \$50 million worth of ether \parencite{daian2016dao}. \cite{cryptoeprint:2016:633} describe three security bugs in contracts (one of them, mishandling of exceptions, was part of the \emph{The DAO attack} and present evidence for numerous appearance in deployed contracts.
 
 
-\section{Comparison and Discussion}
+\section{Comparison}
 
-In the last two sections we presented the two most important public blockchains, Bitcoin and Ethereum. We presented Ethereum mainly by pointing out its differences to Bitcoin. In this section, we conclude with a comprehensive comparison in form of  Table \ref{tbl:btceth} and a discussion of particular perspectives.
+In the last two sections we presented the two most important cryptocurrencies, Bitcoin and Ethereum. 
+To conclude this presentation, we provide concise comparison and discussion. Table \ref{tbl:btceth} compares Bitcoin and Ethereum along a set of dimensions that have appeared explicitly and implicitly during the last two sections. Bitcoin's main scope is to provide a peer-to-peer electronic cash system. Therefore, focus is on security and decentralization. Further important goals are privacy and anonymity despite the public nature of the system. For many users Bitcoin has taken an additional role of traditional money besides acting as a medium of exchange, it provides a store of value. In order to keep those characteristics, the Bitcoin community\footnote{It is important to note that the Bitcoin community is a diverse set of actors with diverting goals.} is reluctant to controversial changes. From an original design perspective, ether is considered as fuel to provide incentives for a decentralized computing platform. However today, most transactions on the platform are purely financial transactions between externally owned accounts, and do not involve contracts. Even if contracts are involved, their nature is nevertheless mostly financial. This might change in the future. As a developer platform the focus is on ease of use and developer empowerment (c.f. accounts vs. \ac{UTXO}s, Bitcoin Script vs. Solidity). These characteristics sometimes oppose security as can be seen most prominently in the The DAO incident. Ethereum core developers follow a much more progressive agenda. For example Ethereum is much more open to \emph{hard forks}, protocol upgrades which have to be done by all network participants, in contrast to \emph{soft forks} which require only miners to upgrade. In fact, Bitcoin had his last hard fork, caused by a software bug, in March 2013\footnote{See \url{https://github.com/bitcoin/bips/blob/master/bip-0050.mediawiki} for a detailed description.}, whereas Ethereum had multiple hard forks in 2016. 
+Due to the employment of a modified version of the \ac{GHOST} protocol, Ethereum can handle a much higher block generation rate, and allows thus a higher transaction throughput. However, the higher block generation rate in combination with the larger header size leads also to higher bandwidth and storage requirements for light clients. Based on a block generation rate of $\frac{1}{10 min}$ and a header size of 80 bytes for Bitcoin, and a block generation rate of $\frac{1}{15 s}$ for Ethereum, the requirements for Ethereum are increased by a factor of 250. Another important difference is the monetary policy. Bitcoin is set with an issuance schedule following a geometric function, and accumulated issuance of approximately 21 million bitcoins. Ethereum currently has a fixed reward of 5 ether per block \parencite{ethmining}\footnote{Plus a possible reward for including a valid ommer block.}. The reward is not set decrease automatically as in Bitcoin. However, this will probably be changed with a future protocol update. 
 
-\begin{table}
+\begin{table}\footnotesize
 \resizebox{\textwidth}{!}{%
 	\begin{tabularx}{\textwidth}{ l  l  X  }
 		\toprule
-		& Bitcoin & Ethereum \\
+		& \textbf{Bitcoin} & \textbf{Ethereum} \\
 		\midrule
-		Main Scope & E-cash & Decentralized computing\newline platform\\
-		Focus & Security \& Decentralization & Ease of use \\
-		Development & Conservative & Progressive \\
-		Model & UTXO & Account \\
-		Stateful & No & Yes \\
-		Scripting & Restricted & Turing-complete \\
-		Block Rate & 10 min & 15 s \\
-		Header Size & 80 bytes & $>$500 bytes \\
-		Fees & Tx size & Instructions, storage etc. \\
-		Incentive Issues & Selfish mining & Verifier's dilemma \\
-		Monetary policy & Max 21 million & Uncertain \\
+		\textbf{Main Scope} & E-cash & Decentralized computing\newline platform\\
+		\textbf{Focus} & Security \& Decentralization & Ease of use \\
+		\textbf{Development} & Conservative & Progressive \\
+		\textbf{Model} & UTXO & Account \\
+		%\textbf{Stateful} & No & Yes \\
+		\textbf{Scripting} & Restricted & Turing-complete \\
+		\textbf{Block Rate} & 10 min & 15 s \\
+		\textbf{Header Size} & 80 bytes & $>$500 bytes \\
+		\textbf{Fees} & Tx size & Instructions, storage etc. \\
+		\textbf{Incentive Issues} & Selfish mining & Verifier's dilemma \\
+		\textbf{Monetary policy} & Max 21 million & Uncertain \\
 		\bottomrule
 	\end{tabularx}
 }
@@ -430,41 +504,45 @@ In the last two sections we presented the two most important public blockchains,
 \label{tbl:btceth}
 \end{table}
 
-\subsection{Scope and Ideology}
-
-Bitcoin's main scope is to provide a peer-to-peer electronic cash system. Therefore, focus is on security and decentralization. Further important goals are privacy and anonymity despite the public nature of the system. For many users Bitcoin has taken an additional role of traditional money besides acting as a medium of exchange, it provides a store of value. In order to keep those characteristics, the Bitcoin community\footnote{It is important to note that the Bitcoin community is a diverse set of actors with diverting goals.} is reluctant to controversial changes. From an original design perspective, ether is considered as fuel to provide incentives for a decentralized computing platform, the world computer. However today, most transactions on the platform are purely financial transactions between externally owned accounts, and do not involve contracts. Even if contracts are involved, their nature is nevertheless mostly financial. This might change in the future. As a developer platform the focus is on ease of use and developer empowerment (c.f. accounts vs. UTXOs, Bitcoin Script vs. Solidity, stateless vs. stateful). These characteristics sometimes oppose security as can be seen most prominently in the {The DAO} incident. Ethereum core developers follow a much more progressive agenda which might be described with trial and error. For example Ethereum is much more open to \emph{hard forks}, protocol upgrades which have to be done by all network participants, in contrast to \emph{soft forks} which require only miners to upgrade. In fact, Bitcoin had his last hard fork, caused by a software bug, in March 2013\footnote{See https://github.com/bitcoin/bips/blob/master/bip-0050.mediawiki for a detailed description.}, whereas Ethereum decided to employ a hard fork in order to return the stolen The DAO funds, and is scheduled for additional hard forks in the future. 
-
-\subsection{Blockchains and the End-to-End Principle}
+\subsection*{Blockchains and the End-to-End Principle}
 
 One of the main design principles that led to the success of today's Internet is the End-to-End (e2e) principle \parencite{Saltzer:1984:EAS:357401.357402}. The e2e principle states that \emph{intelligence} should be at the edges, at the top of a layered system. This implies the strict separation of application-specific matter and the actual means of communication and transport. This is what allows the uncountable applications and use cases of the Internet, and low cost for communication. Taking this perspective, what does it mean for blockchains? To answer this, we would have to define the basic function of a blockchain. Is it a decentralized, censorship-resistant publication platform? Is it a peer-to-peer value transfer system? Or is it general purpose decentralized state-transition system? We do not know yet, however all blockchains today employ the notion of a digital asset, i.e. value, that can be transferred between accounts augmented by public key cryptography. Therefore, we will take the perspective, that the basic functionality is a peer-to-peer value transfer system. Just as the Internet transfers duplicate-able information, a blockchain transfers non-duplicable information, i.e. digital scarcity. From this perspective Bitcoin follows the e2e principle. Particular applications, e.g. the transfer of a special asset, is done on a higher level (c.f. colored coins, meta coins and virtual chains), and logic is contained mainly in application-specific clients. In contrast, in Ethereum, every node is aware of every application.
 
-%\subsubsection{Oracles vs. On-chain Complexity}
 
+\subsection*{Internet of Things Perspective}
 
-\subsection{Internet of Things Perspective}
+There are two main considerations for the application in the \ac{IOT}. The first are requirements and capabilities of light clients, since most smart objects are resource constrained, and can not take part in a blockchain network as full nodes. The second are protocol upgrades in form of hard forks. Smart objects are mostly embedded devices with limited direct user interaction. In the future all kinds of objects might have wallets and transact autonomously with each other. In case of a hard fork every device has to be upgraded, since upgraded and not-upgraded objects are incompatible and transactions are essentially based on different currencies. However, who decides and who initiates an upgrade? Therefore, avoidance of hard forks could be very important for \ac{IOT} deployments.
 
-There are two main considerations for the application in the IoT. The first are requirements and capabilities of light clients, since most smart objects are resource constrained, and can not take part in a blockchain network as full nodes. The second are protocol upgrades in form of hard forks. Smart objects are mostly embedded devices with limited direct user interaction. In the future all kinds of objects might have wallets and transact autonomously with each other. In case of a hard fork every device has to be upgraded, since upgraded and not-upgraded objects are incompatible and transactions are essentially based on different currencies. However, who decides and who initiates an upgrade? Therefore, avoidance of hard forks could be very important for IoT deployments.
+\section{Permissioned Blockchains}
+
+Starting in 2014, a common theme in the financial service industry has been \emph{to embrace the blockchain}, however, without the currency aspect. This lead to the notion of permissioned blockchains, and several start ups, large corporations, and industry consortia have formed around this approach (c.f. Sec. \ref{sec:eco:consortia}). The main point of permissioned blockchains is that transaction validators (in the sense of miners) are permissioned and known entities, instead of anonymous ad-hoc miners. Non-validating nodes can have adjustable access rights. Individual users, i.e transaction originators, may also be permissioned. This can be done either directly identify individuals or by privacy-preserving permissioning \parencite{hardjono2016chain,Hardjono:2016:CCC:2899007.2899012}.
+
+Permissioned blockchains can be implemented in single companies, but more importantly across company and industry boundaries. Since validators are fixed and known entities there is no need for a mining process, and no need for incentivization through minting new coins. Thus, permissioned blockchains usually do not have a native token or cryptocurrency. Instead of proof-of-work-based consensus, permissioned blockchains are typically based on variants of traditional byzantine fault-tolerant consensus protocols based on leader election such as \ac{PBFT} \parencite{castro1999practical}. A prominent representative, Hyperledger \parencite{cachin2016architecture}, aims for a modular architecture that enables the replacement of a particular consensus protocol.
+
+\cite{swanson2015consensus} argues that only permissioned blockchains are suitable to track \emph{off-chain assets}, i.e. assets which are not entirely governed by the blockchain but involve a counterparty. The main reason is that legally-binding transfers of off-chain assets should not be subject to possible blockchain reorganizations caused by anonymous non-accountable miners. However, while this risk exists in principle, in practice the causation of long-range reorganization attacks is very expensive, and has not been observed yet.
+
+Table \ref{tbl:crypto:taxonomy} shows a taxonomy based on transaction validation (e.g. mining) and transaction access. Transaction access thereby means who can access transactions. Bitcoin and Ethereum are examples of permissionless and public blockchains. Transaction validation can be done by everyone and is incentivized by cryptocurrency rewards. Access regulation can be built on top of permissionless blockchains. For example colored coin transactions are able to conceal what is actually transacted to the parties involved. Furthermore, multisignature outputs that require the signature of an authorizing party can be used to regulate transactions on a permissionless blockchain. Permissioned blockchains employ authorized transaction processors instead of voluntary miners. Since transaction validators are fixed, they have to be secured against \ac{DoS} and other cybercriminal attacks. Permissioned blockchains are federated systems and can have public transaction access. An example would be the Interplanetary Database\footnote{\url{https://ipdb.foundation/}}. Security and censorship resistance of such systems are highly dependent on the number and diversity (in terms of incentives, location, legislation etc.), and the governance structure. Most permissioned blockchain projects can be classified as regulated or private, where all participants are permissioned in some form. This allows for greater control and privacy. On the other hand, the security model might approximate that of a traditional shared database \parencite{Narayanan2015private}.
+
+\begin{table}\footnotesize
+  \centering
+  \begin{tabularx}{\textwidth}{ p{0.5cm} p{1.5cm} p{4cm} p{4cm}  }
+    \toprule
+    & & \multicolumn{2}{c}{\textbf{Transaction validation}} \\
+    & &  \textbf{Permissioned} & \textbf{Permissionless} \\
+    \midrule
+    \multirow{3}{*}{\rotatebox[origin=c]{90}{\textbf{Transaction access}}} & \textbf{Public} & Transparency but no censorship resistance. Security by traditional means. \ac{DoS} Attacks possible. & Cryptocurrencies. Censorship resistance and security provided by cryptoeconomics \\
+    & \textbf{Regulated} & Stakeholders may have transparency and auditability. No Censorship resistance. & Regulated systems embedded in permissionless blockchains (e.g. authorized securities trading based on colored coins) \\
+    & \textbf{Private} & Access limited to transaction validators & Not applicable \\
+    \bottomrule
+  \end{tabularx}
+  \caption{Taxonomy of blockchain technology by transaction validation and transaction access based on \parencite{BitFuryPermissioned2015}.}
+  \label{tbl:crypto:taxonomy}
+\end{table}
 
 
 
 \section{Conclusion}
 
-%\section{Interfacing Blockchains}
+Bitcoin is the first implementation of an electronic cash system. Digital property has always been reliant on trusted third parties to prevent the double spending problem, and thus digital bearer instruments, such as electronic cash, were impossible. In contrast, Bitcoin is based on open source software that establishes a decentralized peer-to-peer network maintaining a blockchain, a public cryptographically- and thermodynamically-secured replicated database. Bitcoin is programmable money and can be used to express simple forms of self-enforcing smart contracts, and to reduce the need for trust in certain transactions. However, Bitcoin's architecture and programming model is restricted in order to keep the system decentralized, lean and secure. Ethereum is generalizing the blockchain concept to provide a decentralized trusted Turing-complete virtual machine with an integrated cryptocurrency that can act as a platform to implement arbitrary smart contracts and decentralized applications. Public permissionless blockchains currently have limitations concerning scalability, privacy, usability, governance, and their environmental footprint. However, researchers, industry and the open source community are working on improvements. 
 
-%\subsection{Full Nodes}
-%Full nodes take part in 
-
-%\subsection{Thin Clients}
-
-%\subsection{Web Services}
-
-% Internet status quo: Trust requirement into the service provider and dependency on a central system
-
-% Trust in crypto alone might be problematic since crypto could be broken some day.
-
-% Classic paper for security in DHTs is Sit et al. 2002. One key issue found is \emph{verification of node keys} that can be mitigated by a solution based on authentication.
-
-% MaidSafe uses username and password to self-authenticate. Data is stored self-encrypted in the network and nodes that store data proved by Proof-of-Resource are get paid in Safecoins. (When do I have to pay Safecoins? How do Safecoins get value?) 
-
-% \section{Further reading}
-% \cite{Bonneau2015,Tschorsch:2015:464}
+Cryptocurrencies are subject to network effects, and the technological underpinnings are only one factor for the success of one or the other. Thus, a consideration of the ecosystem is important.
