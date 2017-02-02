@@ -1,11 +1,32 @@
-\chapter{Discussion and Conclusion}
+\chapter{Conclusion}
 \label{sec:discussion}
 
-\section{Key Findings and Lessons Learned}
+\section{Key Findings}
+
+The Internet of Things has made a leap over the last decades. Smartphones have become ubiquitous in developed countries and developing countries are catching up. The scale of the smartphone supply chain made \ac{SoC}s, combining computing, memory and various communication technologies, cheap and pervasive. Cloud computing, in combination with the \emph{as-a-Service} business model, allows to scale backend infrastructure for connected devices without large capital requirements and expertise. These developments allowed manufacturers of traditional \emph{things} as well as start-ups to bring an ever growing number of connected devices to market. Connected devices in combination with artificial intelligence and data analytics have great potential to make life more comfortable and efficient, to save energy, optimize industrial manufacturing, and enable new business models. However, much value can only be unlocked, if connected devices and web services from various vendors are interoperable. Furthermore, connected devices pose a thread to individual as well as national security and privacy. 
+The prevailing architectural paradigm of the \ac{IOT} is a tight link between a connected device and a cloud service. Data is streamed from the device to a data center without control of the individual, and corporations have to maintain large data centers in order to keep connected devices functional over their lifetime. 
+Enabling devices to be more autonomous, i.e. to be less dependent on backend infrastructure, is a promising approach towards a more secure and sustainable \ac{IOT}. In analogy to how money, contracts, and the market enabled decentralization and specialization in the human economy, it can be expected that the same can be true for the machine economy. 
+
+Cryptocurrencies are based on cryptographic primitives, peer-to-peer network, and a consensus mechanism that employs economic (or game theoretic) considerations. This enables decentralized and global digital money and a payment network independent of any trusted third party. The technological underpinnings are vaguely conflated to the term \emph{blockchain technology}. Blockchain technology enables digital bearer instruments which can be controlled by cryptographic keys. Thus, machines are able to facilitate autonomous economic interactions. 
+The Bitcoin network was initiated in the beginning of 2009. At time of writing, the market capitalization of Bitcoin is on the order of \$10 billion. Due to its nature as open source software, Bitcoin gave rise to a flourishing ecosystem of alternative coins, start-up companies, and industry endeavors. Although, there are hundreds of alternative decentralized currencies Bitcoin's supremacy is unsolicited. Bitcoin transactions provide a built-in scripting language which allows to implement self-enforceable \emph{smart contracts}. One of the most basic, yet powerful, are multi-signature transactions enabling the implementation of trustless escrow contracts.
+
+In order to investigate the impact of cryptocurrencies on the \ac{IOT}, one the most foundational processes, the exchange of sensor data, and its business model manifestation Sensing-as-a-Service was selected. The unique pseudonymous Bitcoin addresses could be used to identify and address a sensor. Enabling a global and permissionless sensing platform with a built-in public-key infrastructure for data authentication and encryption. In a first prototypical system, Bitcoin was used as a medium of value \textbf{and} data exchange. Data payload was injected directly in Bitcoin transaction. This limits the maximal payload per transaction to 80 bytes. This is enough space for a typical data point, but already too little to use Bitcoin's native encryption scheme \ac{ECIES} for data encryption. Thus, transmitted sensor data would always be public. A severe problem for the S\textsuperscript{2}aaS scheme on one hand. However, on the other hand, a benefit for certain applications since the data gets authenticated, timestamped, and globally replicated. The broadcast-based peer-to-peer transport protocol and the proof-of-work-based consensus protocol lead to significant latency in the process. Depending on the sensor's trust in the payer, the process may take from seconds (unconfirmed transaction with double spending risk) to a period on the order of tens of minutes. Bitcoin transaction fees are, in principle, market-based. Increasing transaction volume in combination with a limited transaction throughput has lead to an increase in transaction fees. Due to the limitation in the block size, Bitcoin transaction fees are proportional to their size in bytes instead of their value. Thus, micropayments and data transactions are affected in particular, leading to transaction fees on the order of \$ 0.1 USD for the data exchange process. 
+
+The initial prototype illustrated the concept of an autonomous sensor earning money by selling (authenticated) measurement data on an open market, but pointed out the limitations concerning confidentiality, latency, and micropayments. These limitations can be mitigated by introducing an additional communication layer. Bitcoin's cryptographic primitives and the programmability of Bitcoin transactions allow to move most communication \emph{off-chain} without changes in the trust model. Bitcoin payment channels allow for instant micropayments between to parties based on a timelocked multi-signature escrow. This, means a payer locks funds (capacity of the channel) with a fixed payee. Updates of the balances, with a granularity of 1 satoshi (on the order of \$ 0.00001 USD), can then be made securely and instantly via a direct communication channel. S\textsuperscript{2}aaS, and in particular crowdsensing applications, require the collection of data points from a large number of individual sensors. Thus, direct payment channels between a data requester and each sensor is inhibiting in many cases. We cut back on decentralization and introduce hubs which cryptographically interconnect payment channels in order to mediate between data requesters and sensors. Thereby, a protocol based on \ac{HTLC}s is developed that allows for trust-less atomic payments over two interconnected channels. In contrast to the more advanced lightning network protocol, the presented protocol is not impeded by transaction malleability, and can thus be used securely on the current Bitcoin network. A variant of the protocol has been implemented as part of a mobile crowdsensing system, that enables users of a smartphone application to sell various sensor data to interested parties without having to sign-up or disclose any additional personal or financial information. Still, there remain two main issues. First, in practice hubs may introduce \emph{Know Your Sensor} requirements, since establishing (and closing) of channels with sensors consumes transaction fees, and locks capital. A viable business models for hubs requires to optimize payment channel lifetimes, capacities, and sensor selection. Second, block size scarcity and the low block generation rate limits the number of possible channel openings/closings. Thus, setting up channels for a million sensors on the current Bitcoin network would take at least a few months.
+
+Scaling issues aside, cryptocurrencies enable connected devices to perform autonomous economic interactions. Direct trading of digital goods and services, such as data, computation or storage, are but one aspect. Drawing from the concepts of smart contracts and smart property, the general concept of economic devices is introduced. Economic devices provide passive and active economic capabilities. These capabilities enable economic interactions with connected devices as the object as well as the subject with minimal trust requirements in the respective counterparties. 
+Passive capabilities involve atomic trading and renting of the device, as well as \emph{capitalizing} it in form of collateral for loans, by supporting the enforcement of property rights by code and direct financial incentives or penalties, instead of the legal system and human enforcement. The concept is illustrated with a prototype of an public display that is instantiating active economic capabilities. The display provides the service to screen customer-selected content on a pay-per-time basis in exchange for cryptocurrency. Furthermore, the display is able to issue tradable shares, which provide owners access to a real-time share of revenue. The prototype is implemented based on an Ethereum smart contract. In contrast to Bitcoin, Ethereum allows to deploy autonomous programs with access to cryptocurrency on the network itself. Thus, a trusted representation of the economic device can be instantiated, whereas an implementation based on Bitcoin would involve to executing business logic on the device hardware itself. Thus, tamper-resistant hardware and trusted execution environments would be indispensable. It is argued that economic devices could be beneficial to finance productive assets in developing countries where financial services and legal systems are underdeveloped.
 
 
-General discussion on evolution of ecosystem, companies, projects, cryptocurrencies.
-How is programming with cryptocurrencies
+
+Programming environment. Ecosystem ...
+
+Security 
+
+Decentraliztion, no single point of failure, business models.
+
+
+Scaling off chain etc. centralization...
 
 
 \subsection{Privacy, Aggregation, ...}
@@ -18,28 +39,29 @@ Implications on IoT business models. New wave of decentralization. Still need fo
 	\item Ethereum bitcoin network effects etc.
 \end{itemize}
 
-\section{Discussion}
 
-\section{Implications}
+\section{Implications for Research and Practice}
 
-Research Implications
+\subsection{Implications for Research}
 
+Information Systems
+HCI Ubiquitous Computing
 
-Practical Implications
+\subsection{Implications for Industry}
+
+\section{Limitation}
 
 \section{Outlook and Future Work}
 
-\section{Conclusions}
+
 
 
 \newpage
 \appendix
-\chapter{Bitcoin Ecosystem: Representative Cases} \label{App:AppendixA}
+\chapter{Bitcoin Start-up Ecosystem: Representative Cases}
 \label{appendix:cases}
 
-In the following, we investigate the challengers beyond financial services in more 
-detail. Therefore, we present six comprehensive case studies (marked as bold in Table 
-\ref{tbl:ecosystem}).
+In \parencite{Worner2016ecis}, we investigated six promising start-up companies that are active in the Bitcoin ecosystem with applications beyond financial services. Most of these companies appear repeatedly in this thesis. Therefore, the case studies are presented here for reference.
 
 \section{Filament (Internet of Things)}
 \label{sec:ecofilament}
@@ -286,10 +308,233 @@ model in place.
 
 \newpage
 
+\chapter{Implementing Smart Property}
+\label{appendix:cases}
 
+The prototype in Section \ref{sec:economicobjects} implemented only active capabilities of economic devices. Thus, this appendix provides supplementary implementations of passive economic capabilities based on the smart property concept. The following concepts are implemented based on Bitcoin and based on Ethereum:
 
 \begin{itemize}
-	\item Was aus Kapitel 4 runter?
-	\item Interactive Refund Transactions
-	\item Smart Contract
+	\item Low-trust atomic trades
+	\item Low-trust renting
+	\item Liquid property (using smart property as collateral for loans)
 \end{itemize}
+
+\section{Low-trust Atomic Trades}
+
+Smart property can be sold via the Internet in an atomic process without third party escrow. Transfer of ownership\footnote{We do not necessarily mean legal rights of ownership, but the ability to control the property} and transfer of money happen at once.
+
+\subsection{Implementation based on Bitcoin}
+
+The simplest way to achieve atomicity in Bitcoin is by executing both parts of the trade in a single transaction. In Fig. \ref{fig:smartproperty} an atomic trade protocol based on \cite{smartproperty2011} is shown. The protocol may either be initiated by the seller (A) or by the buyer (B). We assume A initiates the protocol and sends the price, a Bitcoin address where she would like to receive the payment, and a reference to the \ac{UTXO} that represents the smart property (ownership output) to B. B creates a new ownership key pair and prepares a transaction that sends the price to A and transfers the ownership to the newly created ownership key. B signs the transaction and sends it to A. To accept the offer A signs the ownership input and broadcasts the transaction to the Bitcoin network. 
+
+After a number of confirmations, B can provide a \ac{SPV} proof to the smart property. Therefore, B provides a selection of subsequent block headers entailing the header of the block the transaction is in, plus its merkle proof. The smart property is able to reason about the amount of proof-of-work that was spent to generate the blocks. In case of doubt, the smart property can ask for more block headers.
+
+\begin{figure}[!t]
+    \centering
+    \includegraphics[width=\linewidth]{./externalized/smartproperty}
+    \caption{Protocol of atomic trade of a smart property on the Bitcoin blockchain. The smart property does not need to interact with the Bitcoin network itself.}
+    \label{fig:smartproperty}
+  \end{figure}
+
+In this protocol the smart property is not part of the Bitcoin network, but is able to verify \ac{SPV} proofs provided by a potentially untrusted party. 
+
+\subsection{Implementation based on Ethereum}
+
+The following contract illustrates a contract representing a tradable smart property in Ethereum. The original issuer of the contract is identified as the owner. In practice this would be the manufacturer. Ethereum does not support collaborative transactions, i.e. transactions with operations authorized by different entities. Therefore, selling has to be implemented in a two-stage process. In the contract below, we do this by implementing a \emph{sell function} which can be only called by the current owner (through the \emph{onlyOwner modifier}). The \emph{sell function} has two parameters: the price, and a buyer address. The \emph{buyer parameter} allows to explicitly state a seller. Otherwise everyone who would pay the price using the \emph{buy function} would be able to buy the smart property.
+
+\newpage
+\begin{lstlisting}[breaklines,basicstyle=\tiny]
+contract SmartProperty {
+    
+    address owner;
+    address buyer;
+    bool onlyBuyerFlag;
+    bool isOnSale;
+    uint price;
+    
+    modifier onlyOwner() {
+        if (msg.sender != owner) throw;
+    }
+    
+    modifier onlyBuyer(bool flag) {
+        if (flag && msg.sender != buyer) throw;
+    }
+    
+    function SmartProperty() {
+        owner = msg.sender;
+    }
+    
+    function sell(uint _price, address _buyer) onlyOwner() {
+        isOnSale = true;
+        if (_buyer != 0) {
+            onlyBuyerFlag = true;
+            buyer = _buyer;
+        } else {
+            onlyBuyerFlag = false;
+        }
+        price = _price;
+    }
+    
+    function stopSale() onlyOwner() {
+        isOnSale = false;
+    }
+        
+    function buy() onlyBuyer(onlyBuyerFlag) {
+        if (isOnSale) {
+            if (msg.value == price) {
+                isOnSale = false;
+                owner = msg.sender;
+                owner.send(msg.value);
+                
+            } else {
+                msg.sender.send(msg.value);
+            }
+        } else {
+            msg.sender.send(msg.value);
+        }
+    }
+}
+\end{lstlisting}
+
+
+\section{Low-trust renting}
+
+Time-restricted transfer of ownership with adjustable counterparty risk. Smart property can be the basis for a peer-to-peer sharing\footnote{In the sense of Uber and AirBnB.} ecosystem. 
+
+\subsection{Implementation based on Bitcoin}
+
+The idea is to combine shared ownership and the unidirectional payment channel. Therefore, the parties create a transaction that creates a multi-signature ownership output for A (owner) and B (renter), and a 2-of-2 multi-signature output where B deposits some amount. Furthermore, both parties create a timelocked refund transaction that allocates the ownership output back to A, and the deposit back to B. The timelock should cover the maximal renting period, and the deposit should cover the renting price for that period. B can now pay in small increments with off-chain payment transactions that entail an additional ownership output that assign the car ownership back to A. Because of Bitcoin's current malleability issue it is important that the order of providing signatures is such that only A is able to broadcast the funding transaction. Furthermore, A needs also a (tiny) payment transaction from B before broadcasting the funding transaction. Otherwise B could just use the smart property without paying for the entire maximal renting period, since A would not have a transaction that is immediately valid. Figure \ref{fig:smartproperty_renting} illustrates the protocol in more detail.
+
+\begin{figure}[!t]
+    \centering
+    \includegraphics[width=\linewidth]{./externalized/smartproperty_renting}
+    \caption{Protocol for trust-minimized renting of smart property using a Bitcoin payment channel.}
+    \label{fig:smartproperty_renting}
+  \end{figure}
+
+\subsection{Implementation based on Ethereum}
+
+
+The following contract implements low-trust renting of smart property on Ethereum. Note that the \emph{Rentable Property} contracts inherits properties and functions from the \emph{SmartProperty} contract. When deploying the contract the owner sets a deposit a renter has to provide and a time based renting price. The main functions are a \emph{rent} and a \emph{returnPropery} function. The \emph{rent} function allows an arbitrary account or contract to rent the smart property by providing a deposit. The deposit is held in the contract, and can only be released by the rules of the contract. Neither the owner, nor the renter have control over the deposit. The contract keeps also track of the block in which the rent function was executed. This \emph{startBlock} serves as the begin of the renting period as measured in time of blocks. The Ethereum network has an average block generation rate of approximately 14s. 
+The software running locally on the smart property has now to be notified that it must obey orders signed by the renter for a maximal period defined by the price and the deposit. 
+The renter can later call the \emph{returnProperty} function which calculates the price for the renting period and distributes the deposit accordingly. If the renter does not return the property in time her access/control rights expire. 
+
+\begin{lstlisting}[breaklines,basicstyle=\tiny]
+contract RentableProperty is SmartProperty {
+    
+    address renter;
+    uint startBlock;
+    uint pricePerBlock;
+    uint deposit;
+    bool isRentable = true;
+    
+    modifier onlyRenter() {
+        if (msg.sender != renter) throw;
+    } 
+    
+    function RentableProperty(uint _pricePerBlock, uint _deposit) {
+        owner = msg.sender;
+        pricePerBlock = _pricePerBlock;
+        deposit = _deposit;
+    }
+    
+    function notRentable() onlyOwner() {
+        isRentable = false;
+    }
+    
+    function rentProperty() {
+        if (isRentable) {
+            if (msg.value >= deposit) {
+                renter = msg.sender;
+                startBlock = block.number;
+                isRentable = false;
+                if (msg.value > deposit) {
+                    msg.sender.send(msg.value - deposit);
+                }
+            } else throw;
+        } else throw;
+    }
+    
+    function returnProperty() onlyRenter {
+        renter = 0;
+        if (deposit > price*(block.number-startBlock)) {
+            owner.send(price*(block.number-startBlock));
+            msg.sender.send(deposit-price*(block.number-startBlock));
+        } else {
+            owner.send(deposit);
+        }
+        isRentable = true;
+    }
+}
+\end{lstlisting}
+
+\section{Liquid property}
+
+Smart property can be used as collateral for loans. The underlying principle is that property ownership is transferred to the lender if repayment terms are not met. Thereby the loan gets securitized by the smart property. Because of the global permissionless nature of cryptocurrencies, a global market for loans on individual smart properties can emerge which lowers the cost of loans. Moreover, since transactions are public, a borrower is able to prove timely payments of earlier loans. 
+
+\subsection{Implementation based on Bitcoin}
+
+We will implement the following contract. The owner of a smart property (B) wants a loan of size $L$ and provides the property as security for a creditor (A). If the owner (and debtor) does not repay the loan (plus interest) until time $T$, ownership of the property will be transferred to the creditor.
+
+After A and B agreed on terms, B creates the \emph{loan transaction} spending his ownership output and creating a timelocked 2-of-2 multi-signature ownership output that can be redeemed either collaboratively by A and B, or by A alone after time $T$. Furthermore, B adds an output that credits him with loan $L$, leaving the input, providing the loan, for A to add. 
+\begin{figure}
+\begin{lstlisting}
+OP_IF 
+    2 <pubKeyA><pubKeyB> 2
+    OP_CHECKMULTISIG
+OP_ELSE
+    <T> OP_CHECKLOCKTIMEVERIFY OP_DROP
+OP_END    
+\end{lstlisting}
+\caption{PubScript of timelocked 2-of-2 multi-signature ownership output.}
+\end{figure}
+
+B sends the partial transaction to A, who prepares the \emph{settlement transaction}. The settlement transaction reassigns the ownership back to B, and credits A with the loan plus interest. A completes the loan transaction and partially signs the settlement transaction, and sends both transactions back to B. B can then broadcast the loan transaction to the Bitcoin network. 
+If B can provide an input to the settlement transaction covering $L+\Delta$ before time $T$, B can complete the settlement transaction and regain sole ownership of the property. However, if the settlement transaction does not enter the blockchain before $T$, then A is able to claim sole ownership.
+
+Another Bitcoin-based protocol for smart property as a collateral for loans is described in \cite{smartproperty2011}. However, the protocol has the problem that a creditor has the ability to resell the property immediately without giving the debtor a chance to repay the loan. In the protocol described above this is prevented by use of the multi-signature. 
+
+\subsection{Implementation based on Ethereum}
+
+A simple implementation of property liquidification defines a loan and a latest payDay. The owner  
+
+\begin{lstlisting}[breaklines,basicstyle=\tiny]
+contract LiquidProperty is SmartProperty {
+    
+    address lender;
+    uint loan;
+    uint payDay;
+    uint paid = 0;
+    
+    bool isLiquid = false;
+    
+    function LiquidProperty(uint _loan, uint _payDay) {
+        owner = msg.sender;
+        loan = _loan;
+        payDay = _payDay;
+    }
+    
+    function giveLoan() {
+        if (msg.value < loan || isLiquid) throw;
+        isLiquid = true;
+        lender = msg.sender;
+        owner.send(msg.value);
+    }
+    
+    function pay() {
+        if (!isLiquid) throw;
+        paid = paid + msg.value;
+        lender.send(msg.value);
+    }
+    
+    function enforce() {
+        if (!isLiquid) throw;
+        if (paid >= loan) {
+            isLiquid = false;
+        } else if (block.number > payDay) {
+            owner = lender;
+            isLiquid = false;
+        }
+    }
+}
+\end{lstlisting}

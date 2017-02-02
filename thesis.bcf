@@ -2358,14 +2358,20 @@
     <bcf:citekey order="224">bergkvist2012narayanan</bcf:citekey>
     <bcf:citekey order="225">smartproperty2011</bcf:citekey>
     <bcf:citekey order="226">Pureswaran2015</bcf:citekey>
-    <bcf:citekey order="227">Geth</bcf:citekey>
-    <bcf:citekey order="228">Web3</bcf:citekey>
-    <bcf:citekey order="229">whisper</bcf:citekey>
-    <bcf:citekey order="230">rfc6455</bcf:citekey>
-    <bcf:citekey order="231">smartcontr</bcf:citekey>
-    <bcf:citekey order="232">1319505</bcf:citekey>
-    <bcf:citekey order="233">Balaji2015</bcf:citekey>
-    <bcf:citekey order="234">Chavez2015</bcf:citekey>
+    <bcf:citekey order="227">chaia2010counting</bcf:citekey>
+    <bcf:citekey order="228">poushter2016smartphone</bcf:citekey>
+    <bcf:citekey order="229">Bogner:2016:DSA:2991561.2998465</bcf:citekey>
+    <bcf:citekey order="230">Geth</bcf:citekey>
+    <bcf:citekey order="231">Web3</bcf:citekey>
+    <bcf:citekey order="232">whisper</bcf:citekey>
+    <bcf:citekey order="233">rfc6455</bcf:citekey>
+    <bcf:citekey order="234">smartcontr</bcf:citekey>
+    <bcf:citekey order="235">Worner2016ecis</bcf:citekey>
+    <bcf:citekey order="236">1319505</bcf:citekey>
+    <bcf:citekey order="237">Balaji2015</bcf:citekey>
+    <bcf:citekey order="238">Chavez2015</bcf:citekey>
+    <bcf:citekey order="239">smartproperty2011</bcf:citekey>
+    <bcf:citekey order="240">smartproperty2011</bcf:citekey>
   </bcf:section>
   <bcf:sortlist section="0" name="nyt/global/" type="entry" sortscheme="nyt" sortnamekeyscheme="global" labelprefix="">
   <bcf:sorting>
