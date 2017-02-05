@@ -10,7 +10,7 @@ One of the main drivers to utilize a cryptocurrency for applications like S\text
 One method is known as payment channels. These are simple but powerful smart contracts allowing low-latency micropayments between a buyer and a seller. While direct payment channels are useful for particular use cases in which a buyer is only interested in buying repeatedly from a single seller, S\textsuperscript{2}aaS and mobile crowdsensing, however, require in general the simultaneous trades between a buyer and a large number of sellers and vice versa. This would require to establish contracts between each trading pair which may lock up significant capital and cause significant transaction costs. Therefore, we present an enhancement of payment channels in order to scale to a large number of participants. To achieve this, we make a compromise on decentralization and introduce a hub. The hub is responsible for trust-less mediation of payments and data delivery. Although we sacrifice censorship-resistance and resilience, the power of the hub is strictly limited. We refer to this limitation by \emph{trust-less mediation} which is operationalized as follows. Trust-less mediation of payments is achieved by means of \ac{HTLC}s. \ac{HTLC}s are expressed in Bitcoin's scripting language to form a smart contract that provides atomicity of two payments in two distinct payment channels. Trust-less mediation of data delivery is achieved by encryption and digital signatures provided by the cryptographic primitives underlying Bitcoin. Operating a hub may require significant financial resources, and thus needs a viable business model.
 We implement a proof-of-concept prototype targeted at the usage in crowdsensing scenarios. Smartphones are the largest sensing platform with an unprecedented scale and global distribution. The application allows smartphone users to offer built-in sensors as a service in exchange for payment with minimal human involvement. The protocols can be open and implemented into other smartphone applications, or ported to other sensor platforms or connected devices.
 
-The structure of the chapter is as follows. In Sec. \ref{sec:micropayments}, we provide an overview of methods to enable low-latency micropayments with bitcoin. The main focus thereby is on payment channels. In Sec. \ref{sec:htlc}, we present the trust-less mediation of payment channels using \ac{HTLC}s and briefly discuss the trust-less mediation of data delivery and discovery in Sec. \ref{sec:trustlessexchange}. Thereafter, we present the system and its main processes in Sec. \ref{sec:trustlessoverview}. Sec. \ref{sec:trustlessimplementation} provides implementation details. In Sec. \ref{sec:trustlessevaluation} we evaluate the concept mostly based on criteria already introduced in Chapter \ref{sec:s2aas}. In Sec. \ref{sec:trustlessdiscussion} we present a discussion concerning the costs of running a hub, developments towards bidirectional payment networks and a comparison to Ethereum. Furthermore, we briefly recapitulate the key findings and set the results in a broader picture by synthesizing with Chapter \ref{sec:s2aas}. The chapter ends with a conclusion (Sec. \ref{sec:trustlessconclusion}).
+The structure of the chapter is as follows. In Sec. \ref{sec:micropayments}, we provide an overview of methods to enable low-latency micropayments with bitcoin. The main focus thereby is on payment channels. In Sec. \ref{sec:htlc}, we present the trust-less mediation of payment channels using \ac{HTLC}s and briefly discuss the trust-less mediation of data delivery and discovery in Sec. \ref{sec:trust-lessexchange}. Thereafter, we present the system and its main processes in Sec. \ref{sec:trust-lessoverview}. Sec. \ref{sec:trust-lessimplementation} provides implementation details. In Sec. \ref{sec:trust-lessevaluation} we evaluate the concept mostly based on criteria already introduced in Chapter \ref{sec:s2aas}. In Sec. \ref{sec:trust-lessdiscussion} we present a discussion concerning the costs of running a hub, developments towards bidirectional payment networks and a comparison to Ethereum. Furthermore, we briefly recapitulate the key findings and set the results in a broader picture by synthesizing with Chapter \ref{sec:s2aas}. The chapter ends with a conclusion (Sec. \ref{sec:trust-lessconclusion}).
 
 
 \section{Low-latency Micropayments with Bitcoin}
@@ -145,7 +145,7 @@ OP_ENDIF
 If all parties cooperate, then there will be no payment transactions with \ac{HTLC} outputs ending up in the blockchain. From the perspective of the Bitcoin network the situation is equivalent to two independent channels.
 
 \section{Trust-less Mediation of Data Exchange and Discovery}
-\label{sec:trustlessexchange}
+\label{sec:trust-lessexchange}
 
 In the last chapter, we found that data exchange via the Bitcoin network is not viable due to latency, cost, and confidentiality. In the last section, we introduced a payment hub in order to allow efficient trust-less micropayments between a larger number of requesters and sensors. The hub needs to keep connections with requesters and sensors in order to be able to exchange Bitcoin transactions off-chain, i.e. privately and not via the Bitcoin network. These communication channels can also be used to deliver the measurement data.
 
@@ -153,7 +153,7 @@ Although the communication between a sensor and a requester might be mediated by
 Furthermore, digital signatures can be used to verify the authenticity of entries in the repository.
 
 \section{System Overview}
-\label{sec:trustlessoverview}
+\label{sec:trust-lessoverview}
 
 In the following we briefly present the participating entities and describe the processes. A graphical illustration of the system is shown in Fig. \ref{fig:architecture}.
 
@@ -233,7 +233,7 @@ The sensor performs the sensing task and provides the hashlock $H(S)$ as an auth
  The receiving side of the channel has to make sure that it closes the channel with sufficient margin to the expiry time. Otherwise a race condition with a refund transaction can occur.
 
 \section{Implementation}
-\label{sec:trustlessimplementation}
+\label{sec:trust-lessimplementation}
 
 In order to leverage the largest mobile sensing platform available today, we implemented the sensor client as an Android smartphone application. The Android \ac{API} has a lot of similarities to the Java \ac{API}. Hence, we opted for Bitcoinj\footnote{https://bitcoinj.github.io/}, a Java library for working with the Bitcoin protocol,  as a starting point. Besides being able to run on multiple platforms, Bitcoinj provides the first implementation of a \ac{SPV} client and the first payment channel implementation. In fact, at time of implementation (Q2-Q3 2015) there was no other implementation of payment channels available. Thus, Bitcoinj provides a suitable basis for a cross-platform implementation of \ac{HTLC}-based mediated payment channels.
 
@@ -299,7 +299,7 @@ The hub creates a new public key for every channel using a hierarchical determin
 \paragraph{Final Note} At time of implementation the \texttt{CHECKLOCKTIMEVERIFY} op code \parencite{bip65} was not available in Bitcoin Script. Thus, the implementation of payment channels, and \ac{HTLC}s in particular, was more involved, and implied additional security risks, because refund transactions had to be created collaboratively (c.f. malleability discussion in Sec. \ref{sec:paymentnetworks}). We will evaluate the concept based on the implementation of the current capabilities of Bitcoin Script, i.e with \texttt{CHECKLOCKTIMEVERIFY}.
 
 \section{Evaluation}
-\label{sec:trustlessevaluation}
+\label{sec:trust-lessevaluation}
 
 In the following we evaluate the concept of trust-less mediation of payments and data exchange for crowdsensing applications. We base the the evaluation on the criteria used in the last chapter. However, we discuss some criteria like scalability, confidentiality, and privacy more explicitly.  
 
@@ -353,7 +353,7 @@ The value of the system depends mainly on the participating data providers. Henc
 
 
 \section{Discussion}
-\label{sec:trustlessdiscussion}
+\label{sec:trust-lessdiscussion}
 
 \subsection{Key Findings}
 
@@ -399,9 +399,9 @@ We saw that the basic elements of a S\textsuperscript{2}aaS scheme are discovery
 
 
 \section{Conclusion}
-\label{sec:trustlessconclusion}
+\label{sec:trust-lessconclusion}
 
-The main contribution of this chapter was the introduction of low-latency micropayment schemes for Bitcoin. We concentrated on payment channels which leverage Bitcoin's built-in programmability to implement a simple form of a smart contract. However, these contracts are bilateral and based on an on-chain multi-signature output. Thus, in m-to-n relationships, m*n contracts -- and 2*m*n on-chain transactions -- would be needed. We introduce a hub able to trustlessly interconnect payments in two channels via \ac{HTLC}s. We discuss how discovery and data exchange can be mediated as well, and implement a prototypical crowdsensing system based on this concept. By downloading a smartphone application, a user is able to offer the sensing capabilities of her phone to requesters all over the world in exchange for Bitcoin micropayments. However, running the mediating hub locks up capital proportional to the number of sensors. Furthermore, Bitcoin's current block size and rate limitation would inhibit a large scale deployment of the scheme. Even though most transactions are happening off-chain, and mediation decreases the number of necessary channels tremendously, channel opening and closing does still need on-chain transactions. Progress towards bi-directional payment channel networks which can be open indefinitely (lightning channels), and on-chain scalability improvements could make S\textsuperscript{2}aaS with Bitcoin viable on a large scale. 
+The main contribution of this chapter was the introduction of low-latency micropayment schemes for Bitcoin. We concentrated on payment channels which leverage Bitcoin's built-in programmability to implement a simple form of a smart contract. However, these contracts are bilateral and based on an on-chain multi-signature output. Thus, in m-to-n relationships, m*n contracts -- and 2*m*n on-chain transactions -- would be needed. We introduce a hub able to trust-lessly interconnect payments in two channels via \ac{HTLC}s. We discuss how discovery and data exchange can be mediated as well, and implement a prototypical crowdsensing system based on this concept. By downloading a smartphone application, a user is able to offer the sensing capabilities of her phone to requesters all over the world in exchange for Bitcoin micropayments. However, running the mediating hub locks up capital proportional to the number of sensors. Furthermore, Bitcoin's current block size and rate limitation would inhibit a large scale deployment of the scheme. Even though most transactions are happening off-chain, and mediation decreases the number of necessary channels tremendously, channel opening and closing does still need on-chain transactions. Progress towards bi-directional payment channel networks which can be open indefinitely (lightning channels), and on-chain scalability improvements could make S\textsuperscript{2}aaS with Bitcoin viable on a large scale. 
 
 
 

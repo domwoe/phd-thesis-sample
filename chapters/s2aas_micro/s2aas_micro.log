@@ -2686,9 +2686,9 @@ Missing character: There is no e in font nullfont!
 Missing character: There is no c in font nullfont!
 Missing character: There is no . in font nullfont!
 ! Undefined control sequence.
-<write> ...ec:trustlessexchange' on page \thepage 
+<write> ...ec:trust-lessexchange' on page \thepage 
                                                   \space undefined\on@line .
-l.8 ...scovery in Sec. \ref{sec:trustlessexchange}
+l.8 ...scovery in Sec. \ref{sec:trust-lessexchange}
                                                   . Thereafter, we present t...
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
@@ -2697,7 +2697,7 @@ spelling (e.g., `I\hbox'). Otherwise just continue,
 and I'll forget about whatever was undefined.
 
 
-LaTeX Warning: Reference `sec:trustlessexchange' on page  undefined on input li
+LaTeX Warning: Reference `sec:trust-lessexchange' on page  undefined on input li
 ne 8.
 
 Missing character: There is no . in font nullfont!
@@ -2756,10 +2756,10 @@ Missing character: There is no e in font nullfont!
 Missing character: There is no c in font nullfont!
 Missing character: There is no . in font nullfont!
 ! Undefined control sequence.
-<write> ...ec:trustlessoverview' on page \thepage 
+<write> ...ec:trust-lessoverview' on page \thepage 
                                                   \space undefined\on@line .
-l.8 ...ocesses in Sec. \ref{sec:trustlessoverview}
-                                                  . Sec. \ref{sec:trustlessi...
+l.8 ...ocesses in Sec. \ref{sec:trust-lessoverview}
+                                                  . Sec. \ref{sec:trust-lessi...
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
 misspelled it (e.g., `\hobx'), type `I' and the correct
@@ -2767,7 +2767,7 @@ spelling (e.g., `I\hbox'). Otherwise just continue,
 and I'll forget about whatever was undefined.
 
 
-LaTeX Warning: Reference `sec:trustlessoverview' on page  undefined on input li
+LaTeX Warning: Reference `sec:trust-lessoverview' on page  undefined on input li
 ne 8.
 
 Missing character: There is no . in font nullfont!
@@ -2778,7 +2778,7 @@ Missing character: There is no . in font nullfont!
 ! Undefined control sequence.
 <write> ...stlessimplementation' on page \thepage 
                                                   \space undefined\on@line .
-l.8 ...ew}. Sec. \ref{sec:trustlessimplementation}
+l.8 ...ew}. Sec. \ref{sec:trust-lessimplementation}
                                                    provides implementation d...
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
@@ -2787,7 +2787,7 @@ spelling (e.g., `I\hbox'). Otherwise just continue,
 and I'll forget about whatever was undefined.
 
 
-LaTeX Warning: Reference `sec:trustlessimplementation' on page  undefined on in
+LaTeX Warning: Reference `sec:trust-lessimplementation' on page  undefined on in
 put line 8.
 
 Missing character: There is no p in font nullfont!
@@ -2827,9 +2827,9 @@ Missing character: There is no e in font nullfont!
 Missing character: There is no c in font nullfont!
 Missing character: There is no . in font nullfont!
 ! Undefined control sequence.
-<write> ...:trustlessevaluation' on page \thepage 
+<write> ...:trust-lessevaluation' on page \thepage 
                                                   \space undefined\on@line .
-l.8 ...ails. In Sec. \ref{sec:trustlessevaluation}
+l.8 ...ails. In Sec. \ref{sec:trust-lessevaluation}
                                                    we evaluate the concept m...
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
@@ -2838,7 +2838,7 @@ spelling (e.g., `I\hbox'). Otherwise just continue,
 and I'll forget about whatever was undefined.
 
 
-LaTeX Warning: Reference `sec:trustlessevaluation' on page  undefined on input 
+LaTeX Warning: Reference `sec:trust-lessevaluation' on page  undefined on input 
 line 8.
 
 Missing character: There is no w in font nullfont!
@@ -2930,9 +2930,9 @@ Missing character: There is no e in font nullfont!
 Missing character: There is no c in font nullfont!
 Missing character: There is no . in font nullfont!
 ! Undefined control sequence.
-<write> ...:trustlessdiscussion' on page \thepage 
+<write> ...:trust-lessdiscussion' on page \thepage 
                                                   \space undefined\on@line .
-l.8 ...aas}. In Sec. \ref{sec:trustlessdiscussion}
+l.8 ...aas}. In Sec. \ref{sec:trust-lessdiscussion}
                                                    we present a discussion c...
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
@@ -2941,7 +2941,7 @@ spelling (e.g., `I\hbox'). Otherwise just continue,
 and I'll forget about whatever was undefined.
 
 
-LaTeX Warning: Reference `sec:trustlessdiscussion' on page  undefined on input 
+LaTeX Warning: Reference `sec:trust-lessdiscussion' on page  undefined on input 
 line 8.
 
 Missing character: There is no w in font nullfont!
@@ -3230,9 +3230,9 @@ Missing character: There is no e in font nullfont!
 Missing character: There is no c in font nullfont!
 Missing character: There is no . in font nullfont!
 ! Undefined control sequence.
-<write> ...:trustlessconclusion' on page \thepage 
+<write> ...:trust-lessconclusion' on page \thepage 
                                                   \space undefined\on@line .
-l.8 ...clusion (Sec. \ref{sec:trustlessconclusion}
+l.8 ...clusion (Sec. \ref{sec:trust-lessconclusion}
                                                   ).
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
@@ -3241,7 +3241,7 @@ spelling (e.g., `I\hbox'). Otherwise just continue,
 and I'll forget about whatever was undefined.
 
 
-LaTeX Warning: Reference `sec:trustlessconclusion' on page  undefined on input 
+LaTeX Warning: Reference `sec:trust-lessconclusion' on page  undefined on input 
 line 8.
 
 Missing character: There is no ) in font nullfont!

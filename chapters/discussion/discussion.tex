@@ -1,14 +1,14 @@
 \chapter{Conclusion}
 \label{sec:discussion}
 
-\section{Key Findings}
+\section{Summary and Key Findings}
 
 The Internet of Things has made a leap over the last decades. Smartphones have become ubiquitous in developed countries and developing countries are catching up. The scale of the smartphone supply chain made \ac{SoC}s, combining computing, memory and various communication technologies, cheap and pervasive. Cloud computing, in combination with the \emph{as-a-Service} business model, allows to scale backend infrastructure for connected devices without large capital requirements and expertise. These developments allowed manufacturers of traditional \emph{things} as well as start-ups to bring an ever growing number of connected devices to market. Connected devices in combination with artificial intelligence and data analytics have great potential to make life more comfortable and efficient, to save energy, optimize industrial manufacturing, and enable new business models. However, much value can only be unlocked, if connected devices and web services from various vendors are interoperable. Furthermore, connected devices pose a thread to individual as well as national security and privacy. 
 The prevailing architectural paradigm of the \ac{IOT} is a tight link between a connected device and a cloud service. Data is streamed from the device to a data center without control of the individual, and corporations have to maintain large data centers in order to keep connected devices functional over their lifetime. 
 Enabling devices to be more autonomous, i.e. to be less dependent on backend infrastructure, is a promising approach towards a more secure and sustainable \ac{IOT}. In analogy to how money, contracts, and the market enabled decentralization and specialization in the human economy, it can be expected that the same can be true for the machine economy. 
 
 Cryptocurrencies are based on cryptographic primitives, peer-to-peer network, and a consensus mechanism that employs economic (or game theoretic) considerations. This enables decentralized and global digital money and a payment network independent of any trusted third party. The technological underpinnings are vaguely conflated to the term \emph{blockchain technology}. Blockchain technology enables digital bearer instruments which can be controlled by cryptographic keys. Thus, machines are able to facilitate autonomous economic interactions. 
-The Bitcoin network was initiated in the beginning of 2009. At time of writing, the market capitalization of Bitcoin is on the order of \$10 billion. Due to its nature as open source software, Bitcoin gave rise to a flourishing ecosystem of alternative coins, start-up companies, and industry endeavors. Although, there are hundreds of alternative decentralized currencies Bitcoin's supremacy is unsolicited. Bitcoin transactions provide a built-in scripting language which allows to implement self-enforceable \emph{smart contracts}. One of the most basic, yet powerful, are multi-signature transactions enabling the implementation of trustless escrow contracts.
+The Bitcoin network was initiated in the beginning of 2009. At time of writing, the market capitalization of Bitcoin is on the order of \$10 billion. Due to its nature as open source software, Bitcoin gave rise to a flourishing ecosystem of alternative coins, start-up companies, and industry endeavors. Although, there are hundreds of alternative decentralized currencies Bitcoin's supremacy is unsolicited. Bitcoin transactions provide a built-in scripting language which allows to implement self-enforceable \emph{smart contracts}. One of the most basic, yet powerful, are multi-signature transactions enabling the implementation of trust-less escrow contracts.
 
 In order to investigate the impact of cryptocurrencies on the \ac{IOT}, one the most foundational processes, the exchange of sensor data, and its business model manifestation Sensing-as-a-Service was selected. The unique pseudonymous Bitcoin addresses could be used to identify and address a sensor. Enabling a global and permissionless sensing platform with a built-in public-key infrastructure for data authentication and encryption. In a first prototypical system, Bitcoin was used as a medium of value \textbf{and} data exchange. Data payload was injected directly in Bitcoin transaction. This limits the maximal payload per transaction to 80 bytes. This is enough space for a typical data point, but already too little to use Bitcoin's native encryption scheme \ac{ECIES} for data encryption. Thus, transmitted sensor data would always be public. A severe problem for the S\textsuperscript{2}aaS scheme on one hand. However, on the other hand, a benefit for certain applications since the data gets authenticated, timestamped, and globally replicated. The broadcast-based peer-to-peer transport protocol and the proof-of-work-based consensus protocol lead to significant latency in the process. Depending on the sensor's trust in the payer, the process may take from seconds (unconfirmed transaction with double spending risk) to a period on the order of tens of minutes. Bitcoin transaction fees are, in principle, market-based. Increasing transaction volume in combination with a limited transaction throughput has lead to an increase in transaction fees. Due to the limitation in the block size, Bitcoin transaction fees are proportional to their size in bytes instead of their value. Thus, micropayments and data transactions are affected in particular, leading to transaction fees on the order of \$ 0.1 USD for the data exchange process. 
 
@@ -18,42 +18,20 @@ Scaling issues aside, cryptocurrencies enable connected devices to perform auton
 Passive capabilities involve atomic trading and renting of the device, as well as \emph{capitalizing} it in form of collateral for loans, by supporting the enforcement of property rights by code and direct financial incentives or penalties, instead of the legal system and human enforcement. The concept is illustrated with a prototype of an public display that is instantiating active economic capabilities. The display provides the service to screen customer-selected content on a pay-per-time basis in exchange for cryptocurrency. Furthermore, the display is able to issue tradable shares, which provide owners access to a real-time share of revenue. The prototype is implemented based on an Ethereum smart contract. In contrast to Bitcoin, Ethereum allows to deploy autonomous programs with access to cryptocurrency on the network itself. Thus, a trusted representation of the economic device can be instantiated, whereas an implementation based on Bitcoin would involve to executing business logic on the device hardware itself. Thus, tamper-resistant hardware and trusted execution environments would be indispensable. It is argued that economic devices could be beneficial to finance productive assets in developing countries where financial services and legal systems are underdeveloped.
 
 
-
-Programming environment. Ecosystem ...
-
-Security 
-
-Decentraliztion, no single point of failure, business models.
-
-
-Scaling off chain etc. centralization...
-
-
-\subsection{Privacy, Aggregation, ...}
-
-Implications on IoT business models. New wave of decentralization. Still need for centralized services
-
-\begin{itemize}
-	\item Be sure about payments!
-	\item Innovation through experimentation. No governmental monopoly on money
-	\item Ethereum bitcoin network effects etc.
-\end{itemize}
-
-
 \section{Implications for Research and Practice}
 
-\subsection{Implications for Research}
+Research on \ac{IOT}, cyber-physical systems, and ubiquitous computing has a long tradition. Cryptocurrency research, on the other hand, has only begun during the time the research for this thesis was conducted. Similar to \ac{IOT}, the science, its technology and its implications touch various disciplines, and are thus inherently interdisciplinary. Until 2013, only few academic papers from the fields of computer security, distributed computing, law, and economics have been published, and the topic was absent from academic conferences. In fact, \cite{Worner:2014:YSE:2638728.2638786} was the first publication on applications of cryptocurrencies in \ac{IOT}, and was covered on CoinDesk, a popular cryptocurrency magazine \parencite{Coindesk2014}. 
 
-Information Systems
-HCI Ubiquitous Computing
+Open participatory platforms for S\textsuperscript{2}aaS to enable real-time data markets \parencite{worner2016design} powered by individuals, corporations and research institutions are an emerging tool for researchers to tap novel streams of data. Open global platforms providing privacy and security as well as monetary incentives for their contributors may enable a planetary nervous system \parencite{Giannotti2012}accessible by researchers, entrepreneurs and corporations a like. Although this thesis suggests that Bitcoin is not ready to power a platform with millions or billions of devices, necessary to be \ac{IOT} scale, research and developments on scaling decentralized cryptocurrencies are a growing field (c.f. Sec. \ref{sec:btc_scalability}).
 
-\subsection{Implications for Industry}
+The concept of economic devices enables novel device-centered business and ownership models. This thesis has provided a first investigation of the concept and illustrated the capabilities. Device manufacturers are advised to acknowledge and explore these novel possibilities and opportunities. However, cryptocurrencies are still a niche. These models become only useful if cryptocurrencies are prevalent in the broader population.
 
-\section{Limitation}
 
 \section{Outlook and Future Work}
 
-
+The state of cryptocurrencies and blockchain technology today is often compared to the state of the Internet in the early 90s\footnote{See e.g. \url{http://www.coindesk.com/marc-andreessen-balaji-srinivasan-discuss-bitcoin/}}. Cryptocurrencies provide a fundamentally new way of establishing and transferring value over the Internet. However, the technology and its social and economic ramifications are barely understood.
+Cryptocurrencies enable machines to transact autonomously, but the most prevailing cryptocurrency, Bitcoin, cannot even handle the number of transactions VISA does on a regular basis. Only recently an update for Bitcoin was developed that practically increases the maximal number of transactions per block and fixes the malleability issue that prevents the usage of lightning payment channels \parencite{bip141}. Unfortunately, miners are currently blocking the deployment of the update. Nevertheless, different globally distributes teams are working on the implementation of the lightning network which will enable bidirectional micropayment channels with an indefinite lifetime and the possibility to route over any number of intermediary channels \parencite{BitFuryFlare2016}. A similar system is in development for Ethereum\footnote{\url{http://raiden.network/}. On-chain scaling is also an active field of research. In addition, new types of cryptocurrencies with a different technological basis (and differing security properties) are being developed that might achieve the necessary scaling requirements for machine-to-machine micropayments. These developments suggest that cryptocurrencies can have an tremendous impact on \ac{IOT} by providing a new basis for decentralized cooperation, and new business and ownership models. 
+The next step is to proceed from lab and demonstration prototypes to real-world applications. 
 
 
 \newpage
@@ -309,7 +287,7 @@ model in place.
 \newpage
 
 \chapter{Implementing Smart Property}
-\label{appendix:cases}
+\label{appendix:smartproperty}
 
 The prototype in Section \ref{sec:economicobjects} implemented only active capabilities of economic devices. Thus, this appendix provides supplementary implementations of passive economic capabilities based on the smart property concept. The following concepts are implemented based on Bitcoin and based on Ethereum:
 
@@ -496,7 +474,7 @@ Another Bitcoin-based protocol for smart property as a collateral for loans is d
 
 \subsection{Implementation based on Ethereum}
 
-A simple implementation of property liquidification defines a loan and a latest payDay. The owner  
+A simple implementation of property liquidification defines a \texttt{loan} and a latest \texttt{payDay}\footnote{Here represented as a Ethereum block number.}. The owner of the property deploys the \emph{LiquidProperty} contract, and a lender can provide a loan using the \emph{giveLoan} function. The loan is immediately credited to the debtor who can use the \emph{pay} function to pay back the loan. Either lender or debtor can call the \emph{enforce} function to enforce the contract. If the loan is paid, then the contract state return to the initial state, if the loan is not paid and it is later than \texttt{payDay}, then the ownership gets transferred to the lender.
 
 \begin{lstlisting}[breaklines,basicstyle=\tiny]
 contract LiquidProperty is SmartProperty {
