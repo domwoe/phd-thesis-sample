@@ -3,16 +3,16 @@
 
 \section{Summary and Key Findings}
 
-The Internet of Things has made a leap over the last decades. Smartphones have become ubiquitous in developed countries and developing countries are catching up. The scale of the smartphone supply chain made \ac{SoC}s, combining computing, memory and various communication technologies, cheap and pervasive. Cloud computing, in combination with the \emph{as-a-Service} business model, allows to scale backend infrastructure for connected devices without large capital requirements and expertise. These developments allowed manufacturers of traditional \emph{things} as well as start-ups to bring an ever growing number of connected devices to market. Connected devices in combination with artificial intelligence and data analytics have great potential to make life more comfortable and efficient, to save energy, optimize industrial manufacturing, and enable new business models. However, much value can only be unlocked, if connected devices and web services from various vendors are interoperable. Furthermore, connected devices pose a thread to individual as well as national security and privacy. 
-The prevailing architectural paradigm of the \ac{IOT} is a tight link between a connected device and a cloud service. Data is streamed from the device to a data center without control of the individual, and corporations have to maintain large data centers in order to keep connected devices functional over their lifetime. 
+The Internet of Things has made a leap over the last decades. Smartphones have become ubiquitous in developed countries and developing countries are catching up. The scale of the smartphone supply chain made \ac{SoC}s, combining computing, memory and various communication technologies, cheap and pervasive. Cloud computing, in combination with the \emph{as-a-Service} business model, allows to scale backend infrastructure for connected devices without large capital requirements and expertise. These developments allowed manufacturers of traditional \emph{things}, as well as start-up companies to bring an ever growing number of connected devices to market. Connected devices in combination with artificial intelligence and data analytics have great potential to make life more comfortable and efficient, to save energy, optimize industrial manufacturing, and enable new business models. However, much value can only be unlocked, if connected devices and web services from various vendors are interoperable \parencite{manyika2015unlocking}. Furthermore, connected devices pose a thread to individual as well as national security and privacy. 
+The prevailing architectural paradigm of the \ac{IOT} is a tight link between connected devices and corresponding cloud serviced. Data is streamed from the device to a data center without control of the individual, and corporations have to maintain large data centers in order to keep connected devices functional over their lifetime. 
 Enabling devices to be more autonomous, i.e. to be less dependent on backend infrastructure, is a promising approach towards a more secure and sustainable \ac{IOT}. In analogy to how money, contracts, and the market enabled decentralization and specialization in the human economy, it can be expected that the same can be true for the machine economy. 
 
-Cryptocurrencies are based on cryptographic primitives, peer-to-peer networks, and a consensus mechanism that employs economic (or game theoretic) considerations. This enables decentralized and global digital money in combination with a payment network independent of any trusted third party. The technological underpinnings are vaguely conflated to the term \emph{blockchain technology}. Blockchain technology enables digital bearer instruments which can be controlled by cryptographic keys. Thus, machines are able to facilitate autonomous economic interactions. 
-The Bitcoin network was initiated in the beginning of 2009. At time of writing, the market capitalization of Bitcoin is on the order of \$10 billion. Due to its nature as open source software, Bitcoin gave rise to a flourishing ecosystem of alternative coins, start-up companies, and industry endeavors. Although, there are hundreds of alternative decentralized currencies Bitcoin's supremacy is unsolicited. Bitcoin transactions provide a built-in scripting language which allows to implement self-enforceable \emph{smart contracts}. One of the most basic, yet powerful, are multi-signature transactions enabling the implementation of trust-less escrow contracts.
+Cryptocurrencies are based on cryptographic primitives, peer-to-peer networks, and a consensus mechanism that employs economic (or game theoretic) considerations. This enables decentralized and global digital money, in combination with a payment network independent of any trusted third party. The technological underpinnings are vaguely conflated to the term \emph{blockchain technology}. Blockchain technology enables digital bearer instruments which can be controlled by cryptographic keys. Thus, machines are able to facilitate autonomous economic interactions. 
+The Bitcoin network was initiated in the beginning of 2009. At time of writing, the market capitalization of Bitcoin is on the order of \$10 billion. Due to its nature as open source software, Bitcoin gave rise to a flourishing ecosystem of alternative coins, start-up companies, and industry endeavors. Although, there are hundreds of alternative decentralized currencies Bitcoin's supremacy is unsolicited. Bitcoin transactions provide a built-in scripting language which allows to implement self-enforceable \emph{smart contracts}. One of the most basic, yet powerful, are multi-signature transactions enabling the implementation of trust-less escrow contracts, and are the basis for payment channels.
 
 In order to investigate the impact of cryptocurrencies on the \ac{IOT}, one the most foundational processes, the exchange of sensor data, and its business model manifestation Sensing-as-a-Service was selected. The unique pseudonymous Bitcoin addresses can be used to identify and address a sensor, enabling a global and permissionless sensing platform with a built-in public-key infrastructure for data authentication and encryption. In a first prototypical system, Bitcoin was used as a medium of value \textbf{and} data exchange. Data payload was injected directly in Bitcoin transactions. This limits the maximal payload per transaction to 80 bytes. This is enough space for a typical data point, but already too little to use Bitcoin's native encryption scheme \ac{ECIES} for data encryption. Thus, transmitted sensor data would always be public. A severe problem for the S\textsuperscript{2}aaS scheme on one hand. However, on the other hand, a benefit for certain applications since the data gets authenticated, timestamped, and globally replicated. The broadcast-based peer-to-peer transport protocol and the proof-of-work-based consensus protocol lead to significant latency in the process. Depending on the sensor's trust in the payer, the process may take from seconds (unconfirmed transaction with double spending risk) to a period on the order of tens of minutes. Bitcoin transaction fees are, in principle, market-based. Increasing transaction volume in combination with a limited transaction throughput has lead to an increase in transaction fees. Due to the limitation in the block size, Bitcoin transaction fees are proportional to their size in bytes instead of their value. Thus, micropayments and data transactions are affected in particular, leading to transaction fees on the order of \$ 0.1 USD for the data exchange process. 
 
-The initial prototype illustrated the concept of an autonomous sensor earning money by selling (authenticated) measurement data on an open market, but pointed out the limitations concerning confidentiality, latency, and micropayments. These limitations can be mitigated by introducing an additional communication layer. Bitcoin's cryptographic primitives and the programmability of Bitcoin transactions allow to move most communication \emph{off-chain} without changes in the trust model, i.e without sacrificing security. Bitcoin payment channels allow for instant micropayments between to parties based on a timelocked multi-signature escrow. This means a payer locks funds (capacity of the channel) with a fixed payee. Updates of the balances, with a granularity of 1 satoshi (on the order of \$ 0.00001 USD), can then be made securely and instantly via a direct communication channel. S\textsuperscript{2}aaS, and in particular crowdsensing applications, require the collection of data points from a large number of individual sensors. Thus, direct payment channels between a data requester and each sensor are inhibiting in many cases. We introduce hubs which cryptographically interconnect payment channels in order to mediate between data requesters and sensors. Thereby, a protocol based on \ac{HTLC}s is developed that allows for trust-less atomic payments over two interconnected channels. In contrast to the more advanced lightning network protocol, the presented protocol is not impeded by transaction malleability, and can thus be used securely on the current Bitcoin network. A variant of the protocol has been implemented as part of a mobile crowdsensing system, that enables users of a smartphone application to sell various sensor data to interested parties without having to sign-up, or disclose any additional personal or financial information. Still, there remain two main issues. First, in practice hubs may introduce \emph{Know Your Sensor} requirements, since establishing (and closing) of channels with sensors consumes transaction fees, and locks capital. A viable business models for hubs requires to optimize payment channel lifetimes, capacities, and sensor selection. Second, block size scarcity and the low block generation rate limits the number of possible channel openings/closings. Thus, setting up channels for a million sensors on the current Bitcoin network would take at least a few months.
+The initial prototype illustrated the concept of an autonomous sensor earning money by selling (authenticated) measurement data on an open market, but pointed out the limitations concerning confidentiality, latency, and micropayments. These limitations can be mitigated by introducing an additional communication layer. Bitcoin's cryptographic primitives and the programmability of Bitcoin transactions allow to move most communication \emph{off-chain} without changes in the trust model, i.e without sacrificing security. Bitcoin payment channels allow for instant micropayments between two parties based on a timelocked multi-signature escrow. This means a payer locks funds (capacity of the channel) with a fixed payee. Updates of the balances, with a granularity as low as 1 satoshi (on the order of \$ 0.00001 USD), can then be made securely and instantly via a direct communication channel. S\textsuperscript{2}aaS, and in particular crowdsensing applications, require the collection of data points from a large number of individual sensors. Thus, direct payment channels between a data requester and each sensor are inhibiting in many cases. We introduce hubs which cryptographically interconnect payment channels in order to mediate between data requesters and sensors. Thereby, a protocol based on \ac{HTLC}s is developed that allows for trust-less atomic payments over two interconnected channels. In contrast to the more advanced lightning network protocol \parencite{poonbitcoin}, the presented protocol is not impeded by transaction malleability, and can thus be used securely on the current Bitcoin network. A variant of the protocol has been implemented as part of a mobile crowdsensing system, that enables users of a smartphone application to sell various sensor data to interested parties without having to sign-up, or disclose any additional personal or financial information. Still, there remain two main issues. First, in practice hubs may introduce \emph{Know Your Sensor} requirements, since establishing (and closing) of channels with sensors consumes transaction fees, and locks capital. A viable business models for hubs requires to optimize payment channel lifetimes, capacities, and sensor selection. Second, block size scarcity and the low block generation rate limits the number of possible channel openings/closings. Thus, setting up channels for a million sensors on the current Bitcoin network would take at least a few months.
 
 Scaling issues aside, cryptocurrencies enable connected devices to perform autonomous economic interactions. Direct trading of digital goods and services, such as data, computation or storage, are but one aspect. Drawing from the concepts of smart contracts and smart property, the general concept of economic devices is introduced. Economic devices provide passive and active economic capabilities. These capabilities enable economic interactions with connected devices as the object as well as the subject with minimal trust requirements in the respective counterparties. 
 Passive capabilities involve atomic trading and renting of the device, as well as \emph{capitalizing} it in form of collateral for loans, by supporting the enforcement of property rights by code and direct financial incentives or penalties, instead of the legal system and human enforcement. The concept is illustrated with a prototype of an public display that is instantiating active economic capabilities. The display provides the service to screen customer-selected content on a pay-per-time basis in exchange for cryptocurrency. Furthermore, the display is able to issue tradable shares, which provide owners access to a real-time share of revenue. The prototype is implemented based on an Ethereum smart contract. In contrast to Bitcoin, Ethereum allows to deploy autonomous programs with access to cryptocurrency on the network itself. Thus, a trusted representation of the economic device can be instantiated, whereas an implementation based on Bitcoin would involve to executing business logic on the device hardware itself. Thus, tamper-resistant hardware and trusted execution environments would be indispensable. It is argued that economic devices could be beneficial to finance productive assets in developing countries where financial services and legal systems are underdeveloped.
@@ -45,8 +45,8 @@ In \parencite{Worner2016ecis}, we investigated six promising start-up companies 
 \section{Filament (Internet of Things)}
 \label{sec:ecofilament}
 
-Filament\footnote{https://filament.com/} provides wireless sensor networks for the (industrial) IoT, e.g. 
-for smart cities or smart agriculture use case. Most IoT platform providers follow 
+Filament\footnote{\url{https://filament.com/}} provides wireless sensor networks for the (industrial) \ac{IOT}, e.g. 
+for smart cities or smart agriculture use case. Most \ac{IOT} platform providers follow 
 a centralized approach by connecting all devices to their respective cloud-infrastructure. 
 This has the major disadvantage that devices depend on a central infrastructure 
 in order to operate. Moreover, it can be argued that this approach cannot keep 
@@ -69,7 +69,7 @@ to data or request some service.
 As described, devices can be operated and governed by using only the blockchain 
 as a backend and therefore without any technical dependence on the platform creator 
 (Filament) or other third parties. This might bare great benefits for customers 
-needing to deploy large Industrial IoT applications with a lifetime of 5-10 years. 
+needing to deploy large Industrial \ac{IOT} applications with a lifetime of 5-10 years. 
 Because they want to minimize the risk of a lock-in with a specific company. Moreover, 
 according to Filament, customers prefer paying continuously on a real-time basis 
 instead of an upfront investment, which can be solved efficiently by Bitcoin micropayments. 
@@ -89,15 +89,15 @@ Filament.
 \section{Ascribe (Intellectual Property)}
 \label{sec:ecoascribe}
 
-Ascribe\footnote{https://www.ascribe.io/} aims to provide provenance of intellectual property. Digital work, 
+Ascribe\footnote{\url{https://www.ascribe.io/}} aims to provide provenance of intellectual property. Digital work, 
 like art, photos, and music, can be registered publicly on the bitcoin blockchain 
 together with its accompanying terms and conditions. The technological basis is 
-the spool protocol\footnote{https://github.com/ascribe/spool}, an overlay protocol that uses 
+the spool protocol\footnote{\url{https://github.com/ascribe/spool}}, an overlay protocol that uses 
 Bitcoin transactions to represent unforgeable ownership transfers and licensing 
 agreements for digital work. Thus, authenticity of ownership and usage rights can 
 always be proven. Ascribe focuses on digital art in particular. Although art is 
 in principle copyrighted by the time of creation, it is currently cumbersome and 
-expensive to officially register work and prove ownership (see e.g. http://copyright.gov/docs/fees.html). 
+expensive to officially register work and prove ownership (see e.g. \url{http://copyright.gov/docs/fees.html}). 
 Therefore, hardly any digital art gets registered. Ascribe aims to change the status 
 quo by providing a virtually free and automatable registration process. Moreover, 
 the unique representation of digital work based on cryptography and the blockchain 
@@ -119,7 +119,7 @@ immutability of the bitcoin blockchain, instead of an authority.
 \section{OpenBazaar (E-Commerce Marketplace)}
 \label{sec:ecobazaar}
 
-OpenBazaar\footnote{https://www.openbazaar.org/} is an open source project consisting of a protocol and a reference 
+OpenBazaar\footnote{\url{https://www.openbazaar.org/}} is an open source project consisting of a protocol and a reference 
 implementation that enables a decentralized peer-to-peer e-commerce marketplace. 
 In comparison to traditional e-commerce market places like eBay and Amazon, there 
 is no central server or authority that is running the market place. Thus, there 
@@ -153,22 +153,19 @@ mechanics on centralized marketplaces work.
 \section{21 (Digital Micro Commerce Marketplace)}
 \label{sec:eco21}
 
-At first sight, the categorization of 21 Inc.\footnote{https://www.21.co} as a challenger seems odd, 
+At first sight, the categorization of 21 Inc.\footnote{\url{https://www.21.co}} as a challenger seems odd, 
 since 21 is an infrastructure and platform provider for the bitcoin ecosystem. 
 Indeed, it is often categorized as a mining company. However, we argue that 21 
 is better classified as a marketplace for digital micro services, which has the 
 potential to challenge traditional Internet business models.
 
 With a funding of \$121M, 21 supersedes every other start up in the bitcoin ecosystem. 
-They have developed an embeddable ASIC\footnote{ Application-specific integrated 
-circuit. A hardware chip customized for a particular task in contrast to a general 
-CPU. In this case task is Bitcoin mining, which involves the extensive execution 
-of SHA265 operations.} mining chip that they are using in their own mining operations, 
+They have developed an embeddable \ac{ASIC} mining chip that they are using in their own mining operations, 
 but which is also embeddable into arbitrary connected devices. In November 2015 
 they released their first product, the 21 Bitcoin computer. Essentially the 21 
 Bitcoin computer is a full-stack development platform to build bitcoin-payable 
 digital services, which can be published and discovered on 21's digital marketplace. 
-Individual service consumptions, like an API call, can be billed at as little as 
+Individual service consumptions, like an \ac{API} call, can be billed at as little as 
 1 satoshi\footnote{Satoshi is the smallest denominator of a bitcoin. 100,000,000 
 satoshi correspond to 1 bitcoin. Thus, 1 satoshi is currently worth approximately 
 USD 0.000003.}. The embedded mining chip, which is currently coupled to a mining 
@@ -214,7 +211,7 @@ available yet because of missing incentives
 \section{Factom (Records Management)}
 \label{sec:ecofactom}
 
-Factom\footnote{http://factom.org/} is an open source software project that provides businesses with 
+Factom\footnote{\url{http://factom.org/}} is an open source software project that provides businesses with 
 the ability to prove data integrity and to create verifiable and immutable audit 
 trails. 
 
@@ -228,7 +225,7 @@ to the Factom network. There, all hashes are compressed to a single hash by buil
 a Merkle tree and taking the root of the tree. This single hash 
 value is then stored in the bitcoin blockchain. This provably time-stamps all individual 
 records without having to write all records individually into the bitcoin blockchain. 
-The network maintains its own crypto-currency, \emph{factoids}, which is used to incentivize 
+The network maintains its own cryptocurrency, \emph{factoids}, which is used to incentivize 
 participants of the peer-to-peer network to provide their resources. A factoid 
 can be transformed into entry credits, which can be used to submit new records. 
 The price of a factoid depends on the market value, but the price of an entry credit 
@@ -250,7 +247,7 @@ regulations without hiring expensive professional companies for that.
 \section{Onename (Identity)}
 \label{sec:ecoonename}
 
-Onename\footnote{https://onename.com/} allows registering identities on the Bitcoin blockchain. This blockchain 
+Onename\footnote{\url{https://onename.com/}} allows registering identities on the Bitcoin blockchain. This blockchain 
 identity can be connected to various online identities like Facebook, Twitter, 
 PGP keys and a Bitcoin address. Thus, it provides a probabilistic identity which 
 reliability grows with the number of verified connected accounts. Onename is based 
@@ -266,7 +263,7 @@ for OpenBazaar.
 
 Moreover, it is possible to add additional namespaces. In this sense Blockchain 
 IDs could represent not only humans, but also machines. Thus, Blockchain IDs might 
-be the basis of a decentralized DNS system or an IoT registry. 
+be the basis of a decentralized \ac{DNS} system or an IoT registry. 
 
 Essentially, the technology allows individuals to own their online identities, 
 rather than being dependent central institutions. Holding, i.e. registering and 
@@ -394,7 +391,7 @@ The idea is to combine shared ownership and the unidirectional payment channel. 
 \subsection{Implementation based on Ethereum}
 
 
-The following contract implements low-trust renting of smart property on Ethereum. Note that the \emph{Rentable Property} contracts inherits properties and functions from the \emph{SmartProperty} contract. When deploying the contract the owner sets a deposit a renter has to provide and a time based renting price. The main functions are a \emph{rent} and a \emph{returnPropery} function. The \emph{rent} function allows an arbitrary account or contract to rent the smart property by providing a deposit. The deposit is held in the contract, and can only be released by the rules of the contract. Neither the owner, nor the renter have control over the deposit. The contract keeps also track of the block in which the rent function was executed. This \emph{startBlock} serves as the begin of the renting period as measured in time of blocks. The Ethereum network has an average block generation rate of approximately 14s. 
+The following contract implements low-trust renting of smart property on Ethereum. Note that the \emph{Rentable Property} contracts inherits properties and functions from the \emph{SmartProperty} contract. When deploying the contract the owner sets a deposit a renter has to provide and a time based renting price. The main functions are a \emph{rent} and a \emph{returnPropery} function. The \emph{rent} function allows an arbitrary account or contract to rent the smart property by providing a deposit. The deposit is held in the contract, and can only be released by the rules of the contract. Neither the owner, nor the renter have control over the deposit. The contract keeps also track of the block in which the rent function was executed. This \emph{startBlock} serves as the begin of the renting period as measured in time of blocks. The Ethereum network has an average block generation rate of approximately 14 s. 
 The software running locally on the smart property has now to be notified that it must obey orders signed by the renter for a maximal period defined by the price and the deposit. 
 The renter can later call the \emph{returnProperty} function which calculates the price for the renting period and distributes the deposit accordingly. If the renter does not return the property in time her access/control rights expire. 
 
